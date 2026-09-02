@@ -1,5 +1,6 @@
 import { Marcellus, Jost } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/next";
 
 import "../styles/tokens.css";
 import "../styles/typography.css";
@@ -44,7 +45,10 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        <Analytics />
+      </body>
       <GoogleAnalytics gaId="G-684VXEPVGK" />
     </html>
   );
