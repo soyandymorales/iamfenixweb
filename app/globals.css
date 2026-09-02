@@ -3570,7 +3570,7 @@ body:has(.diarios-gate) {
 .diarios-gate__inner {
   justify-content: center;
   gap: var(--space-48);
-  padding-block: calc(var(--header-height) + var(--space-16)) var(--space-24);
+  padding-block: var(--space-24);
   box-sizing: border-box;
 }
 
@@ -3583,9 +3583,24 @@ body:has(.diarios-gate) {
   flex-shrink: 0;
 }
 
+.diarios-gate__mark {
+  display: inline-flex;
+  color: var(--color-ember);
+}
+
+.diarios-gate__mark svg {
+  width: var(--space-120);
+  height: auto;
+}
+
 .diarios-gate__header h1 {
   max-width: var(--reading-hero);
   font-size: var(--text-display);
+  color: var(--color-charcoal);
+}
+
+.diarios-gate__accent {
+  color: var(--color-ember);
 }
 
 .diarios-gate__question {

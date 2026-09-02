@@ -1,0 +1,2187 @@
+# Fénix — Web & Product Architecture Rules
+
+> Reglas de arquitectura frontend para el ecosistema Fénix (Fénix Atelier + Fénix House).
+> Basado en el template genérico de arquitectura, adaptado a la identidad de marca y filosofía definidas en el Fénix Whitepaper.
+>
+> Regla de idioma (según el Whitepaper): nombres propios y estructura del ecosistema se mantienen en inglés — *Fénix, Fénix Architecture, Fénix Atelier, Fénix House, Fénix OS, The Domains, Private Office, The Flight Plan* — las explicaciones se dan en español.
+
+
+## 0. Filosofía
+
+Construimos sistemas, no páginas. Construimos arquitectura, no interfaces desechables.
+
+- **Mobile-first.** La presencia se cultiva primero en la pantalla que la mayoría de las personas usa a diario.
+- **Layout antes que visuales.** El orden precede a la decoración.
+- **Componentes antes que secciones.** El sistema precede al contenido.
+- **Tokens antes que CSS.** Nada se hardcodea; todo se hereda del sistema de diseño Fénix.
+- **Espaciado consistente > decoración.** La consistencia genera la sensación de calidad percibida más que cualquier ornamento.
+- **Restraint over stimulation.** Ante la duda, se remueve en vez de añadir. Se prefiere el vacío a la decoración, la atmósfera a la estimulación, lo atemporal a lo tendencial.
+- **Quiet Luxury como principio de ingeniería, no solo de diseño.** El código, igual que la marca, no debe gritar: debe ser preciso, restringido y duradero.
+- **Un house, no un dashboard de productividad.** La interfaz debe sentirse como un journal, un blueprint, una biblioteca o un atelier — nunca como un panel de "optimización" o "performance".
+- **Product before feature.** Una feature existe para producir un resultado humano o de negocio claro; no para aumentar el inventario del producto.
+- **Clarity before complexity.** La solución más simple que preserve claridad, extensibilidad e integridad es la solución preferida.
+- **Answer before atmosphere.** La estética puede envolver la información, pero nunca reemplazarla. Todo contenido importante debe poder entenderse sin depender de animación, imagen o metáfora.
+- **One concept, one source of truth.** Cada concepto, entidad o pieza de conocimiento importante debe tener una fuente canónica dentro del sistema.
+- **AI-agent ready.** Las reglas críticas deben ser suficientemente explícitas para que un agente de código pueda ejecutarlas, validarlas y saber cuándo no debe improvisar.
+
+---
+
+
+---
+
+# 1. Product & Experience Architecture
+
+## 1.1 Product Thinking
+
+Fénix construye experiencias, herramientas y productos; no solo páginas. Cada superficie debe tener una intención explícita, un usuario identificable y un resultado observable.
+
+### AI-agent contract
+
+**RULE:** no implementar features sin un outcome definido.  
+**WHY:** evita construir funcionalidad ornamental o complejidad sin propósito.  
+**DO:** expresar la feature como problema → acción → resultado.  
+**DON'T:** empezar por el componente o la tecnología.  
+**VALIDATION:** el cambio debe incluir el outcome esperado.
+
+Toda feature debe poder responder:
+
+1. ¿Para quién existe?
+2. ¿Qué problema resuelve?
+3. ¿Qué acción permite?
+4. ¿Qué resultado produce?
+5. ¿Cómo sabremos que funciona?
+
+Si una feature no tiene una respuesta clara a estas preguntas, no debe construirse todavía.
+
+---
+
+## 1.2 User Journeys
+
+La arquitectura de producto debe partir del recorrido del usuario, no de la estructura interna del código.
+
+Modelo mínimo:
+
+```text
+Entry
+  ↓
+Context
+  ↓
+Action
+  ↓
+System response
+  ↓
+Next meaningful action
+  ↓
+Outcome
+```
+
+Cada flujo crítico debe tener un camino principal claro y estados definidos para éxito, espera, error, ausencia de datos y recuperación.
+
+---
+
+## 1.3 Information Architecture
+
+La navegación, las rutas, los contenidos y las features deben reflejar cómo el usuario entiende el producto.
+
+- Preferir jerarquías cortas y explícitas.
+- No esconder una acción crítica detrás de capas innecesarias.
+- Una URL debe representar una superficie conceptual estable.
+- Los nombres de rutas deben ser legibles para humanos y máquinas.
+- La arquitectura de información precede a la arquitectura visual.
+
+---
+
+## 1.4 Product States
+
+Todo flujo interactivo debe contemplar, cuando corresponda:
+
+```text
+idle
+loading
+success
+empty
+error
+offline
+unauthorized
+forbidden
+expired
+processing
+completed
+```
+
+No todos los productos necesitan todos los estados, pero ningún estado relevante debe quedar implícito.
+
+### Regla
+
+Un estado debe comunicar:
+
+- qué está ocurriendo;
+- qué puede hacer el usuario;
+- qué ocurrió si hubo un error;
+- cómo continuar.
+
+Evitar spinners genéricos cuando un estado quieto y contextual sea suficiente.
+
+---
+
+## 1.5 Source of Truth
+
+Cada dato importante debe tener una única fuente canónica.
+
+Ejemplos:
+
+- pricing → source of truth de pricing;
+- entities → source of truth de entidades;
+- vocabulary → source of truth de vocabulario;
+- metadata → source of truth de metadata;
+- product state → source of truth de estado.
+
+No duplicar manualmente el mismo dato en componentes independientes.
+
+Cuando un dato debe aparecer en múltiples superficies, consumirlo desde su fuente canónica.
+
+---
+
+## 1.6 One Concept, One Source of Truth
+
+Cada concepto propietario o importante debe tener una definición canónica.
+
+Ejemplo:
+
+```text
+Money Architecture™
+    ↓
+canonical definition
+    ↓
+homepage
+Atelier
+essays
+schema
+metadata
+AI-facing answers
+```
+
+Las distintas superficies pueden adaptar el contexto y el tono, pero no deben crear definiciones contradictorias.
+
+---
+
+## 1.7 Progressive Disclosure
+
+No mostrar toda la complejidad disponible en el primer momento.
+
+- Primero: qué es.
+- Después: por qué importa.
+- Después: cómo funciona.
+- Finalmente: profundidad, configuración o detalle técnico.
+
+La profundidad debe estar disponible sin convertir la primera experiencia en un manual.
+
+---
+
+## 1.8 Product Boundaries
+
+Cada producto debe tener límites claros respecto al resto del ecosistema.
+
+Una superficie puede compartir:
+
+- design system;
+- entities;
+- vocabulary;
+- authentication;
+- analytics;
+- infrastructure;
+
+sin convertirse automáticamente en una única experiencia.
+
+Fénix Core define principios compartidos. Cada producto puede tener su propia identidad, journey y lógica cuando el negocio lo requiera.
+
+# 2. Arquitectura del Proyecto
+
+## 2.1 Estructura de Carpetas
+
+La estructura sigue el sistema Next.js estándar, adaptada a los dominios y al ecosistema de marca Fénix (Fénix Atelier, Fénix House, The Domains).
+
+```
+/
+├── app/
+│   ├── layout.js                    # Root layout
+│   ├── page.js                      # Home
+│   ├── globals.css                  # Global styles
+│   ├── error.js
+│   ├── not-found.js
+│   │
+│   ├── atelier/                     # Fénix Atelier (práctica privada)
+│   │   ├── layout.js
+│   │   ├── page.js
+│   │   ├── consultation/            # Architect's Consultation
+│   │   ├── blueprint/               # The Blueprint
+│   │   └── build/                   # The Build
+│   │
+│   ├── house/                       # Fénix House (medios, software, libros)
+│   │   ├── books/
+│   │   ├── media/
+│   │   ├── software/
+│   │   └── experiences/
+│   │
+│   ├── dashboard/                   # Fénix OS (panel privado del cliente)
+│   │   ├── layout.js
+│   │   └── page.js
+│   │
+│   ├── blog/                        # Ensayos / cuerpo de pensamiento
+│   ├── privacy-policy/
+│   ├── tos/
+│   │
+│   └── api/
+│       ├── auth/
+│       ├── lead/
+│       ├── stripe/
+│       └── webhook/
+│
+├── components/
+│   │
+│   ├── layout/
+│   │   ├── LayoutClient.js
+│   │   ├── Header.js
+│   │   ├── Footer.js
+│   │   └── Navigation.js
+│   │
+│   ├── hero/
+│   │   └── Hero.js
+│   │
+│   ├── sections/
+│   │   ├── MuseumClaim.js            # Museum Claim — frase manifiesto
+│   │   ├── SocialProofLogos.js       # "He caminado con personas de"
+│   │   ├── FilosofiaFenix.js         # Filosofía Fénix (Salud / Felicidad / Dinero + citas bíblicas)
+│   │   ├── TheProblem.js             # Fragmentación
+│   │   ├── ArquitecturaFenix.js      # Statement + diagrama ThreeJS (fragmentación → integración)
+│   │   ├── HowItWorks.js             # Los 3 Dominios — overview, referencia a components/domains/
+│   │   ├── TheStory.js               # The Story — Andy (founder)
+│   │   ├── Metrics.js                # Métricas relevantes
+│   │   ├── TheAtelier.js             # Tabla de servicios/tiers (Architect · Blueprint · Build · Private Office)
+│   │   ├── BibliotecaArquitecto.js   # La Biblioteca del Arquitecto (YouTube)
+│   │   ├── LaCasa.js                 # La House — grid de obras/productos
+│   │   └── CTADiariosFenix.js        # CTA — Diarios del Fénix (reto 21 días)
+│   │
+│   ├── domains/                      # Los 3 Dominios (How it works)
+│   │   ├── BodyArchitecture.js       # Body Architecture™
+│   │   ├── HappeaceArchitecture.js   # Happeace Architecture™ (claridad, presencia, paz)
+│   │   └── MoneyArchitecture.js      # Money Architecture™
+│   │
+│   ├── testimonials/
+│   │   ├── Testimonials1.js
+│   │   ├── Testimonials3.js
+│   │   ├── Testimonials11.js
+│   │   ├── TestimonialsSmall.js
+│   │   ├── TestimonialsAvatars.js
+│   │   └── TestimonialRating.js
+│   │
+│   ├── buttons/
+│   │   ├── ButtonAccount.js
+│   │   ├── ButtonCheckout.js
+│   │   ├── ButtonSignin.js
+│   │   ├── ButtonSupport.js
+│   │   ├── ButtonLead.js
+│   │   ├── ButtonPopover.js
+│   │   └── ButtonGradient.js
+│   │
+│   ├── ui/
+│   │   ├── Modal.js
+│   │   ├── Tabs.js
+│   │   ├── BetterIcon.js
+│   │   ├── Card.js
+│   │   ├── WorkCard.js               # Card de La House (grid de obras/productos)
+│   │   ├── TierCard.js               # Card/fila de tier de The Atelier
+│   │   ├── ScriptureCitation.js      # Cita bíblica (Filosofía Fénix)
+│   │   ├── Badge.js
+│   │   ├── Divider.js
+│   │   ├── Container.js
+│   │   ├── Section.js
+│   │   ├── Grid.js
+│   │   ├── Stack.js
+│   │   └── Typography.js
+│   │
+│   └── forms/
+│       ├── Input.js
+│       ├── Select.js
+│       ├── Textarea.js
+│       └── FormField.js
+│
+├── libs/
+│   ├── api.js
+│   ├── auth.js
+│   ├── db.js
+│   ├── email.js
+│   ├── stripe.js
+│   ├── seo.js                        # Metadata API dinámica (title/description/OG)
+│   ├── schema/                       # JSON-LD builders — un archivo por tipo de entidad (11.12.1)
+│   │   ├── organization.js
+│   │   ├── person.js
+│   │   ├── course.js
+│   │   ├── book.js
+│   │   ├── event.js
+│   │   ├── product.js
+│   │   ├── breadcrumb.js
+│   │   └── faq.js
+│   ├── ai.js                        # The AI Layer
+│   ├── analytics.js
+│   └── utils.js
+│
+├── models/
+│   ├── User.js
+│   ├── Lead.js
+│   └── plugins/
+│
+├── hooks/
+│   ├── useBreakpoint.js
+│   ├── useModal.js
+│   ├── useScroll.js
+│   └── useMediaQuery.js
+│
+├── content/                          # Source of truth for structured product/brand knowledge
+│   ├── entities/
+│   ├── works/
+│   ├── services/
+│   ├── domains/
+│   ├── vocabulary/
+│   ├── questions/
+│   ├── essays/
+│   ├── navigation/
+│   ├── testimonials/
+│   └── metadata/
+│
+├── styles/
+│   ├── tokens.css
+│   ├── typography.css
+│   ├── spacing.css
+│   ├── animations.css
+│   └── utilities.css
+│
+├── public/
+│   ├── blog/
+│   ├── fonts/                       # Marcellus, Jost
+│   ├── images/
+│   ├── icons/
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   └── sitemap-0.xml
+│
+├── package.json
+├── package-lock.json
+├── next.config.js
+├── tailwind.config.js
+├── postcss.config.js
+├── jsconfig.json
+├── .eslintrc.json
+├── next-sitemap.config.js
+└── .gitignore
+```
+
+---
+
+# 3. Design Tokens
+
+Se definen únicamente variables. Nunca se hardcodean valores de color, tipografía, radio, sombra, movimiento, espaciado o z-index directamente en los componentes.
+
+- Colors
+- Typography
+- Radius
+- Shadows
+- Motion
+- Spacing
+- Z-index
+
+### Nunca hardcodear valores.
+
+## 3.1 Sistema de Color
+
+Basado en el **Color System** del Whitepaper (Part VI — The Brand World). El color no se usa para atraer atención; se usa para crear atmósfera. La calidez proviene de los materiales, no de la saturación.
+
+| Token | Hex | Rol |
+|---|---|---|
+| `--color-chalk-white` | `#F8F6F1` | Fondo primario (campo visual dominante) |
+| `--color-warm-parchment` | `#EFE9DD` | Fondo secundario / surfaces |
+| `--color-limestone` | `#D8D2C6` | Neutro estructural |
+| `--color-ash-stone` | `#777066` | Bordes y texto secundario |
+| `--color-charcoal` | `#2A2926` | Tipografía primaria |
+| `--color-ember` | `#B56A3A` | Acento primario (reservado para significado, dirección o énfasis) |
+| `--color-burnt-cedar` | `#7A5637` | Acento secundario |
+
+**Reglas de uso de color:**
+
+- `--color-chalk-white` es siempre el campo dominante.
+- Usar tonos neutros antes que colores de acento.
+- `--color-ember` se reserva para momentos de significado, dirección o énfasis — nunca para decoración.
+- Ningún color de acento puede dominar la composición.
+- La jerarquía visual se crea con espacio, tipografía y composición — nunca con exceso de color.
+- **Colores prohibidos:** azul eléctrico, púrpura brillante, verde neón, gradientes "cyber", paletas altamente saturadas, efectos metálicos sintéticos, glow artificial. Fénix nunca debe sentirse "digital-first"; siempre "human-first".
+
+## 3.2 Tipografía (tokens)
+
+| Token | Fuente | Uso |
+|---|---|---|
+| `--font-display` | **Marcellus** (Google Fonts) | Titulares, hero, momentos editoriales |
+| `--font-body` | **Jost** (Google Fonts) | Cuerpo de texto, UI, interfaz |
+
+Alternativas de respaldo:
+- Display: Cormorant Garamond, EB Garamond, Forum, Spectral Display
+- Body/Interface: Inter, IBM Plex Sans, Source Sans 3
+
+**Filosofía:** la tipografía nunca compite con las ideas. El display trae memoria (talla, no dibuja); el sans-serif trae claridad (desaparece detrás del contenido). Juntas expresan la dualidad Fénix: tradición + modernidad, sabiduría + tecnología, craft + sistemas.
+
+## 3.3 Radius, Shadows, Motion
+
+Consistentes con el **Principle of Restraint** y el lenguaje material de Fénix (piedra, madera, lino, cuero, papel hecho a mano):
+
+- `--radius-sm / md / lg`: esquinas sutiles, nunca esquinas totalmente cuadradas ni excesivamente redondeadas — evocan piedra tallada, no plástico ni "tech UI".
+- `--shadow-soft`: sombras difusas y de bajo contraste (como luz natural en un atelier), nunca sombras duras ni efectos de "elevación" tipo dashboard SaaS.
+- `--motion-duration / easing`: movimiento lento, deliberado, sin rebote ("bounce"). Las transiciones deben sentirse como respiración, no como notificación.
+
+## 3.4 Z-index
+
+Escala controlada y documentada por capa (nav, modal, overlay, tooltip). Nunca valores arbitrarios (`z-999`).
+
+## 3.5 Hero
+
+- **Eyebrow** — frase corta en el vocabulario Fénix (ej. "The Art of Living in the Age of AI"), nunca lenguaje de "performance" u "optimización".
+- **Headline** — declaración editorial, calmada, en `--font-display`. Ej.: tono de "Design a life capable of sustaining what you are building."
+- **Subheadline** — extiende la idea con precisión y restricción, nunca con urgencia artificial.
+- **CTA** — dos variantes válidas, a elegir según el objetivo de la página:
+  - **Variante A — Email capture:** email input field (no un botón tradicional), con botón de submit circular oscuro (`--color-charcoal` / `--color-ember`) a la derecha. Usar cuando el objetivo del hero es captura de lead (newsletter, lista de espera).
+  - **Variante B — Button CTA:** botón sólido (`--color-charcoal` de fondo, texto `--color-chalk-white`, o outline sobre `--color-ember`) con copy directo en el vocabulario Fénix — ej. *"Entrar a Diarios del Fénix"*. Usar cuando el objetivo del hero es dirigir a un producto/acción específica (ej. La House, Diarios del Fénix, El Atelier).
+  - Puede acompañarse de un microcopy secundario debajo (ej. *"Acceso gratuito a los planos"*) en `--font-body`, tamaño pequeño, color `--color-ash-stone`.
+  - Nunca combinar ambas variantes en el mismo hero — se elige una según la intención de conversión de esa página.
+
+## 3.6 Hero Atmospheric Fade
+
+### Propósito
+
+El final (parte inferior) del hero nunca debe terminar de forma abrupta.
+
+En su lugar, el hero debe disolverse naturalmente hacia el fondo de la página, creando la sensación de que el elemento focal emerge de la luz en vez de estar simplemente colocado sobre una sección.
+
+Este efecto aumenta la profundidad percibida y le da al hero una apariencia editorial y premium — coherente con la estética Fénix de *contemplative luxury*.
+
+---
+
+### Principios
+
+El fade se compone de múltiples capas sutiles en vez de un único degradado obvio.
+
+Usar restricción (*restraint*).
+
+El efecto debe ser casi invisible.
+
+El usuario debe sentirlo antes de notarlo.
+
+---
+
+### Capa 1 — Background Glow (resplandor de fondo)
+
+Colocar un glow radial grande detrás del objeto focal del hero.
+
+**Propósito:**
+- crear foco visual
+- separar el objeto del fondo
+- simular luz ambiental
+
+**Reglas**
+
+- centrado sobre el objeto focal
+- opacidad muy baja
+- bordes difuminados ("feathered")
+- nunca transiciones duras
+- debe ocupar aproximadamente 50–80% del ancho del hero
+- usar `--color-ember` o `--color-warm-parchment` a opacidad mínima — nunca colores fuera de la paleta Fénix
+
+---
+
+### Capa 2 — Bottom Dissolve (disolución inferior)
+
+La parte inferior del hero se desvanece gradualmente hacia el fondo de la página.
+
+**Propósito**
+
+- eliminar bordes duros
+- permitir que screenshots, dispositivos o ilustraciones desaparezcan de forma natural
+- conectar visualmente el hero con la siguiente sección
+
+**Reglas**
+
+- el fade debe comenzar antes de que el hero termine
+- el color de fondo (`--color-chalk-white` o `--color-warm-parchment`) debe volverse dominante cerca de la parte inferior
+- la transición debe ser continua
+- evitar bandas de degradado visibles
+
+---
+
+### Capa 3 — Blur Bloom (opcional)
+
+Una fuente de luz difuminada y sutil puede colocarse detrás del objeto focal.
+
+**Propósito**
+
+- suavizar la composición
+- crear atmósfera
+- reforzar la estética premium
+
+**Reglas**
+
+- radio de blur grande
+- opacidad extremadamente baja
+- nunca visible como un elemento independiente
+
+---
+
+### Integración del objeto
+
+Los objetos principales del hero deben verse embebidos en la atmósfera, nunca superpuestos sobre ella.
+
+**Evitar:**
+
+✗ cortes abruptos ("sharp cutoffs")
+
+✗ bordes rectangulares de imagen visibles
+
+✗ screenshots flotantes y aisladas
+
+**Preferir:**
+
+✓ desaparición gradual
+
+✓ mezcla suave ("soft blending")
+
+✓ continuidad visual
+
+---
+
+### Peso visual
+
+Los efectos atmosféricos nunca deben competir con el contenido.
+
+**Prioridad:**
+
+1. Headline
+2. CTA
+3. Objeto del hero
+4. Efectos atmosféricos
+
+Si los efectos atmosféricos se notan antes que el contenido, reducir su opacidad.
+
+---
+
+### Filosofía de diseño
+
+La atmósfera debe sentirse como luz.
+
+No como decoración.
+
+No como una ilustración.
+
+No como un gráfico de fondo.
+
+El usuario debe percibir calma, profundidad y continuidad — no efectos.
+
+**Nunca hardcodear valores.** Todos los parámetros del fade (opacidad, radio de blur, color, timing) deben vivir como tokens en `styles/tokens.css` / `styles/animations.css`, nunca como valores sueltos en el componente `Hero.js`.
+
+---
+
+# 4. Sistema de Layout
+
+## 4.1 Container
+
+Ancho máximo de escritorio: **1200px**
+
+## 4.2 Márgenes Externos (Gutters)
+
+| Viewport | Padding |
+|---|---:|
+| ≤375 | 16px |
+| ≤768 | 24px |
+| ≤1024 | 40px |
+| ≥1400 | 60px |
+
+**Regla de oro:** el contenido nunca toca el borde del viewport. El white space es parte del lenguaje de diseño — no es espacio vacío, es contemplación.
+
+## 4.3 Ancho de Lectura
+
+- Body: 680–720px
+- Hero: 900px
+- CTA: 540px
+- Cards: 280–360px
+
+## 4.4 Ritmo Vertical
+
+El layout sigue una única escala de espaciado. Nunca se inventan valores de espaciado arbitrarios. Se usan únicamente los tokens predefinidos en toda la aplicación.
+
+### Escala de Espaciado
+
+| Valor | Uso |
+|---|---|
+| 8 | icon spacing |
+| 16 | mobile gutters |
+| 24 | component spacing |
+| 32 | card padding |
+| 48 | element groups |
+| 64 | large component spacing |
+| 80 | section headers |
+| 100 | standard section spacing |
+| 120 | hero and premium spacing |
+
+### Regla de Oro
+
+Si un valor de espaciado no pertenece a la escala, probablemente no debería existir.
+La consistencia genera más calidad percibida que la decoración.
+
+---
+
+# 5. Sistema Responsive
+
+**Breakpoints**
+
+- 375
+- 768
+- 1024
+- 1400
+
+**Reglas:**
+
+- Colapsar grids en 768.
+- Ocultar navegación secundaria.
+- CTA a ancho completo.
+- El peso tipográfico del body aumenta en mobile (para mantener legibilidad y jerarquía sin recurrir a color).
+- Preservar siempre los gutters — el "breathing room" no se sacrifica en ningún breakpoint.
+
+---
+
+# 6. Tipografía
+
+Usar `clamp()` para todo tamaño de fuente.
+
+Nunca tamaños de display fijos.
+
+- `--font-display` (Marcellus) crea ritmo, memoria y permanencia.
+- `--font-body` (Jost) crea claridad y funcionalidad silenciosa.
+- La tipografía debe sentirse como arquitectura: estructurada, balanceada, duradera, silenciosa.
+
+---
+
+# 7. Componentes
+
+Cada componente es dueño de:
+
+- Estilos
+- Accesibilidad
+- Loading state
+- Empty state
+- Comportamiento responsive
+
+**Regla de tono en componentes con copy:** todo texto de UI (labels, placeholders, mensajes de error, empty states) debe seguir la **Fénix Voice** — calma, precisión, profundidad, calidez, restricción, convicción. Nunca lenguaje de urgencia, gamificación agresiva o "growth hacking" (ver Vocabulary, sección 8.3).
+
+---
+
+# 8. Secciones
+
+## 8.1 Orden sugerido
+
+1. **Navbar** — *"i . am Fénix"* + Historia · Biblioteca del Arquitecto · El Atelier · La House · Empieza Aquí
+2. **Hero** — Eyebrow / Headline / Subheadline / CTA
+3. **Museum Claim** *(frase manifiesto)*
+4. **Social Proof** *(logos — "He caminado con personas de")*
+5. **Filosofía Fénix** *(Salud / Felicidad / Dinero + citas bíblicas)*
+6. **The Problem** *(Fragmentación)*
+7. **Arquitectura Fénix** *(statement + diagrama fragmentación → integración)*
+8. **How It Works — Los 3 Dominios** *(Body / Happeace / Money Architecture™)*
+9. **The Story** *(Founder — Andy)*
+10. **Testimonios**
+11. **Métricas relevantes**
+12. **The Atelier** *(tabla de servicios/tiers)*
+13. **La Biblioteca del Arquitecto** *(YouTube)*
+14. **La House** *(grid de obras/productos)*
+15. **CTA — Diarios del Fénix** *(reto 21 días)*
+16. **Footer**
+
+## 8.2 Regla "One idea, one home"
+
+La regla más importante durante la edición de contenido: **cada idea tiene un hogar principal.** Puede reaparecer en otras secciones o páginas, pero nunca se vuelve a explicar desde cero — cada reaparición cumple una función distinta.
+
+Ejemplo del Whitepaper: *Fragmentation* vive principalmente en **The Problem**, y puede reaparecer en *The Fénix Difference*, *Fénix Architecture* o *The Offer*, pero con un rol diferente cada vez.
+
+## 8.3 Vocabulario de marca (aplicado a copy de UI y contenido)
+
+**Usar (Quiet Luxury Lexicon / Fénix Lexicon):** Craft, Design, Practice, Stewardship, Devotion, Craftsmanship, Mastery, Presence, Architecture, Ritual, Legacy, Cultivation, Refinement, Discretion, Integrity, Order, Vitality, Renewal, Rebirth, Faith, Wisdom, Home, Temple, Discipline, Daily practice, Memory, Service, Peace, Freedom, Abundance.
+
+**Verbos preferidos:** Designing, Building, Cultivating, Protecting, Refining, Stewarding, Integrating, Practicing, Renewing, Reinvesting, Serving, Creating, Guarding.
+
+**Evitar siempre:** Performance, High performance, Peak performance, Antifragile, Biohacking, Life hacking, Human optimization, Productivity machine, Superhuman, Dominate, "Become unstoppable", "Unlock your peak performance", "Optimize every area of your life", "Hack your biology".
+
+## 8.4 Fotografía e iconografía (si la sección incluye imágenes/ilustraciones)
+
+- **Fotografía:** preferir amaneceres, piedra, concreto, madera, café, journals escritos a mano, zapatillas de correr desgastadas, bibliotecas, arquitectura, mapas, planos, blueprints. Evitar personas sonriendo directo a cámara, brazos cruzados, imágenes de laptop, oficinas genéricas, headshots corporativos.
+- **Iconografía:** inspirada en líneas arquitectónicas, blueprints, grids, compases, mediciones, diagramas espaciales — nunca ADN, moléculas, cerebros, hexágonos, circuitos, interfaces neón, dashboards futuristas o imagery genérico de "AI".
+
+## 8.5 The Atelier — Tabla de Servicios (Tiers)
+
+Sección de conversión principal del ecosistema Fénix. Presenta los 4 tiers de la práctica privada (**Architect Consultation · Blueprint Basic · Build Premium · Private Office Concierge**) en formato de tabla comparativa, cruzando cada tier contra los 3 Dominios (Body / Happeace / Money Architecture™).
+
+**Estructura de datos** (vive en `content/services/`, nunca hardcodeada en el componente):
+
+```js
+{
+  tier: "Blueprint",
+  role: "Lead Architect",
+  mission: "Design",
+  outcome: "Architecture",
+  duration: "4 weeks",
+  domains: {
+    body: "Build the vitality required for your life's work.",
+    happeace: "Create greater clarity, focus and presence.",
+    money: "Align wealth with freedom, purpose and stewardship."
+  },
+  investment: "US$997",
+  cta: "Apply for Blueprint"
+}
+```
+
+**Reglas de diseño y contenido:**
+
+- Cada tier es una **progresión editorial**, no una escalera de "planes SaaS": Diagnose → Design → Build → Evolve. El copy debe sentirse como una consulta arquitectónica privada, nunca como un pricing table de software.
+- Los 4 tiers se muestran en una tabla/grid — en mobile colapsa a tarjetas apiladas (scroll horizontal o acordeón), nunca una tabla con scroll horizontal forzado sin indicación visual.
+- El precio (`Investment`) se presenta con el mismo peso tipográfico que el resto de la fila — nunca se agranda ni se le pone color de "oferta" o urgencia. Coherente con Voice & Tone: Fénix no vende con urgencia.
+- El CTA de cada tier es siempre un verbo de aplicación/solicitud (*"Request Consultation"*, *"Apply for Blueprint"*, *"Apply for Build"*, *"Request Private Office"*) — nunca "Comprar" / "Buy Now" / "Sign up".
+- Los nombres de dominio siempre llevan el símbolo de marca registrada: **Body Architecture™**, **Happeace Architecture™**, **Money Architecture™** — en cualquier lugar donde aparezcan como producto (no en prosa narrativa general).
+- Componente vive en `components/sections/TheAtelier.js`, con subcomponente `components/ui/TierCard.js` o `components/ui/ServiceTable.js` para reutilizar la fila/tarjeta de cada tier.
+
+## 8.6 La House — Grid de Obras
+
+Grid de productos del brazo editorial/cultural de Fénix (libros, herramientas, experiencias, comunidad).
+
+**Estructura de datos** (vive en `content/works/`):
+
+```js
+{
+  title: "Diario de un Fénix",
+  type: "Libro",
+  status: "Pronto", // o "Live"
+  tag: "Coming Soon", // o "Live"
+  description: "Colecciona memorias.",
+  cta: null // opcional, ej. "Suscríbete"
+}
+```
+
+**Reglas de diseño y contenido:**
+
+- Grid de cards (`components/ui/Card.js`), 2–3 columnas en desktop, 1 columna en mobile, respetando la escala de espaciado (sección 4.4).
+- Cada obra lleva un **tag de estado** (`Live`, `Pronto`, `Coming Soon`) — usar `--color-ember` solo para el tag activo (`Live`), y `--color-ash-stone` para estados futuros. Nunca badges de colores saturados ("new", "hot", etc.).
+- El copy de cada obra es corto (una línea, tono manifiesto) — ej. *"Prospera sin perder tu alma con principios bíblicos"*, *"El monasterio moderno de objetos útiles para el arte de vivir"* — nunca descripciones de producto tipo e-commerce.
+- Las imágenes de cada obra siguen la regla de fotografía/iconografía (8.4): objetos con textura y herencia (lámparas, libros, objetos artesanales), nunca mockups genéricos de producto digital.
+- Componente vive en `components/sections/LaCasa.js` + `components/ui/WorkCard.js`.
+
+## 8.7 Citas Bíblicas (Filosofía Fénix)
+
+Las citas de Escritura (ej. *1 Corintios 6:19–20*, *Mateo 25:14–30*, *Gálatas 2:20*) son parte estructural del contenido — no decoración religiosa incidental. Deben tratarse con el mismo restraint que el resto del sistema.
+
+**Reglas de estilo:**
+
+- La referencia bíblica (libro, capítulo, versículo) se presenta en `--font-body` (Jost), tamaño pequeño, color `--color-ash-stone` — nunca en el mismo peso que el titular de la sección.
+- Nunca se usan comillas decorativas grandes, iconos de "cruz" o ilustraciones religiosas explícitas — coherente con la regla de iconografía (8.4): sin símbolos genéricos, solo tipografía y espacio.
+- La cita puede mostrarse colapsada/expandible (ej. mostrar solo la referencia, con opción de revelar el texto) para no romper el ritmo editorial de la sección — especialmente en **Filosofía Fénix**, donde cada pilar (Salud / Felicidad / Dinero) tiene su propia cita.
+- Nunca se reproduce el texto completo del versículo como bloque destacado con fondo de color — se integra dentro del flujo de texto o como cita al margen (estilo editorial, no "highlight box").
+- Componente reutilizable: `components/ui/ScriptureCitation.js`, usado dentro de `components/sections/FilosofiaFenix.js`.
+
+---
+
+# 9. Accesibilidad
+
+- Keyboard first.
+- Semantic HTML.
+- Contraste AA — validar especialmente `--color-charcoal` sobre `--color-chalk-white` / `--color-warm-parchment`, y `--color-ember` sobre fondos claros (el acento debe cumplir AA incluso siendo restringido).
+- Los estados de foco deben mantener el lenguaje visual de la marca (sin outlines genéricos azules por defecto del navegador).
+
+---
+
+# 10. Content & Knowledge Architecture
+
+Esta capa convierte el contenido en una parte estructural del producto y no en texto disperso dentro de componentes.
+
+## 10.1 Content as System
+
+El contenido debe ser tratable como datos estructurados cuando tenga:
+
+- identidad;
+- relaciones;
+- metadata;
+- reutilización;
+- lifecycle;
+- necesidad de indexación;
+- presencia en múltiples superficies.
+
+El contenido que cumple estas condiciones no debe vivir hardcodeado dentro de componentes de presentación.
+
+---
+
+## 10.2 Content Source of Truth
+
+La carpeta `content/` es la fuente estructurada del conocimiento editorial y de producto.
+
+Arquitectura inicial:
+
+```text
+content/
+├── entities/
+├── works/
+├── services/
+├── domains/
+├── vocabulary/
+├── questions/
+├── essays/
+├── navigation/
+├── testimonials/
+└── metadata/
+```
+
+### Responsabilidad
+
+- `entities/` — personas, organizaciones, productos y conceptos con identidad propia.
+- `works/` — obras de The House.
+- `services/` — servicios y ofertas de The Atelier.
+- `domains/` — Body, Happeace y Money Architecture™.
+- `vocabulary/` — Fénix Lexicon, Quiet Luxury Lexicon y Words to Avoid.
+- `questions/` — preguntas canónicas que el sistema debe poder responder.
+- `essays/` — contenido editorial estructurado.
+- `navigation/` — estructura de navegación declarativa cuando corresponda.
+- `testimonials/` — testimonios estructurados.
+- `metadata/` — metadata canónica de superficies y entidades.
+
+---
+
+## 10.3 Content Relationships
+
+El contenido debe poder representar relaciones explícitas:
+
+```text
+Entity
+  ├── belongs to
+  ├── authored by
+  ├── provides
+  ├── related to
+  ├── answers
+  ├── supports
+  └── is part of
+```
+
+Cuando una relación sea importante para comprender una entidad, debe existir como dato o enlace explícito y no depender únicamente de inferencia visual.
+
+---
+
+## 10.4 Topical Architecture
+
+Los temas deben organizarse alrededor de entidades y conceptos, no de una colección arbitraria de keywords.
+
+Modelo:
+
+```text
+Pillar
+  ↓
+Topic
+  ↓
+Supporting content
+  ↓
+Questions
+  ↓
+Examples / evidence
+  ↓
+Related entities
+  ↓
+Product / service
+```
+
+Cada cluster debe tener una página o recurso principal cuando exista suficiente profundidad para justificarlo.
+
+---
+
+## 10.5 Internal Linking
+
+Los enlaces internos deben ayudar a construir relaciones conceptuales.
+
+### Reglas
+
+- Usar anchor text descriptivo.
+- Enlazar desde contenido contextualmente relevante.
+- Evitar páginas huérfanas.
+- No crear enlaces solo por cumplir una cantidad.
+- Priorizar relaciones que ayuden al usuario a continuar su recorrido.
+- Los conceptos propietarios deben enlazar a su fuente de verdad cuando exista.
+
+---
+
+## 10.6 Content Lifecycle
+
+El contenido estructurado debe poder representar:
+
+```text
+draft
+review
+published
+updated
+archived
+```
+
+Cuando corresponda, registrar:
+
+- `publishedAt`
+- `updatedAt`
+- `author`
+- `source`
+- `canonical`
+- `status`
+
+Las fechas deben reflejar cambios reales y sustantivos; nunca utilizar una actualización artificial para aparentar frescura.
+
+---
+
+## 10.7 Content Quality
+
+Cada pieza importante debe ser:
+
+- clara;
+- útil;
+- específica;
+- atribuible cuando haga claims;
+- consistente con el vocabulario Fénix;
+- comprensible sin depender de contexto visual externo.
+
+La profundidad debe estar determinada por la necesidad del usuario, no por una cantidad arbitraria de palabras.
+
+# 11. SEO & Discoverability
+
+Esta capa complementa la sección de Claridad Estructural existente. No reemplaza sus reglas.
+
+## 11.1 Crawlability
+
+Las páginas públicas que deban descubrirse deben ser:
+
+- accesibles por enlaces;
+- renderizables;
+- no bloqueadas innecesariamente;
+- servidas con URLs estables;
+- conectadas a la arquitectura interna.
+
+No asumir que una página es descubrible solo porque existe una ruta.
+
+---
+
+## 11.2 Indexation
+
+Cada URL debe tener una intención explícita respecto a indexación:
+
+```text
+index
+noindex
+redirect
+canonical to another URL
+```
+
+Las páginas privadas, estados internos, duplicados y superficies temporales deben evitar indexación cuando corresponda.
+
+---
+
+## 11.3 URL Architecture
+
+Las URLs deben ser:
+
+- legibles;
+- estables;
+- descriptivas;
+- consistentes;
+- basadas en conceptos reales.
+
+Evitar URLs que dependan de IDs opacos cuando una ruta semántica sea apropiada.
+
+---
+
+## 11.4 Canonicalization
+
+Cada página indexable debe tener una canonical clara cuando exista riesgo de duplicación o múltiples representaciones de la misma superficie.
+
+No utilizar canonical para ocultar una arquitectura de URLs mal definida.
+
+---
+
+## 11.5 Robots & Sitemap
+
+Mantener una estrategia explícita para:
+
+- `robots.txt`;
+- XML sitemap;
+- sitemap index cuando corresponda;
+- URLs indexables;
+- URLs excluidas.
+
+El sitemap debe contener URLs que realmente puedan ser indexadas.
+
+---
+
+## 11.6 Internal Linking
+
+El internal linking debe seguir la arquitectura de contenido definida en la sección 10.
+
+Prioridad:
+
+```text
+User usefulness
+    >
+Semantic relationship
+    >
+Crawl discovery
+```
+
+No crear enlaces internos únicamente para manipular señales.
+
+---
+
+## 11.7 Image SEO
+
+Toda imagen significativa debe tener:
+
+- `alt` descriptivo;
+- dimensiones;
+- formato apropiado;
+- contexto textual cuando sea útil.
+
+Las imágenes decorativas deben utilizar `alt=""`.
+
+Evitar:
+
+```text
+alt="image"
+alt="photo"
+alt="hero"
+```
+
+cuando no describan el contenido.
+
+---
+
+## 11.8 Search Intent
+
+Antes de crear una página orientada a búsqueda, identificar la intención principal:
+
+- informational;
+- navigational;
+- commercial;
+- transactional;
+- local, cuando corresponda.
+
+Una página no debe intentar responder simultáneamente a múltiples intenciones incompatibles.
+
+---
+
+## 11.9 SEO Content Quality
+
+El contenido debe responder la intención con claridad y profundidad suficiente.
+
+No crear:
+
+- páginas thin;
+- contenido duplicado;
+- keyword stuffing;
+- contenido creado únicamente para capturar una query;
+- páginas casi idénticas con pequeñas variaciones artificiales.
+
+---
+
+## 11.10 Internationalization
+
+Si el ecosistema incorpora múltiples idiomas:
+
+- definir URLs por idioma;
+- mantener contenido equivalente cuando corresponda;
+- utilizar `hreflang` cuando aplique;
+- evitar mezclar idiomas sin intención editorial;
+- mantener consistencia entre metadata y contenido visible.
+
+---
+
+## 11.11 SEO QA
+
+Antes de publicar una superficie indexable:
+
+```text
+URL
+↓
+Crawlability
+↓
+Indexability
+↓
+Canonical
+↓
+Metadata
+↓
+Content
+↓
+Internal links
+↓
+Structured data
+↓
+Performance
+```
+
+## 11.12 Claridad Estructural (SEO & GEO)
+
+Las inteligencias artificiales y los motores de búsqueda premian el orden, la autoridad y la precisión. En Fénix, el SEO no se trata de "optimizar" o perseguir algoritmos, sino de construir un código legible, estructurado y perdurable que refleje el mismo nivel de *craftsmanship* que el diseño visual.
+
+### 11.12.1 Arquitectura de Entidades (JSON-LD Schema / GEO)
+
+**El Principio:** los motores generativos (SGE, Perplexity, ChatGPT Search) no solo leen páginas; conectan conceptos y construyen gráficos de conocimiento. Todo debe estar mapeado y declarado explícitamente — nunca inferido implícitamente por el modelo.
+
+**Modelo de entidad — Híbrido (por tipo de producto):**
+
+No todo el ecosistema hereda automáticamente de una única `Organization`. La regla es: **cada producto declara su propio schema cuando tiene identidad de marca independiente, pero siempre se enlaza de vuelta a Fénix mediante una relación explícita** (`memberOf`, `isPartOf`, `sameAs` o `brand.parentOrganization` según el tipo).
+
+| Producto / Superficie | Tipo de Schema | Relación con Fénix |
+|---|---|---|
+| Ecosistema global Fénix | `Organization` | — (nodo raíz) |
+| Andy Morales (fundador/arquitecto) | `Person` | `worksFor` → Organization Fénix |
+| Diarios del Fénix (reto/clase magistral) | `Course` | `provider` → Organization Fénix |
+| Diario de un Fénix (libro) | `Book` | `author` → Person; `publisher` → Organization |
+| El Atelier / tiers (Consultation, Blueprint, Build, Private Office) | `Service` | `provider` → Organization Fénix |
+| Racecrew (experiencias colectivas) | `Event` o `Service` | `organizer`/`memberOf` → Organization Fénix — identidad de marca propia, permitida |
+| Kingdominion, Monkhouse (objetos/productos) | `Product` o `Brand` | `brand.parentOrganization` → Organization Fénix |
+| La Biblioteca del Arquitecto (YouTube) | `VideoObject` / `EducationalOrganization` | `sameAs` → canal oficial; `isPartOf` → Organization Fénix |
+
+**Regla de decisión:** un producto obtiene su **propia entidad independiente** (nombre, logo, `sameAs` propios) cuando se comunica y se distribuye con marca propia hacia el público externo (ej. Racecrew, Kingdominion, Monkhouse). Un producto se declara **anidado bajo Fénix** cuando es una extensión directa de la práctica/voz del fundador (ej. Diarios del Fénix, El Atelier). Ante la duda: si el producto tiene su propio nombre y podría vivir en su propio dominio algún día, se le da entidad propia enlazada; si no, se anida.
+
+**Reglas de código:**
+
+- Implementar Schema Markup estricto en cada página utilizando **JSON-LD** (nunca microdata ni RDFa).
+- Usar `Organization` para el ecosistema global de Fénix.
+- Usar `Person` para el arquitecto/fundador, vinculando las redes de distribución de contenido y la trayectoria profesional en gestión de producto para establecer autoridad técnica y **E-E-A-T** (Experiencia, Conocimiento, Autoridad, Confianza).
+- Usar `Course` o `EducationalOrganization` para las estructuras educativas y clases magistrales como Diarios del Fénix.
+- Usar `Book` para obras editoriales como Diario de un Fénix.
+- Usar `Event` o `Service` para plataformas dentro del ecosistema que faciliten la logística de experiencias grupales colectivas (Racecrew), asegurando que las IAs comprendan el valor de la comunidad y no lo clasifiquen erróneamente como una herramienta para el individuo aislado.
+- Usar `BreadcrumbList` en toda página con jerarquía (ej. `La House > Diario de un Fénix`) para reforzar la estructura del sitio ante motores y IAs.
+- Usar `FAQPage` en la sección FAQ — es uno de los formatos con mayor tasa de citación directa en respuestas extractivas de IA (GEO).
+
+### 11.12.2 Estructura de Contenido AI-First (GEO)
+
+**El Principio:** las IAs extractivas priorizan respuestas directas, jerarquías absolutas y definiciones claras por encima de narrativas extensas sin segmentar.
+
+**Reglas de código:**
+
+- **Jerarquía innegociable:** el uso de `H1`, `H2` y `H3` debe ser estrictamente secuencial. Nunca saltar niveles de encabezado por razones de estilo — para eso están los tokens de tipografía (`--font-display` / `--font-body`, sección 3.2 y 5), nunca un `H3` usado solo porque "se ve más pequeño".
+- Cada página tiene **un único `H1`**.
+- **Definiciones directas:** en los ensayos del blog y en las explicaciones de "The Domains" (Body / Happeace / Money Architecture™), el primer bloque de texto debajo de un `H2` clave debe ser un párrafo conciso (2–3 líneas) que defina la idea principal utilizando el vocabulario de la marca (sección 8.3). Esta será la fuente de verdad que las IAs citarán en sus respuestas — el resto del contenido narrativo/editorial puede extenderse después, con el mismo restraint de Voice & Tone.
+
+### 11.12.3 Autoridad y Metadatos Dinámicos
+
+**El Principio:** ninguna página viaja de forma anónima. Cada enlace compartido o indexado debe llevar el peso y la identidad de la marca.
+
+**Reglas de código:**
+
+- Generación dinámica de `title`, `description` y `Open Graph images` desde el lado del servidor aprovechando la **Metadata API de Next.js** (`generateMetadata`), nunca meta tags estáticos hardcodeados por página.
+- El copy de las etiquetas meta debe respetar estrictamente el **Fénix Voice** (sección 8.3): convicción, calma y precisión. Quedan prohibidas las descripciones diseñadas como "clickbait" o con lenguaje de urgencia para forzar el CTR.
+- Las **Open Graph images** generadas dinámicamente deben seguir el sistema de diseño (`--color-chalk-white` / `--color-charcoal` de fondo, tipografía `--font-display` para el titular) — nunca una plantilla genérica fuera del sistema de tokens. Cada OG image es, en sí misma, una pieza editorial de marca.
+- Canonical URLs explícitas en toda página para evitar contenido duplicado entre rutas equivalentes (ej. `/la-house` vs `/la-house/`).
+
+### 11.12.4 Performance Silencioso (Technical SEO)
+
+**El Principio:** la velocidad de carga es una forma de respeto por la atención del visitante y un requisito técnico indiscutible para la indexación prioritaria.
+
+**Reglas de código:**
+
+- Cumplimiento riguroso de los **Core Web Vitals** (LCP, INP, CLS).
+- **Optimización del LCP:** las imágenes pesadas de alto valor estético (madera, piedra, planos) deben servirse mediante `next/image` en formatos de próxima generación (WebP/AVIF), garantizando que la atmósfera se cargue sin bloquear el renderizado del texto principal.
+- **Diagrama ThreeJS ("Arquitectura Fénix", sección 8.1):** al ser una pieza pesada de JS y no crítica para el primer render, debe cargarse con `dynamic import` y `ssr: false`, activarse solo cuando entra en viewport (`IntersectionObserver` o `useInView`), y nunca bloquear el LCP del hero ni de "The Problem". El fallback mientras carga debe ser un estado quieto (no un spinner genérico) coherente con la estética de restraint.
+- Los efectos atmosféricos del Hero (sección 3.6) se implementan en CSS/SVG livianos — nunca como imágenes pesadas o video de fondo, para no penalizar LCP.
+
+---
+
+# 12. GEO / AEO
+
+GEO y AEO son capas de discoverability construidas sobre SEO, arquitectura de contenido, autoridad y claridad. No deben tratarse como un sistema separado que dependa de trucos de formato.
+
+## 12.1 Answer Architecture
+
+Una respuesta importante debe poder existir como una unidad autónoma:
+
+```text
+Question
+  ↓
+Direct Answer
+  ↓
+Definition
+  ↓
+Explanation
+  ↓
+Evidence
+  ↓
+Example
+  ↓
+Related Concepts
+  ↓
+Next Action
+```
+
+La página puede conservar una narrativa editorial extensa, pero las respuestas fundamentales no deben quedar enterradas.
+
+---
+
+## 12.2 Fénix Answer Unit
+
+Para conceptos, productos, servicios y temas estratégicos, utilizar cuando corresponda:
+
+### Question
+¿Qué pregunta intenta responder el usuario?
+
+### Direct Answer
+Una respuesta breve y precisa.
+
+### Definition
+Qué significa el concepto.
+
+### Explanation
+Cómo funciona o por qué importa.
+
+### Evidence
+Experiencia, datos, fuentes o ejemplos que respalden el claim.
+
+### Example
+Una manifestación concreta.
+
+### Related Concepts
+Conceptos conectados.
+
+### Next Action
+Dónde continuar.
+
+No todas las páginas necesitan una Answer Unit completa. Debe utilizarse cuando mejore la comprensión o recuperación del contenido.
+
+---
+
+## 12.3 Question Architecture
+
+Cada página importante debe identificar las preguntas naturales que preceden o siguen a su existencia.
+
+Ejemplos:
+
+```text
+What is it?
+Who is it for?
+What problem does it solve?
+How does it work?
+Why is it different?
+What does it include?
+What does it cost?
+Who created it?
+What evidence supports it?
+What should I do next?
+```
+
+No todas las preguntas deben convertirse en una FAQ visible. Pueden formar parte de la estructura editorial normal.
+
+---
+
+## 12.4 Direct Answers
+
+Cuando una sección responde una pregunta explícita:
+
+- responder primero;
+- explicar después;
+- profundizar después.
+
+La primera respuesta debe poder entenderse sin leer el resto de la página.
+
+Esto no elimina la narrativa editorial; establece una puerta de entrada clara a ella.
+
+---
+
+## 12.5 Evidence & Attribution
+
+Los claims materiales deben ser identificables como uno de los siguientes:
+
+- experiencia propia;
+- resultado cuantificado;
+- fuente externa;
+- documentación;
+- ejemplo;
+- opinión claramente presentada como opinión.
+
+No presentar opiniones, hipótesis o marketing como hechos verificables.
+
+---
+
+## 12.6 Entity Clarity
+
+Las entidades importantes deben tener:
+
+- nombre estable;
+- definición;
+- tipo;
+- relaciones;
+- canonical URL cuando exista;
+- metadata;
+- representación estructurada cuando corresponda.
+
+Los nombres propietarios no deben cambiar arbitrariamente entre páginas.
+
+---
+
+## 12.7 Citation Readiness
+
+El contenido importante debe poder citarse sin depender de:
+
+- animaciones;
+- imágenes;
+- gráficos no accesibles;
+- información exclusivamente visual;
+- contexto oculto.
+
+Cuando una afirmación requiera una fuente, la fuente debe ser identificable.
+
+---
+
+## 12.8 Machine-readable Content
+
+Cuando el contenido tenga una estructura semántica clara, utilizar formatos legibles por máquinas:
+
+- semantic HTML;
+- JSON-LD;
+- metadata;
+- explicit relationships;
+- canonical URLs.
+
+La representación estructurada debe reflejar contenido visible y real.
+
+---
+
+## 12.9 AI Discoverability
+
+No crear contenido artificial únicamente para "engañar" sistemas generativos.
+
+La prioridad es:
+
+```text
+Crawlable
+  ↓
+Understandable
+  ↓
+Structured
+  ↓
+Credible
+  ↓
+Citable
+```
+
+La visibilidad en sistemas generativos no se garantiza mediante una sola técnica.
+
+# 13. Structured Data
+
+La sección 11.12.1 define la arquitectura de entidades y JSON-LD. Esta sección define estándares de implementación.
+
+## 13.1 Builder Architecture
+
+Los builders de schema deben vivir en `libs/schema/` y ser reutilizables.
+
+Cada builder debe:
+
+- recibir datos estructurados;
+- producir JSON-LD válido;
+- evitar lógica de presentación;
+- poder validarse independientemente;
+- reutilizar identifiers canónicos.
+
+---
+
+## 13.2 Schema-per-Entity
+
+No crear un schema por página si varias páginas representan la misma entidad.
+
+Separar:
+
+```text
+Entity
+```
+
+de:
+
+```text
+Page
+```
+
+Una entidad puede aparecer en múltiples páginas.
+
+---
+
+## 13.3 Visible Truth
+
+Structured data debe describir la página y la entidad de forma veraz.
+
+No declarar información que:
+
+- no existe;
+- no corresponde a la página;
+- contradice el contenido;
+- atribuye relaciones inexistentes.
+
+---
+
+## 13.4 Validation
+
+Validar JSON-LD en desarrollo y antes de producción cuando la infraestructura de QA lo permita.
+
+Errores de structured data deben bloquear release cuando afecten una entidad crítica o generen datos incorrectos.
+
+---
+
+## 13.5 Entity Graph
+
+Cuando una superficie tenga varias entidades relevantes, mantener relaciones consistentes:
+
+```text
+Organization
+├── Person
+├── Service
+├── Product
+├── Book
+├── Course
+└── Event
+```
+
+El grafo debe representar el negocio real.
+
+# 14. Performance
+
+## 14.1 Performance Budget
+
+Performance is an architectural constraint, not a cleanup task.
+
+Every major surface should define reasonable budgets for:
+
+- JavaScript shipped;
+- image weight;
+- font weight;
+- initial requests;
+- third-party scripts;
+- API latency;
+- Core Web Vitals.
+
+A feature that materially violates the budget must justify the tradeoff.
+
+---
+
+## 14.2 Rendering Strategy
+
+- Server Components by default.
+- Client Components only when interaction or browser APIs require them.
+- Avoid moving entire page trees to the client unnecessarily.
+- Prefer progressive enhancement over JavaScript dependency when practical.
+
+---
+
+## 14.3 Loading Priority
+
+Prioritize:
+
+```text
+Critical content
+  ↓
+Primary interaction
+  ↓
+Supporting content
+  ↓
+Decorative enhancement
+```
+
+Above-the-fold content must not be blocked by non-critical animation, ThreeJS, analytics or decorative assets.
+
+---
+
+## 14.4 Media
+
+- Use `next/image` for raster images where appropriate.
+- Use modern formats when supported.
+- Reserve eager loading for critical visual content.
+- Lazy-load below-the-fold media.
+- Define dimensions to prevent layout shift.
+- Avoid autoplay video unless the experience genuinely requires it.
+
+---
+
+## 14.5 Fonts
+
+Fonts are part of the performance budget.
+
+- Load only required weights.
+- Prefer `next/font` when compatible with the project architecture.
+- Avoid loading unused families or weights.
+- Typography must never block critical content unnecessarily.
+
+---
+
+## 14.6 Third-party Scripts
+
+Every third-party script must have a reason to exist.
+
+Before adding one, evaluate:
+
+- business value;
+- performance cost;
+- privacy implications;
+- whether the framework can provide the same capability.
+
+---
+
+## 14.7 Motion Performance
+
+Animations should use performant browser primitives where possible.
+
+Avoid animation that:
+
+- blocks interaction;
+- causes layout thrashing;
+- significantly increases CPU usage;
+- delays meaningful content.
+
+The visual language may be slow and deliberate without being computationally expensive.
+
+---
+
+## 14.8 Existing Fénix Performance Rules
+
+The existing Fénix performance rules remain active, including:
+
+- Server Components by default.
+- Client Components only when necessary.
+- `next/image`.
+- modern image formats.
+- lazy loading.
+- ThreeJS deferred from critical rendering.
+- atmospheric effects implemented with lightweight CSS/SVG.
+
+- Server Components por defecto.
+- Client Components solo cuando sea necesario.
+- Optimizar fonts (Marcellus, Jost autohosted vía `next/font`) e imágenes (fotografía editorial pesa más que iconografía genérica — usar `next/image`, lazy loading y formatos modernos).
+
+---
+
+# 15. Security
+
+La seguridad es una propiedad del producto, no una fase posterior.
+
+## 15.1 Server Trust Boundary
+
+Nunca confiar en información proveniente del cliente para:
+
+- autorización;
+- permisos;
+- precios;
+- ownership;
+- roles;
+- estado de pago;
+- operaciones sensibles.
+
+Toda decisión de seguridad debe validarse en el servidor.
+
+---
+
+## 15.2 Secrets
+
+- Secrets solo server-side.
+- Nunca exponer claves privadas en Client Components.
+- Usar environment variables.
+- Nunca commitear credentials.
+- Nunca utilizar una secret key como public configuration.
+
+---
+
+## 15.3 Authentication & Authorization
+
+Authentication responde:
+
+> ¿Quién eres?
+
+Authorization responde:
+
+> ¿Qué puedes hacer?
+
+No confundir ambas.
+
+Cada operación protegida debe verificar autorización independientemente del estado visual del frontend.
+
+---
+
+## 15.4 Input Validation
+
+Todo input externo debe validarse:
+
+- forms;
+- query params;
+- route params;
+- API bodies;
+- webhooks;
+- uploaded content.
+
+La validación del cliente mejora UX, pero nunca reemplaza la validación del servidor.
+
+---
+
+## 15.5 API Security
+
+Las APIs públicas deben contemplar cuando corresponda:
+
+- authentication;
+- authorization;
+- validation;
+- rate limiting;
+- abuse prevention;
+- predictable error handling.
+
+No exponer internals innecesarios.
+
+---
+
+## 15.6 Webhooks & Payments
+
+Los webhooks de terceros deben verificar su autenticidad antes de procesar eventos.
+
+Las operaciones financieras deben ser idempotentes.
+
+Nunca asumir que un callback recibido una vez significa que el evento ocurrió exactamente una vez.
+
+---
+
+## 15.7 Least Privilege
+
+Cada servicio, usuario, API key y proceso debe tener únicamente los permisos que necesita.
+
+# 16. Analytics & Observability
+
+La medición debe ser silenciosa pero suficiente para saber si el producto funciona.
+
+## 16.1 Event Taxonomy
+
+Los eventos importantes deben utilizar nombres consistentes y orientados a acciones.
+
+Ejemplo:
+
+```text
+page_view
+cta_view
+cta_click
+lead_started
+lead_completed
+signup_completed
+checkout_started
+purchase_completed
+feature_started
+feature_completed
+error_shown
+```
+
+No instrumentar cada click indiscriminadamente.
+
+---
+
+## 16.2 Product Analytics
+
+Cada producto debe definir:
+
+```text
+Activation
+Conversion
+Retention
+Completion
+Failure
+```
+
+antes de instrumentar eventos.
+
+La métrica debe corresponder al outcome del producto, no simplemente al volumen de actividad.
+
+---
+
+## 16.3 Conversion Tracking
+
+Las acciones de negocio críticas deben poder medirse de principio a fin:
+
+```text
+Entry
+ ↓
+Intent
+ ↓
+Action
+ ↓
+Conversion
+ ↓
+Outcome
+```
+
+---
+
+## 16.4 Error Observability
+
+Los errores importantes deben ser detectables sin depender de que un usuario los reporte manualmente.
+
+Registrar suficiente contexto para diagnosticar el problema sin almacenar datos innecesarios o sensibles.
+
+---
+
+## 16.5 Performance Observability
+
+Medir cuando corresponda:
+
+- LCP;
+- INP;
+- CLS;
+- page load;
+- route transitions;
+- JS weight;
+- API latency;
+- errors.
+
+---
+
+## 16.6 SEO / GEO Observability
+
+Cuando las herramientas disponibles lo permitan, monitorizar:
+
+- indexing;
+- search performance;
+- important URL health;
+- structured data errors;
+- AI visibility;
+- citations;
+- grounding queries;
+- changes in discoverability.
+
+La medición no implica garantizar presencia en ninguna plataforma.
+
+# 17. Testing & QA
+
+## 17.1 Testing Hierarchy
+
+Utilizar el nivel de testing apropiado para el riesgo:
+
+```text
+Type / Lint
+  ↓
+Unit
+  ↓
+Component
+  ↓
+Integration
+  ↓
+E2E
+```
+
+No todo código necesita el máximo nivel de testing.
+
+---
+
+## 17.2 Unit Tests
+
+Utilizar para lógica determinística y funciones que puedan fallar independientemente de la UI.
+
+Especialmente:
+
+- pricing;
+- calculations;
+- transformations;
+- validation;
+- business rules.
+
+---
+
+## 17.3 Integration Tests
+
+Verificar interacciones entre:
+
+- UI + API;
+- database + services;
+- auth + permissions;
+- payments + webhooks;
+- content + rendering.
+
+---
+
+## 17.4 E2E Tests
+
+Los journeys críticos deben tener cobertura E2E cuando el riesgo lo justifique.
+
+Ejemplos:
+
+```text
+Signup
+Login
+Lead submission
+Checkout
+Payment
+Core product activation
+Critical feature completion
+```
+
+---
+
+## 17.5 Accessibility QA
+
+Validar:
+
+- keyboard;
+- focus;
+- semantic HTML;
+- labels;
+- contrast;
+- screen reader behavior;
+- reduced motion;
+- interactive states.
+
+---
+
+## 17.6 Visual Regression
+
+Para superficies visualmente críticas:
+
+- hero;
+- navigation;
+- pricing;
+- cards;
+- responsive layouts;
+- key product flows.
+
+Comparar visualmente antes de aceptar cambios que puedan introducir regresiones.
+
+---
+
+## 17.7 SEO QA
+
+Antes de producción verificar:
+
+- title;
+- description;
+- canonical;
+- indexability;
+- robots;
+- sitemap inclusion;
+- headings;
+- internal links;
+- image alt;
+- structured data;
+- Open Graph.
+
+---
+
+## 17.8 Structured Data QA
+
+Cada schema debe validarse contra:
+
+1. tipo correcto;
+2. propiedades correctas;
+3. entidad correcta;
+4. contenido visible;
+5. relaciones correctas.
+
+# 18. Engineering Standards
+
+## 18.1 Code Quality
+
+Preferir:
+
+- claridad;
+- composición;
+- nombres explícitos;
+- funciones pequeñas cuando mejoren comprensión;
+- abstracciones justificadas;
+- dependencia mínima.
+
+Evitar abstracciones creadas únicamente para demostrar sofisticación.
+
+---
+
+## 18.2 Naming
+
+Los nombres deben describir responsabilidad, no implementación accidental.
+
+Preferir:
+
+```text
+TierCard
+CheckoutForm
+MoneyArchitecture
+```
+
+sobre nombres ambiguos como:
+
+```text
+Box
+Thing
+Section2
+ComponentX
+```
+
+---
+
+## 18.3 Dependencies
+
+Antes de introducir una dependencia:
+
+1. verificar si el framework ya resuelve el problema;
+2. evaluar tamaño y mantenimiento;
+3. evaluar seguridad;
+4. evaluar necesidad real;
+5. preferir la dependencia más pequeña que resuelva correctamente el problema.
+
+No agregar una librería para una utilidad trivial.
+
+---
+
+## 18.4 Git & Change Scope
+
+Cada cambio debe tener un propósito claro.
+
+Evitar mezclar en un mismo cambio:
+
+- feature;
+- refactor;
+- visual redesign;
+- dependency migration;
+
+sin necesidad.
+
+Los cambios deben ser reversibles cuando sea razonable.
+
+---
+
+## 18.5 Environment Configuration
+
+Separar:
+
+```text
+development
+preview
+production
+```
+
+Nunca asumir que una variable o servicio existe sin declararlo en la configuración requerida.
+
+---
+
+## 18.6 Documentation
+
+Documentar decisiones que no sean obvias.
+
+No documentar cada línea de código.
+
+La documentación debe explicar:
+
+- por qué;
+- límites;
+- decisiones;
+- contratos;
+- dependencias;
+- comportamiento esperado.
+
+---
+
+## 18.7 AI-Agent Operating Rules
+
+Cuando un agente de código trabaje sobre el proyecto:
+
+1. Leer las reglas relevantes antes de modificar código.
+2. Buscar componentes, datos y patrones existentes antes de crear nuevos.
+3. Reutilizar tokens y componentes existentes.
+4. No duplicar source of truth.
+5. No introducir dependencias sin necesidad.
+6. No cambiar arquitectura existente sin autorización cuando una regla la declare estable.
+7. Validar el cambio contra la Definition of Done.
+8. Si existe una contradicción entre reglas, no improvisar: señalarla.
+
+### Rule format
+
+Las reglas nuevas y críticas deben expresarse, cuando sea útil, mediante:
+
+```text
+RULE
+WHY
+DO
+DON'T
+EXAMPLE
+VALIDATION
+```
+
+# 19. Definition of Done
+
+Una superficie, feature o producto no está terminado porque "funciona".
+
+Debe cumplir los criterios relevantes de las siguientes capas:
+
+## Architecture
+
+- [ ] Responsabilidad clara
+- [ ] Source of truth definido
+- [ ] No duplicación innecesaria
+- [ ] Reutilización evaluada
+- [ ] Límites server/client correctos
+
+## Design
+
+- [ ] Tokens definidos (color, tipografía, radius, shadow, motion, spacing, z-index)
+- [ ] Responsive verificado en 375 / 768 / 1024 / 1400
+- [ ] Gutters respetados en todos los breakpoints
+- [ ] Reading widths respetados (Body, Hero, CTA, Cards)
+- [ ] **Color restraint check** — Ember/Burnt Cedar usados solo como acento, nunca dominante
+- [ ] **Hero Atmospheric Fade** — el hero se disuelve hacia el fondo cuando corresponda, sin cortes abruptos y sin competir con headline/CTA
+
+## UX
+
+- [ ] Journey principal claro
+- [ ] CTA/action principal claro
+- [ ] Loading state
+- [ ] Empty state
+- [ ] Error state
+- [ ] Recovery path
+- [ ] Progressive disclosure cuando corresponda
+- [ ] Componentes reutilizables
+
+## Accessibility
+
+- [ ] Accesibilidad verificada (contraste AA, keyboard, semántica)
+- [ ] Semantic HTML
+- [ ] Focus
+- [ ] Labels
+- [ ] Reduced motion cuando corresponda
+
+## Content
+
+- [ ] **Voice & Tone review** — ningún copy usa lenguaje prohibido (ver 8.3)
+- [ ] **"One idea, one home" check** — ninguna idea se re-explica desde cero en más de un lugar
+- [ ] **One concept, one source of truth**
+- [ ] Vocabulary review
+- [ ] Claims atribuibles cuando corresponda
+- [ ] Content status definido
+- [ ] **Imagery check** — ninguna imagen o icono pertenece a la lista de "Avoid" (ver 8.4)
+
+## Conversion Surfaces
+
+- [ ] **The Atelier check** — tiers usan CTAs de "solicitud/aplicación" (no "comprar"), precio sin urgencia visual, nombres de dominio con ™ (ver 8.5)
+- [ ] **La House check** — tags de estado usan Ember solo para "Live", copy en tono manifiesto sin lenguaje de e-commerce (ver 8.6)
+- [ ] **Scripture citation check** — referencias bíblicas en tono discreto, sin highlight boxes ni iconografía religiosa explícita (ver 8.7)
+
+## SEO
+
+- [ ] SEO metadata
+- [ ] Canonical
+- [ ] Indexability
+- [ ] Sitemap / robots strategy
+- [ ] Internal links
+- [ ] Image alt
+- [ ] Heading hierarchy
+- [ ] Search intent considered
+- [ ] Performance budget
+
+## GEO / AEO
+
+- [ ] Entity clearly defined
+- [ ] Important questions identified
+- [ ] Direct answers available where useful
+- [ ] Answer Unit used where appropriate
+- [ ] Evidence / attribution present for material claims
+- [ ] Content understandable without visual context
+- [ ] Machine-readable representation where appropriate
+
+## Structured Data
+
+- [ ] **Schema/JSON-LD check** — cada página tiene el schema correcto según la arquitectura de entidades (11.12.1)
+- [ ] Correct schema selected
+- [ ] JSON-LD valid
+- [ ] Entity relationships correct
+- [ ] Schema matches visible content
+- [ ] No fabricated properties or relationships
+
+## Performance
+
+- [ ] **LCP/ThreeJS check** — diagrama de Arquitectura Fénix con lazy-load + `ssr:false`, sin bloquear el LCP del hero (11.12.4)
+- [ ] LCP considered
+- [ ] INP considered
+- [ ] CLS considered
+- [ ] Images optimized
+- [ ] Fonts optimized
+- [ ] JavaScript minimized
+- [ ] Third-party scripts justified
+
+## Security
+
+- [ ] Server-side validation
+- [ ] Authorization checked server-side
+- [ ] Secrets protected
+- [ ] APIs protected
+- [ ] Webhooks verified
+- [ ] Rate limiting considered
+- [ ] Least privilege
+
+## Analytics
+
+- [ ] Critical events defined
+- [ ] Conversion observable
+- [ ] Errors observable
+- [ ] Product outcome measurable
+- [ ] Privacy requirements respected
+
+## Testing
+
+- [ ] Relevant unit tests
+- [ ] Integration tests where needed
+- [ ] Critical E2E flows
+- [ ] Accessibility QA
+- [ ] Visual QA where appropriate
+- [ ] SEO QA
+- [ ] Structured data QA
+
+# Appendix A — Decisions Pending
+
+Esta sección **no modifica ninguna regla existente**. Solo registra decisiones que deben revisarse posteriormente en una ronda separada.
+
+## A.1 FAQPage / GEO
+
+La regla existente sobre `FAQPage` y su relación con citación directa de IA debe revisarse antes de modificarla.
+
+## A.2 Heading Hierarchy
+
+La regla existente sobre secuencia estricta H1 → H2 → H3 debe revisarse para distinguir semántica de presentación.
+
+## A.3 Schema Assumptions
+
+Las reglas existentes de relación entre entidades, `memberOf`, `isPartOf`, `sameAs` y `brand.parentOrganization` deben revisarse tipo por tipo antes de ampliar la implementación.
+
+## A.4 Next.js / Runtime Contract
+
+La arquitectura actual debe fijar explícitamente versiones y convenciones de:
+
+```text
+Next.js
+React
+Node
+Rendering
+Styling
+Database
+Auth
+Payments
+Deployment
+```
+
+antes de una futura modernización.
+
+## A.5 Fonts
+
+La relación entre:
+
+```text
+public/fonts/
+next/font
+autohosted fonts
+```
+
+debe resolverse en una futura decisión arquitectónica.
+
+## A.6 Existing SEO / GEO Claims
+
+Las afirmaciones existentes sobre mecanismos de SEO/GEO/AEO deben mantenerse por ahora y revisarse como conjunto, no corregirse individualmente dentro de esta versión.

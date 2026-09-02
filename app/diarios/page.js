@@ -1,4 +1,3 @@
-import Header from "@/components/layout/Header";
 import LayoutClient from "@/components/layout/LayoutClient";
 import DiariosWelcome from "@/components/sections/DiariosWelcome";
 
@@ -43,8 +42,6 @@ export default function DiariosPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-
-      <Header />
 
       <main>
         <DiariosWelcome />

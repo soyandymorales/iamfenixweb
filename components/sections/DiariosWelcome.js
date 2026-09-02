@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import FenixMark from "@/components/ui/FenixMark";
 import { diariosGateCards, diariosWelcome } from "@/content/diarios/welcome";
 
 export default function DiariosWelcome() {
@@ -10,8 +11,20 @@ export default function DiariosWelcome() {
     >
       <div className="container diarios-gate__inner">
         <header className="diarios-gate__header">
+          <Link
+            href="/"
+            className="diarios-gate__mark"
+            aria-label={diariosWelcome.markLabel}
+            data-reveal
+          >
+            <FenixMark />
+          </Link>
           <h1 id="diarios-welcome-title" data-reveal>
-            {diariosWelcome.title}
+            {diariosWelcome.titleBefore}
+            <span className="diarios-gate__accent">
+              {diariosWelcome.titleAccent}
+            </span>
+            {diariosWelcome.titleAfter}
           </h1>
           <h2 className="diarios-gate__question" data-reveal>
             {diariosWelcome.question}

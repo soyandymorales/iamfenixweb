@@ -1,4 +1,4 @@
-import { supabaseServer } from "@/lib/supabase-server";
+import { getSupabaseServer } from "@/lib/supabase-server";
 import { ensureContactWithTag } from "@/lib/systeme";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,7 +23,7 @@ export async function POST(request) {
   const normalizedEmail = email.trim().toLowerCase();
 
   try {
-    const { error } = await supabaseServer.from("leads").upsert(
+    const { error } = await getSupabaseServer().from("leads").upsert(
       {
         email: normalizedEmail,
         first_name: name,
@@ -56,7 +56,7 @@ export async function POST(request) {
   }
 
   try {
-    const { error } = await supabaseServer
+    const { error } = await getSupabaseServer()
       .from("leads")
       .update({ systeme_contact_id: contact.id })
       .eq("email", normalizedEmail);

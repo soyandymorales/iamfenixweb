@@ -1,7 +1,15 @@
 import { domains } from "@/content/domains/domains";
 
+const titleBefore = "Bienvenido a tu Diario ";
+const titleAccent = "Fénix";
+const titleAfter = ".";
+
 export const diariosWelcome = {
-  title: "Bienvenido a tu Diario Fénix.",
+  title: `${titleBefore}${titleAccent}${titleAfter}`,
+  titleBefore,
+  titleAccent,
+  titleAfter,
+  markLabel: "i.am Fénix — inicio",
   question: "¿Por dónde quieres comenzar?",
   listLabel: "Elige una arquitectura para comenzar",
 };
