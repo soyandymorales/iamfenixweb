@@ -1,0 +1,74 @@
+:root {
+  /* Hero atmospheric fade */
+  --hero-glow-opacity: 0.1;
+  --hero-glow-size: 80%;
+  --hero-bloom-opacity: 0.07;
+  --hero-blur-radius: 90px;
+  --hero-dissolve-height: 35%;
+
+  /* Hero — composición horizontal: texto a la izquierda, figura y plano a la derecha */
+  --hero-blueprint-opacity: 0.75;
+  --hero-figure-height: 130%;
+  /* La figura no lleva opacidad propia — el lavado lo hacen las veladuras. */
+  --hero-figure-opacity: 1;
+
+  /* Hero — veladuras de izquierda a derecha (warm parchment → chalk white) */
+  --hero-veil-parchment-opacity: 0.95;
+  --hero-veil-parchment-reach: 58%;
+  --hero-veil-chalk-opacity: 0.5;
+  --hero-veil-chalk-edge-opacity: 0.14;
+
+  /* Reveal motion */
+  --reveal-distance: 28px;
+  --reveal-duration: 1s;
+
+  /* Museum claim — blueprint field */
+  --museum-blueprint-opacity: 0.07;
+  --museum-stroke-axis: 1.15px;
+  --museum-stroke-ring: 0.9px;
+  --museum-stroke-tick: 0.6px;
+  --museum-stroke-frame: 1px;
+
+  /* The Problem — section-cut blueprint field */
+  --problem-grid-size: var(--space-32);
+  --problem-grid-opacity: 0.03;
+
+  /* Ecosystem figures */
+  --ecosystem-figure-size: clamp(11rem, 24vw, 18rem);
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --hero-figure-height: 118%;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --hero-figure-width: min(122vw, 740px);
+    --hero-figure-opacity: 0.6;
+    --museum-blueprint-opacity: 0.06;
+    --problem-grid-opacity: 0.020;
+    --ecosystem-figure-size: clamp(7.5rem, 36vw, 11rem);
+  }
+}
+
+/* Elements orchestrated by GSAP start hidden — only when JS is available. */
+html.js [data-reveal] {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    visibility: visible;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,33 @@
+:root {
+  --text-micro: clamp(0.75rem, 0.72rem + 0.1vw, 0.8125rem);
+  --text-small: clamp(0.875rem, 0.85rem + 0.15vw, 0.9375rem);
+  --text-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lead: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  --text-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --text-display: clamp(1.875rem, 1.4rem + 2vw, 3rem);
+  --text-museum: clamp(1.75rem, 1.2rem + 2.8vw, 3.375rem);
+  --text-hero: clamp(2.125rem, 1.5rem + 2.9vw, 3.25rem);
+  --text-chamber: clamp(2.25rem, 1.5rem + 3.4vw, 4.25rem);
+
+  --leading-tight: 1.12;
+  --leading-snug: 1.3;
+  --leading-body: 1.65;
+
+  --tracking-eyebrow: 0.28em;
+  --tracking-wide: 0.08em;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  line-height: var(--leading-body);
+}

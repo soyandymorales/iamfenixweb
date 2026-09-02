@@ -1,0 +1,21 @@
+:root {
+  --gutter: 16px;
+}
+
+@media (min-width: 376px) {
+  :root {
+    --gutter: 24px;
+  }
+}
+
+@media (min-width: 769px) {
+  :root {
+    --gutter: 40px;
+  }
+}
+
+@media (min-width: 1400px) {
+  :root {
+    --gutter: 60px;
+  }
+}

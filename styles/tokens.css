@@ -1,0 +1,78 @@
+:root {
+  /* Color */
+  --color-chalk-white: #f8f6f1;
+  --color-warm-parchment: #efe9dd;
+  --color-limestone: #d8d2c6;
+  --color-ash-stone: #777066;
+  --color-charcoal: #2a2926;
+  --color-ember: #b56a3a;
+  --color-burnt-cedar: #7a5637;
+
+  /* Derived atmosphere (always from palette, never new hues) */
+  --color-line-strong: rgba(122, 86, 55, 0.42);
+  --color-line: rgba(122, 86, 55, 0.28);
+  --color-line-soft: rgba(122, 86, 55, 0.14);
+  --color-hairline: rgba(42, 41, 38, 0.12);
+  --color-hairline-on-dark: rgba(248, 246, 241, 0.14);
+  --color-line-on-dark: rgba(239, 233, 221, 0.2);
+
+  /* Typography — 3.2: display for headlines/editorial; body for copy/UI */
+  --font-display: var(--font-marcellus), "Marcellus", serif;
+  --font-body: var(--font-jost), "Jost", sans-serif;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 999px;
+
+  /* Borders */
+  --border-hairline: 1px;
+  --border-accent: 4px;
+
+  /* Shadows */
+  --shadow-soft: 0 8px 24px rgba(42, 41, 38, 0.08);
+
+  /* Editorial photography */
+  --image-filter-editorial: saturate(0.72) sepia(0.12) contrast(0.96);
+  --image-scale-rest: 1;
+  --image-scale-hover: 1.025;
+
+  /* Motion */
+  --motion-duration-fast: 300ms;
+  --motion-duration: 600ms;
+  --motion-duration-slow: 1200ms;
+  --motion-easing: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Spacing scale */
+  --space-8: 8px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --space-100: 100px;
+  --space-120: 120px;
+
+  /* Layout */
+  --container-max: 1200px;
+  --reading-body: 720px;
+  --reading-hero: 900px;
+  --reading-cta: 540px;
+  --reading-card-min: 280px;
+  --reading-card: 360px;
+  --height-viewport: 100dvh;
+  --header-height: 72px;
+  --diario-video-w: 16;
+  --diario-video-h: 9;
+  --diario-video-aspect: var(--diario-video-w) / var(--diario-video-h);
+  --diario-thumb-width: calc(var(--space-120) + var(--space-48));
+  --diario-learn-reserve: calc(var(--space-120) + var(--space-32));
+
+  /* Z-index */
+  --z-nav: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-tooltip: 400;
+}

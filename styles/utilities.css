@@ -1,0 +1,41 @@
+.container {
+  width: 100%;
+  max-width: calc(var(--container-max) + (var(--gutter) * 2));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.reading-body {
+  max-width: var(--reading-body);
+}
+
+.reading-hero {
+  max-width: var(--reading-hero);
+}
+
+.reading-cta {
+  max-width: var(--reading-cta);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--color-ember);
+  color: var(--color-chalk-white);
+}
