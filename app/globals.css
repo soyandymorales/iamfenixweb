@@ -563,14 +563,15 @@ button {
   .hero__break {
     display: none;
   }
+
+  .hero__bar-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-16);
+  }
 }
 
 @media (max-width: 640px) {
-  .hero__bar-cta {
-    flex-wrap: wrap;
-    gap: var(--space-16);
-  }
-
   .hero__bar-links {
     gap: var(--space-24);
   }
