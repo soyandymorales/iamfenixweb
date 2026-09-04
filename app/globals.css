@@ -102,33 +102,17 @@ button {
 
 .wordmark {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--space-16);
   font-family: var(--font-display);
   letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
 .wordmark em {
   font-style: normal;
   color: var(--color-ember);
-}
-
-.wordmark__name {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.18em;
-}
-
-.wordmark__name em {
-  margin-inline-start: calc(var(--tracking-wide) * -1);
-}
-
-.wordmark__mark {
-  width: 36px;
-  height: auto;
-  color: var(--color-ember);
-  flex-shrink: 0;
 }
 
 /* CTA canónico — el botón del hero es la fuente de verdad.
@@ -217,7 +201,7 @@ button {
 }
 
 .site-header__wordmark {
-  font-size: var(--text-lead);
+  font-size: var(--text-body);
   color: var(--color-charcoal);
 }
 
@@ -345,8 +329,7 @@ button {
   );
 }
 
-/* Plano regulador — trazos burnt-cedar sobre transparencia. El dibujo completo
-   se contiene dentro de la sección: a lo ancho del fondo, centrado en vertical. */
+/* Plano regulador — textura sobre la escena, no el soporte de la figura. */
 .hero__blueprint {
   position: absolute;
   inset: 0;
@@ -359,22 +342,20 @@ button {
   opacity: var(--hero-blueprint-opacity);
 }
 
-/* Figura — recorte de Andy embebido en la atmósfera. Más alto que la sección:
-   la gorra respira arriba y las piernas se recortan por el borde inferior. */
+/* Escena — foto full-bleed. Andy vive a la derecha; el recorte lo ancla
+   object-position para que el copy de la izquierda no le tape la cara. */
 .hero__figure {
   position: absolute;
-  right: 0;
-  top: 2%;
-  height: var(--hero-figure-height);
-  aspect-ratio: 4 / 5;
+  inset: 0;
   pointer-events: none;
+  transform-origin: 68% 40%;
 }
 
 .hero__figure-image {
-  object-fit: contain;
-  object-position: center bottom;
-  opacity: var(--hero-figure-opacity);
-  filter: var(--image-filter-editorial);
+  object-fit: cover;
+  object-position: var(--hero-figure-position);
+  transform: scale(var(--hero-figure-scale));
+  transform-origin: var(--hero-figure-position);
 }
 
 /* Veladuras — dos capas fade de izquierda a derecha (#efe9dd y #f8f6f1)
@@ -516,10 +497,6 @@ button {
   .hero__subheadline {
     white-space: normal;
   }
-
-  .hero__figure {
-    right: 0;
-  }
 }
 
 /* En mobile la composición gira a vertical: contenido arriba,
@@ -531,6 +508,7 @@ button {
   }
 
   .hero__content {
+    width: 100%;
     max-width: 100%;
   }
 
@@ -539,14 +517,21 @@ button {
     object-fit: cover;
   }
 
+  /* La escena baja al pie: el copy queda sobre pergamino, Andy visible debajo. */
   .hero__figure {
-    top: auto;
-    right: -32vw;
-    bottom: 0;
-    left: auto;
-    margin-inline: 0;
-    width: var(--hero-figure-width);
-    height: auto;
+    top: 28%;
+    transform-origin: 60% 30%;
+  }
+
+  .hero__headline,
+  .hero__kicker,
+  .hero__subheadline {
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  .hero__headline {
+    font-size: clamp(2.35rem, 9vw, 3.25rem);
   }
 
   /* Las veladuras giran con la composición: de arriba hacia abajo. */
@@ -3474,7 +3459,7 @@ button {
 }
 
 .footer__logo {
-  font-size: var(--text-lead);
+  font-size: var(--text-body);
   color: var(--color-charcoal);
 }
 

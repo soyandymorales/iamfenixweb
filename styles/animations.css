@@ -6,17 +6,16 @@
   --hero-blur-radius: 90px;
   --hero-dissolve-height: 35%;
 
-  /* Hero — composición horizontal: texto a la izquierda, figura y plano a la derecha */
-  --hero-blueprint-opacity: 0.75;
-  --hero-figure-height: 130%;
-  /* La figura no lleva opacidad propia — el lavado lo hacen las veladuras. */
-  --hero-figure-opacity: 1;
+  /* Hero — escena full-bleed: texto a la izquierda, Andy anclado a la derecha */
+  --hero-blueprint-opacity: 0.16;
+  --hero-figure-position: 74% 34%;
+  --hero-figure-scale: 1.12;
 
   /* Hero — veladuras de izquierda a derecha (warm parchment → chalk white) */
-  --hero-veil-parchment-opacity: 0.95;
-  --hero-veil-parchment-reach: 58%;
-  --hero-veil-chalk-opacity: 0.5;
-  --hero-veil-chalk-edge-opacity: 0.14;
+  --hero-veil-parchment-opacity: 0.96;
+  --hero-veil-parchment-reach: 54%;
+  --hero-veil-chalk-opacity: 0.42;
+  --hero-veil-chalk-edge-opacity: 0.08;
 
   /* Reveal motion */
   --reveal-distance: 28px;
@@ -39,14 +38,18 @@
 
 @media (max-width: 1200px) {
   :root {
-    --hero-figure-height: 118%;
+    --hero-figure-position: 78% 34%;
+    --hero-figure-scale: 1.16;
   }
 }
 
 @media (max-width: 768px) {
   :root {
-    --hero-figure-width: min(122vw, 740px);
-    --hero-figure-opacity: 0.6;
+    --hero-figure-position: 60% 28%;
+    --hero-figure-scale: 1.2;
+    --hero-blueprint-opacity: 0.1;
+    --hero-veil-parchment-reach: 48%;
+    --hero-veil-chalk-opacity: 0.38;
     --museum-blueprint-opacity: 0.06;
     --problem-grid-opacity: 0.020;
     --ecosystem-figure-size: clamp(7.5rem, 36vw, 11rem);

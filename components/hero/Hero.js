@@ -8,7 +8,7 @@ import { useGSAP } from "@gsap/react";
 /* Static imports: the bundler fingerprints the file, so re-exporting the
    artwork under the same name can never serve a stale optimised version. */
 import blueprintField from "@/public/images/blueprinthero.png";
-import andyFigure from "@/public/images/andyhero.png";
+import andyScene from "@/public/images/andyherofinal.jpg";
 import { siteMetadata } from "@/content/metadata/site";
 
 const HEADLINE = [{ text: "Arquitectura" }, { text: "Humana" }];
@@ -30,18 +30,18 @@ export default function Hero() {
 
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.fromTo("[data-hero-blueprint]", { autoAlpha: 0 }, { autoAlpha: 1, duration: 2.4 }, 0)
+      tl.fromTo(
+          "[data-hero-figure]",
+          { autoAlpha: 0, scale: 1.035 },
+          { autoAlpha: 1, scale: 1, duration: 2.6 },
+          0
+        )
+        .fromTo("[data-hero-blueprint]", { autoAlpha: 0 }, { autoAlpha: 1, duration: 2.4 }, 0.15)
         .fromTo(
           "[data-hero-atmosphere]",
           { autoAlpha: 0 },
           { autoAlpha: 1, duration: 2.6 },
           0.2
-        )
-        .fromTo(
-          "[data-hero-figure]",
-          { autoAlpha: 0, x: 48 },
-          { autoAlpha: 1, x: 0, duration: 2.4 },
-          0.35
         )
         .fromTo(
           "[data-hero-word]",
@@ -62,13 +62,24 @@ export default function Hero() {
 
   return (
     <section className="hero" id="top" ref={rootRef}>
+      <div className="hero__figure" aria-hidden="true" data-hero-figure>
+        <Image
+          src={andyScene}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="hero__figure-image"
+        />
+      </div>
+
       <div className="hero__blueprint" aria-hidden="true" data-hero-blueprint>
         <Image
           src={blueprintField}
           alt=""
           fill
           priority
-          sizes="(max-width: 768px) 500vw, 100vw"
+          sizes="100vw"
           className="hero__blueprint-image"
         />
       </div>
@@ -76,17 +87,6 @@ export default function Hero() {
       <div className="hero__atmosphere" aria-hidden="true" data-hero-atmosphere>
         <div className="hero__glow" />
         <div className="hero__bloom" />
-      </div>
-
-      <div className="hero__figure" aria-hidden="true" data-hero-figure>
-        <Image
-          src={andyFigure}
-          alt=""
-          fill
-          priority
-          sizes="(max-width: 768px) 122vw, 72vw"
-          className="hero__figure-image"
-        />
       </div>
 
       <div className="hero__veil" aria-hidden="true" />
