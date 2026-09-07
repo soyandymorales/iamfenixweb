@@ -68,7 +68,10 @@ export default function Hero() {
           alt=""
           fill
           priority
-          sizes="100vw"
+          quality={90}
+          /* Mobile: cover escala por el alto, no por 100vw. 200vw pide un src
+             lo bastante alto para no estirar el JPEG en pantallas 2x/3x. */
+          sizes="(max-width: 768px) 200vw, 120vw"
           className="hero__figure-image"
         />
       </div>

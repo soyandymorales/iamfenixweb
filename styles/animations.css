@@ -46,7 +46,7 @@
 @media (max-width: 768px) {
   :root {
     --hero-figure-position: 60% 28%;
-    --hero-figure-scale: 1.2;
+    --hero-figure-scale: 1;
     --hero-blueprint-opacity: 0.1;
     --hero-veil-parchment-reach: 48%;
     --hero-veil-chalk-opacity: 0.38;

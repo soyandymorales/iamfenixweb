@@ -26,7 +26,7 @@ export default function Header() {
     <header className={headerClass}>
       <div className="site-header__inner">
         <a href="/#top" className="site-header__logo" aria-label="i.am Fénix — inicio">
-          <BrandWordmark className="wordmark site-header__wordmark" />
+          <BrandWordmark className="wordmark site-header__wordmark" priority />
         </a>
 
         <nav className="site-header__nav" aria-label="Navegación principal">
