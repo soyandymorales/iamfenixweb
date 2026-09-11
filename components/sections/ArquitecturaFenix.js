@@ -2,18 +2,23 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import { simplifyMotion } from "@/lib/motion";
 
-// Heavy WebGL piece: loaded only client-side, and only near the viewport.
+// Heavy WebGL piece: desktop only, and only near the viewport.
 const FenixDiagramCanvas = dynamic(() => import("./FenixDiagramCanvas"), {
   ssr: false,
   loading: () => null,
 });
+
+const PHOENIX_PLATE = encodeURI("/images/fenixiso_Mesa de trabajo 1.svg");
 
 export default function ArquitecturaFenix() {
   const sectionRef = useRef(null);
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
+    if (simplifyMotion()) return undefined;
+
     const node = sectionRef.current;
     if (!node) return undefined;
 
@@ -24,7 +29,7 @@ export default function ArquitecturaFenix() {
           observer.disconnect();
         }
       },
-      { rootMargin: "400px 0px" }
+      { rootMargin: "200px 0px" }
     );
     observer.observe(node);
     return () => observer.disconnect();
@@ -44,6 +49,13 @@ export default function ArquitecturaFenix() {
         </header>
 
         <div className="arquitectura__canvas" aria-hidden="true">
+          {/* Static plate: the WebGL particle field never loads on mobile. */}
+          <img
+            src={PHOENIX_PLATE}
+            alt=""
+            className="arquitectura__fallback"
+            decoding="async"
+          />
           {inView ? <FenixDiagramCanvas /> : null}
           <div className="arquitectura__canvas-labels">
             <span>Desalineación y Fragmentación</span>

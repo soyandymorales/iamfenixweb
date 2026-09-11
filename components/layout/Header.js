@@ -13,8 +13,14 @@ export default function Header() {
   const [overStory, setOverStory] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
+    let last = window.scrollY > 24;
+    setScrolled(last);
+    const onScroll = () => {
+      const next = window.scrollY > 24;
+      if (next === last) return;
+      last = next;
+      setScrolled(next);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -23,19 +29,17 @@ export default function Header() {
     const story = document.getElementById("historia");
     if (!story) return undefined;
 
-    const update = () => {
-      const rect = story.getBoundingClientRect();
-      const vh = window.innerHeight;
-      setOverStory(rect.top <= 48 && rect.bottom >= vh * 0.85);
-    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const { top, bottom } = entry.boundingClientRect;
+        const vh = entry.rootBounds?.height ?? window.innerHeight;
+        setOverStory(top <= 48 && bottom >= vh * 0.85);
+      },
+      { threshold: [0, 0.15, 0.4, 0.7, 1] }
+    );
 
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
+    observer.observe(story);
+    return () => observer.disconnect();
   }, []);
 
   const headerClass = [

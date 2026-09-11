@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion, simplifyMotion } from "@/lib/motion";
 
 gsap.registerPlugin(useGSAP, DrawSVGPlugin, ScrollTrigger);
 
@@ -65,14 +66,12 @@ export default function MuseumBlueprint() {
       const strokes = rootRef.current?.querySelectorAll("[data-stroke]");
       if (!strokes?.length) return;
 
-      const reduced = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-
-      if (reduced) {
+      if (prefersReducedMotion() || simplifyMotion()) {
         gsap.set(strokes, { drawSVG: "100%" });
         return;
       }
+
+      ScrollTrigger.config({ ignoreMobileResize: true });
 
       const slow = durationToken("--motion-duration-slow", 1.2);
       const base = durationToken("--motion-duration", 0.6);

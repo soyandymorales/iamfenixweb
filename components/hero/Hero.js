@@ -4,6 +4,9 @@ import { Fragment, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { prefersReducedMotion, simplifyMotion } from "@/lib/motion";
+
+gsap.registerPlugin(useGSAP);
 
 /* Static imports: the bundler fingerprints the file, so re-exporting the
    artwork under the same name can never serve a stale optimised version. */
@@ -25,10 +28,9 @@ export default function Hero() {
 
   useGSAP(
     () => {
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduced) return;
+      if (prefersReducedMotion() || simplifyMotion()) return;
 
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
       tl.fromTo(
           "[data-hero-figure]",
@@ -69,9 +71,7 @@ export default function Hero() {
           fill
           priority
           quality={90}
-          /* Mobile: cover escala por el alto, no por 100vw. 200vw pide un src
-             lo bastante alto para no estirar el JPEG en pantallas 2x/3x. */
-          sizes="(max-width: 768px) 200vw, 120vw"
+          sizes="(max-width: 768px) 100vw, 120vw"
           className="hero__figure-image"
         />
       </div>
@@ -82,6 +82,7 @@ export default function Hero() {
           alt=""
           fill
           priority
+          quality={75}
           sizes="100vw"
           className="hero__blueprint-image"
         />

@@ -63,7 +63,7 @@
   --reading-cta: 540px;
   --reading-card-min: 280px;
   --reading-card: 360px;
-  --height-viewport: 100dvh;
+  --height-viewport: 100svh;
   --header-height: 72px;
   --diario-video-w: 16;
   --diario-video-h: 9;
@@ -75,7 +75,7 @@
   --story-plate-ratio: 4 / 5;
   --story-colophon-reserve: 0px;
   --story-copy-min: 22rem;
-  --story-frame-height: 100dvh;
+  --story-frame-height: 100svh;
   --story-plate-max-height: var(--story-frame-height);
   --story-folio-width: min(
     calc(var(--story-plate-max-height) * 4 / 5),

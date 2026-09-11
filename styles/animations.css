@@ -53,15 +53,26 @@
     --hero-blueprint-opacity: 0.1;
     --hero-veil-parchment-reach: 48%;
     --hero-veil-chalk-opacity: 0.38;
+    --hero-blur-radius: 0px;
+    --hero-glow-size: 120%;
+    --reveal-distance: 12px;
     --museum-blueprint-opacity: 0.06;
     --problem-grid-opacity: 0.020;
     --ecosystem-figure-size: clamp(7.5rem, 36vw, 11rem);
   }
 }
 
-/* Elements orchestrated by GSAP start hidden — only when JS is available. */
+/* Elements orchestrated by GSAP start hidden — only when JS is available.
+   Mobile keeps them visible: hiding until hydration, then translating on
+   scroll, is the Safari/Chrome glitch. */
 html.js [data-reveal] {
   visibility: hidden;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  html.js [data-reveal] {
+    visibility: visible;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

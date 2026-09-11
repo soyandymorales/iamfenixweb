@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion, simplifyMotion } from "@/lib/motion";
 
 const MAX_POINTS = 1400;
 const PHOENIX_URL = encodeURI("/images/fenixiso_Mesa de trabajo 1.svg");
@@ -174,10 +175,10 @@ export default function FenixDiagramCanvas() {
       const gsap = gsapModule.default;
       const { ScrollTrigger } = scrollTriggerModule;
       gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({ ignoreMobileResize: true });
 
-      const reduced = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
+      const reduced = prefersReducedMotion();
+      const mobile = simplifyMotion();
 
       const ember = new THREE.Color(readToken("--color-ember", "#b56a3a"));
 
@@ -185,8 +186,13 @@ export default function FenixDiagramCanvas() {
       try {
         const img = await loadImage(PHOENIX_URL);
         if (disposed) return;
-        const filled = collectFilledPixels(img);
-        const phoenix = mapPhoenixToWorld(pickEven(filled, 820));
+        const filled = collectFilledPixels(img, {
+          maxDim: mobile ? 360 : 720,
+          step: mobile ? 3 : 2,
+        });
+        const phoenix = mapPhoenixToWorld(
+          pickEven(filled, mobile ? 280 : 820)
+        );
         targets = [...phoenix.points, ...buildOrbitPoints(phoenix.halfW, phoenix.halfH)];
       } catch {
         targets = [];
@@ -195,7 +201,7 @@ export default function FenixDiagramCanvas() {
       if (disposed) return;
       if (targets.length < 80) return;
 
-      const count = Math.min(targets.length, MAX_POINTS);
+      const count = Math.min(targets.length, mobile ? 420 : MAX_POINTS);
 
       const scattered = new Float32Array(count * 3);
       const rest = new Float32Array(count * 3);
@@ -233,10 +239,15 @@ export default function FenixDiagramCanvas() {
         staggers[i] = Math.min(radius / 3.4, 1) * 0.42 + Math.random() * 0.08;
       }
 
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const renderer = new THREE.WebGLRenderer({
+        antialias: !mobile,
+        alpha: true,
+        powerPreference: mobile ? "low-power" : "default",
+      });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1 : 2));
       renderer.setSize(container.clientWidth, container.clientHeight);
       renderer.setClearColor(0x000000, 0);
+      renderer.domElement.style.pointerEvents = "none";
       container.appendChild(renderer.domElement);
 
       const scene = new THREE.Scene();
@@ -265,7 +276,7 @@ export default function FenixDiagramCanvas() {
 
       const material = new THREE.ShaderMaterial({
         uniforms: {
-          uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+          uPixelRatio: { value: Math.min(window.devicePixelRatio, mobile ? 1 : 2) },
         },
         vertexShader: `
           attribute float aSize;
@@ -300,12 +311,19 @@ export default function FenixDiagramCanvas() {
 
       const state = { progress: reduced ? 1 : 0 };
       let frame = 0;
+      let visible = true;
       const easeInOut = (t) => t * t * (3 - 2 * t);
+      const pixelCap = mobile ? 1 : 2;
 
       const living = (index, time) => {
-        const role = roles[index];
         const restX = rest[index * 3];
         const restY = rest[index * 3 + 1];
+
+        if (mobile) {
+          return [restX, restY, 0];
+        }
+
+        const role = roles[index];
         const breath = 1 + Math.sin(time * 0.00115) * 0.02;
 
         if (role === ROLE_RING) {
@@ -335,9 +353,14 @@ export default function FenixDiagramCanvas() {
       };
 
       const render = (time) => {
+        if (!visible) {
+          frame = 0;
+          return;
+        }
+
+        const progress = state.progress;
         const attr = geometry.getAttribute("position");
         const array = attr.array;
-        const progress = state.progress;
 
         for (let i = 0; i < count; i += 1) {
           const local = Math.min(
@@ -355,9 +378,31 @@ export default function FenixDiagramCanvas() {
         attr.needsUpdate = true;
         points.rotation.y = reduced ? 0 : (1 - progress) * 0.32;
         renderer.render(scene, camera);
+
+        if (mobile && progress >= 0.999) {
+          frame = 0;
+          return;
+        }
+
         frame = requestAnimationFrame(render);
       };
-      frame = requestAnimationFrame(render);
+
+      const kick = () => {
+        if (!frame && visible) {
+          frame = requestAnimationFrame(render);
+        }
+      };
+
+      kick();
+
+      const visor = new IntersectionObserver(
+        ([entry]) => {
+          visible = entry.isIntersecting;
+          if (visible) kick();
+        },
+        { rootMargin: "80px 0px" }
+      );
+      visor.observe(container);
 
       let scrollTween = null;
       if (!reduced) {
@@ -368,26 +413,32 @@ export default function FenixDiagramCanvas() {
             trigger: container,
             start: "top 85%",
             end: "top 18%",
-            scrub: 0.85,
+            scrub: mobile ? 0.45 : 0.85,
+            onUpdate: kick,
           },
         });
         ScrollTrigger.refresh();
       }
 
+      let lastWidth = container.clientWidth;
       const onResize = () => {
         const { clientWidth, clientHeight } = container;
+        if (mobile && clientWidth === lastWidth) return;
+        lastWidth = clientWidth;
         camera.aspect = clientWidth / clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(clientWidth, clientHeight);
         material.uniforms.uPixelRatio.value = Math.min(
           window.devicePixelRatio,
-          2
+          pixelCap
         );
+        kick();
       };
       window.addEventListener("resize", onResize);
 
       cleanup = () => {
         cancelAnimationFrame(frame);
+        visor.disconnect();
         window.removeEventListener("resize", onResize);
         scrollTween?.scrollTrigger?.kill();
         scrollTween?.kill();

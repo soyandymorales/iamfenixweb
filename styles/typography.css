@@ -13,8 +13,10 @@
   --text-hero-kicker: clamp(1.75rem, 1.4rem + 1.2vw, 2rem);
   --text-hero-body: clamp(1.1875rem, 1.08rem + 0.5vw, 1.4375rem);
   --text-chamber: clamp(2.25rem, 1.5rem + 3.4vw, 4.25rem);
-  /* Story masthead: above chamber, below hero — the founder statement. */
-  --text-story: clamp(2.35rem, 1.1rem + 4.4vw, 4.5rem);
+  /* Story masthead: above chamber, below hero — the founder statement.
+     Preferred size tracks width and the story frame height (cqh) so a
+     wide, short screen cannot outgrow the 100svh spread. */
+  --text-story: clamp(2.35rem, min(1.1rem + 4.4vw, 1.5rem + 4.2cqh), 4.5rem);
   --text-story-mobile: clamp(2.5rem, 10.5vw, 4.5rem);
 
   --leading-tight: 1.12;
