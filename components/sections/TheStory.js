@@ -1,8 +1,7 @@
-import Image from "next/image";
-
 import { founder } from "@/content/entities/founder";
 import { siteMetadata } from "@/content/metadata/site";
-import andyBio from "@/public/images/andybio.jpg";
+import StoryFolio from "@/components/sections/StoryFolio";
+import { SocialIcon } from "@/components/ui/SocialLinks";
 
 function emphasize(text, phrase) {
   if (!phrase) return text;
@@ -28,7 +27,7 @@ export default function TheStory() {
     <section id="historia" className="story" aria-labelledby="story-title">
       <div className="story__spread">
         <div className="story__column">
-          <header className="story__intro">
+          <header className="story__masthead">
             <p className="story__kicker" data-reveal>
               Historia — {founder.name}
             </p>
@@ -54,23 +53,14 @@ export default function TheStory() {
                 aria-label={`${story.cta.label} — ${story.cta.destination} de ${founder.name}`}
                 data-reveal
               >
+                <SocialIcon id="linkedin" />
                 {story.cta.label}
               </a>
             ) : null}
           </div>
         </div>
 
-        <figure className="story__portrait">
-          <div className="story__portrait-frame">
-            <Image
-              src={andyBio}
-              alt="Andy Morales corriendo una carrera de fondo"
-              fill
-              sizes="(max-width: 900px) 100vw, 50vw"
-              className="story__image"
-            />
-          </div>
-        </figure>
+        <StoryFolio folio={story.folio} founderName={founder.name} />
       </div>
     </section>
   );

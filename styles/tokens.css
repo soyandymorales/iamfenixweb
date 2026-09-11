@@ -15,6 +15,7 @@
   --color-hairline: rgba(42, 41, 38, 0.12);
   --color-hairline-on-dark: rgba(248, 246, 241, 0.14);
   --color-line-on-dark: rgba(239, 233, 221, 0.2);
+  --color-fill-on-dark: rgba(248, 246, 241, 0.06);
 
   /* Typography — 3.2: display for headlines/editorial; body for copy/UI */
   --font-display: var(--font-marcellus), "Marcellus", serif;
@@ -69,6 +70,19 @@
   --diario-video-aspect: var(--diario-video-w) / var(--diario-video-h);
   --diario-thumb-width: calc(var(--space-120) + var(--space-48));
   --diario-learn-reserve: calc(var(--space-120) + var(--space-32));
+
+  /* The Story — reconstruction folio (colophon overlays the plate) */
+  --story-plate-ratio: 4 / 5;
+  --story-colophon-reserve: 0px;
+  --story-copy-min: 22rem;
+  --story-frame-height: 100dvh;
+  --story-plate-max-height: var(--story-frame-height);
+  --story-folio-width: min(
+    calc(var(--story-plate-max-height) * 4 / 5),
+    calc(100vw - var(--story-copy-min))
+  );
+  --story-folio-photo: calc(var(--story-folio-width) * 5 / 4);
+  --story-colophon-min: 0px;
 
   /* Z-index */
   --z-nav: 100;

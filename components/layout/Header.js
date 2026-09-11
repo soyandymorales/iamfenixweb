@@ -10,6 +10,7 @@ import BrandWordmark from "@/components/ui/BrandWordmark";
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [overStory, setOverStory] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -18,9 +19,32 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const headerClass = `site-header${
-    scrolled || menuOpen ? " site-header--scrolled" : ""
-  }`;
+  useEffect(() => {
+    const story = document.getElementById("historia");
+    if (!story) return undefined;
+
+    const update = () => {
+      const rect = story.getBoundingClientRect();
+      const vh = window.innerHeight;
+      setOverStory(rect.top <= 48 && rect.bottom >= vh * 0.85);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  const headerClass = [
+    "site-header",
+    overStory && !menuOpen ? "site-header--over-story" : "",
+    (scrolled || menuOpen) && !(overStory && !menuOpen) ? "site-header--scrolled" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <header className={headerClass}>

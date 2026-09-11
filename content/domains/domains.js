@@ -20,7 +20,7 @@ export const domains = [
   {
     id: "happeace",
     numeral: "II",
-    shortName: "FeliciPaz",
+    shortName: "Happeace",
     name: "Arquitectura Happeace",
     trademark: "Happeace Architecture™",
     image: "/images/Happeace.png",
