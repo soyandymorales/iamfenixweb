@@ -173,21 +173,6 @@ export default function StoryFolio({ folio, founderName }) {
             {active.caption ? <p className="story__colophon-caption">{active.caption}</p> : null}
           </div>
           <div className="story__colophon-nav">
-            <ol className="story__index" aria-label={folio.kicker}>
-              {plates.map((plate, index) => (
-                <li key={plate.id}>
-                  <button
-                    type="button"
-                    className={
-                      index === activeIndex ? "story__tick story__tick--active" : "story__tick"
-                    }
-                    onClick={() => goTo(index)}
-                    aria-label={`${folio.kicker} ${plate.numeral}`}
-                    aria-current={index === activeIndex ? "true" : undefined}
-                  />
-                </li>
-              ))}
-            </ol>
             <button
               type="button"
               className="story__step"

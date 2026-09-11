@@ -5,6 +5,7 @@ import BrandWordmark from "@/components/ui/BrandWordmark";
 const socialLinks = [
   { label: "LinkedIn", href: siteMetadata.social.linkedin },
   { label: "YouTube", href: siteMetadata.social.youtube },
+  { label: "Strava", href: siteMetadata.social.strava },
 ];
 
 export default function Footer() {

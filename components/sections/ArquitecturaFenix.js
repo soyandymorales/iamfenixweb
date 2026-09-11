@@ -2,9 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { simplifyMotion } from "@/lib/motion";
+import { canAffordHeavyMotion, simplifyMotion } from "@/lib/motion";
 
-// Heavy WebGL piece: desktop only, and only near the viewport.
+// Heavy WebGL piece: client-only, and only near the viewport.
 const FenixDiagramCanvas = dynamic(() => import("./FenixDiagramCanvas"), {
   ssr: false,
   loading: () => null,
@@ -17,22 +17,35 @@ export default function ArquitecturaFenix() {
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
-    if (simplifyMotion()) return undefined;
+    if (!canAffordHeavyMotion()) return undefined;
 
     const node = sectionRef.current;
     if (!node) return undefined;
 
+    const mobile = simplifyMotion();
+    let idleId = 0;
+
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setInView(true);
-          observer.disconnect();
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+
+        const mount = () => setInView(true);
+        if (mobile && typeof window.requestIdleCallback === "function") {
+          idleId = window.requestIdleCallback(mount, { timeout: 450 });
+        } else {
+          mount();
         }
       },
-      { rootMargin: "200px 0px" }
+      { rootMargin: mobile ? "80px 0px" : "200px 0px" }
     );
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (idleId && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
+    };
   }, []);
 
   return (
@@ -49,7 +62,7 @@ export default function ArquitecturaFenix() {
         </header>
 
         <div className="arquitectura__canvas" aria-hidden="true">
-          {/* Static plate: the WebGL particle field never loads on mobile. */}
+          {/* Static plate until WebGL is ready, and the only view when it is not. */}
           <img
             src={PHOENIX_PLATE}
             alt=""

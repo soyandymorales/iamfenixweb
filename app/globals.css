@@ -7,7 +7,7 @@ html {
   font-family: var(--font-body);
   font-size: 16px;
   scroll-behavior: smooth;
-  scroll-padding-top: 72px;
+  scroll-padding-top: var(--header-height);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -624,15 +624,13 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  height: 100vh;
-  height: var(--height-viewport);
-  min-height: 100vh;
-  min-height: var(--height-viewport);
+  /* Encaja bajo el header: Trabajo debe dejar Atelier y House
+     enteras en el viewport, sin franja del bloque anterior. */
+  height: calc(var(--height-viewport) - var(--header-height));
+  min-height: calc(var(--height-viewport) - var(--header-height));
   box-sizing: border-box;
   background-color: var(--color-chalk-white);
-  /* Cancela el scroll-padding del header: Trabajo debe encajar
-     la puerta a pantalla completa, no dejar una franja del hero. */
-  scroll-margin-top: calc(var(--header-height) * -1);
+  scroll-margin-top: 0;
 }
 
 .ecosystem__chamber {
@@ -743,6 +741,7 @@ button {
     height: auto;
     min-height: 0;
     padding-top: 0;
+    scroll-margin-top: calc(var(--header-height) * -1);
   }
 
   .ecosystem__chamber {
@@ -989,8 +988,6 @@ button {
 }
 
 @media (max-width: 768px) {
-  .proof__logo-img,
-  .proof__logo-link .proof__logo-img,
   .story__image,
   .dominio__photo,
   .voices__thumb img,
@@ -1001,6 +998,7 @@ button {
   }
 
   .proof__logo-link .proof__logo-img {
+    transition: none;
     transform: none;
   }
 }
@@ -1512,7 +1510,7 @@ button {
   pointer-events: none;
 }
 
-.arquitectura__canvas:has(canvas) .arquitectura__fallback {
+.arquitectura__canvas--live .arquitectura__fallback {
   visibility: hidden;
 }
 
@@ -2137,6 +2135,32 @@ button {
   color: var(--color-limestone);
 }
 
+.story__stage::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  height: var(--story-colophon-dissolve-height);
+  pointer-events: none;
+  background-image: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-charcoal) var(--story-colophon-veil-base), transparent) 0%,
+    color-mix(in srgb, var(--color-charcoal) var(--story-colophon-veil-mid), transparent)
+      var(--story-colophon-veil-mid-stop),
+    transparent 100%
+  );
+}
+
+.story__stage:has(.story__colophon--bands)::after {
+  height: var(--story-colophon-dissolve-height-bands);
+  background-image: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-charcoal) var(--story-colophon-veil-base-bands), transparent) 0%,
+    transparent 100%
+  );
+}
+
 .story__colophon {
   position: absolute;
   inset-inline: 0;
@@ -2149,30 +2173,20 @@ button {
   box-sizing: border-box;
   width: 100%;
   min-height: 0;
-  padding: var(--space-48) var(--space-24) var(--space-24);
-  background-image: linear-gradient(
-    to top,
-    rgba(42, 41, 38, 0.82) 0%,
-    rgba(42, 41, 38, 0.28) 58%,
-    transparent 100%
-  );
+  padding: var(--space-24);
 }
 
 .story__colophon--bands {
   justify-content: flex-end;
-  padding: var(--space-32) var(--space-24) var(--space-16);
-  background-image: linear-gradient(
-    to top,
-    rgba(42, 41, 38, 0.55) 0%,
-    transparent 100%
-  );
+  padding: var(--space-16) var(--space-24);
 }
 
 .story__colophon-meta {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  column-gap: var(--space-16);
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -2182,24 +2196,24 @@ button {
 
 .story__colophon-numeral {
   font-family: var(--font-display);
-  font-size: var(--text-h3);
+  font-size: var(--text-hero-kicker);
   line-height: 1;
   color: var(--color-chalk-white);
   text-shadow: 0 1px 14px rgba(42, 41, 38, 0.45);
 }
 
 .story__colophon-caption {
-  grid-column: 2;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   overflow: hidden;
   min-width: 0;
-  font-size: var(--text-small);
+  font-size: var(--text-body);
   line-height: var(--leading-snug);
-  color: var(--color-limestone);
-  text-shadow: 0 1px 10px rgba(42, 41, 38, 0.4);
+  color: var(--color-chalk-white);
+  text-wrap: pretty;
+  text-shadow: 0 1px 12px color-mix(in srgb, var(--color-charcoal) 55%, transparent);
 }
 
 .story__colophon--bare .story__colophon-caption {
@@ -2213,58 +2227,6 @@ button {
   justify-content: flex-end;
   gap: var(--space-16);
   flex: 0 0 auto;
-}
-
-.story__index {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.15rem;
-  margin: 0 var(--space-8) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.story__tick {
-  position: relative;
-  display: block;
-  width: 14px;
-  height: 28px;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-}
-
-.story__tick::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 6px;
-  width: 2px;
-  height: 12px;
-  background-color: var(--color-limestone);
-  opacity: 0.55;
-  transform: translateX(-50%);
-  transition:
-    height var(--motion-duration-fast) var(--motion-easing),
-    opacity var(--motion-duration-fast) var(--motion-easing),
-    background-color var(--motion-duration-fast) var(--motion-easing);
-}
-
-.story__tick:hover::after,
-.story__tick:focus-visible::after {
-  opacity: 1;
-}
-
-.story__tick:focus-visible {
-  outline: var(--border-hairline) solid var(--color-ember);
-  outline-offset: 3px;
-}
-
-.story__tick--active::after {
-  height: 20px;
-  opacity: 1;
-  background-color: var(--color-ember);
 }
 
 .story__count {
@@ -2408,11 +2370,11 @@ button {
     flex-wrap: wrap;
     align-items: flex-end;
     height: auto;
-    padding: var(--space-48) var(--gutter) var(--space-16);
+    padding: var(--space-24) var(--gutter) var(--space-16);
   }
 
   .story__colophon--bands {
-    padding: var(--space-32) var(--gutter) var(--space-16);
+    padding: var(--space-16) var(--gutter);
   }
 
   .story__colophon-meta {
@@ -2420,26 +2382,11 @@ button {
     width: 100%;
   }
 
-  .story__colophon-caption {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-  }
-
   .story__colophon-nav {
     flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
     row-gap: var(--space-8);
-  }
-
-  .story__index {
-    flex: 1 1 100%;
-    margin-right: 0;
-  }
-
-  .story__tick {
-    width: 16px;
-    height: 32px;
   }
 
   .story__band {
@@ -2889,7 +2836,10 @@ button {
   min-height: var(--height-viewport);
   max-height: 100vh;
   max-height: var(--height-viewport);
-  padding-top: 72px;
+  /* Full-viewport frame: header overlays the padding, so hash scroll
+     must land at the viewport top — not another header-height below. */
+  padding-top: var(--header-height);
+  scroll-margin-top: calc(var(--header-height) * -1);
   box-sizing: border-box;
 }
 

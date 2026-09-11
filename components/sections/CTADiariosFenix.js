@@ -48,7 +48,7 @@ export default function CTADiariosFenix() {
           Diarios del Fénix
         </span>
         <h2 id="cta-title" className="cta-final__headline" data-reveal>
-          Arquitecta tu vida como un artesano crea una obra maestra.
+          Arquitecta tu vida como un artesano crea su obra maestra.
         </h2>
         <div className="cta-final__architectures">
           <p className="cta-final__meta-kicker" data-reveal>

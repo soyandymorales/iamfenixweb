@@ -51,7 +51,6 @@ export default function TheStory() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${story.cta.label} — ${story.cta.destination} de ${founder.name}`}
-                data-reveal
               >
                 <SocialIcon id="linkedin" />
                 {story.cta.label}

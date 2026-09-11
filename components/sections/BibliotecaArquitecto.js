@@ -137,7 +137,6 @@ export default async function BibliotecaArquitecto() {
             className="btn btn--solid biblioteca__subscribe"
             target="_blank"
             rel="noopener noreferrer"
-            data-reveal
           >
             <svg
               viewBox="0 0 24 24"

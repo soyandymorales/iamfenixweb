@@ -165,20 +165,24 @@ export default function FenixDiagramCanvas() {
     let cleanup = () => {};
 
     (async () => {
+      const reduced = prefersReducedMotion();
+      const mobile = simplifyMotion();
+
       const [THREE, gsapModule, scrollTriggerModule] = await Promise.all([
         import("three"),
         import("gsap"),
-        import("gsap/ScrollTrigger"),
+        mobile || reduced
+          ? Promise.resolve(null)
+          : import("gsap/ScrollTrigger"),
       ]);
       if (disposed) return;
 
       const gsap = gsapModule.default;
-      const { ScrollTrigger } = scrollTriggerModule;
-      gsap.registerPlugin(ScrollTrigger);
-      ScrollTrigger.config({ ignoreMobileResize: true });
-
-      const reduced = prefersReducedMotion();
-      const mobile = simplifyMotion();
+      const ScrollTrigger = scrollTriggerModule?.ScrollTrigger;
+      if (ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.config({ ignoreMobileResize: true });
+      }
 
       const ember = new THREE.Color(readToken("--color-ember", "#b56a3a"));
 
@@ -187,11 +191,11 @@ export default function FenixDiagramCanvas() {
         const img = await loadImage(PHOENIX_URL);
         if (disposed) return;
         const filled = collectFilledPixels(img, {
-          maxDim: mobile ? 360 : 720,
+          maxDim: mobile ? 320 : 720,
           step: mobile ? 3 : 2,
         });
         const phoenix = mapPhoenixToWorld(
-          pickEven(filled, mobile ? 280 : 820)
+          pickEven(filled, mobile ? 240 : 820)
         );
         targets = [...phoenix.points, ...buildOrbitPoints(phoenix.halfW, phoenix.halfH)];
       } catch {
@@ -201,7 +205,7 @@ export default function FenixDiagramCanvas() {
       if (disposed) return;
       if (targets.length < 80) return;
 
-      const count = Math.min(targets.length, mobile ? 420 : MAX_POINTS);
+      const count = Math.min(targets.length, mobile ? 360 : MAX_POINTS);
 
       const scattered = new Float32Array(count * 3);
       const rest = new Float32Array(count * 3);
@@ -311,9 +315,17 @@ export default function FenixDiagramCanvas() {
 
       const state = { progress: reduced ? 1 : 0 };
       let frame = 0;
-      let visible = true;
+      let visible = !mobile;
+      let live = false;
       const easeInOut = (t) => t * t * (3 - 2 * t);
       const pixelCap = mobile ? 1 : 2;
+      const host = container.parentElement;
+
+      const markLive = () => {
+        if (live) return;
+        live = true;
+        host?.classList.add("arquitectura__canvas--live");
+      };
 
       const living = (index, time) => {
         const restX = rest[index * 3];
@@ -376,8 +388,9 @@ export default function FenixDiagramCanvas() {
         }
 
         attr.needsUpdate = true;
-        points.rotation.y = reduced ? 0 : (1 - progress) * 0.32;
+        points.rotation.y = reduced || mobile ? 0 : (1 - progress) * 0.32;
         renderer.render(scene, camera);
+        markLive();
 
         if (mobile && progress >= 0.999) {
           frame = 0;
@@ -393,32 +406,50 @@ export default function FenixDiagramCanvas() {
         }
       };
 
-      kick();
+      let assembleTween = null;
+      let assemblePlayed = false;
+
+      if (!reduced) {
+        if (mobile) {
+          assembleTween = gsap.to(state, {
+            progress: 1,
+            duration: 1.4,
+            ease: "power2.out",
+            paused: true,
+            onUpdate: kick,
+          });
+        } else {
+          assembleTween = gsap.to(state, {
+            progress: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: container,
+              start: "top 85%",
+              end: "top 18%",
+              scrub: 0.85,
+              onUpdate: kick,
+            },
+          });
+          ScrollTrigger.refresh();
+          kick();
+        }
+      } else {
+        kick();
+      }
 
       const visor = new IntersectionObserver(
         ([entry]) => {
           visible = entry.isIntersecting;
-          if (visible) kick();
+          if (!visible) return;
+          kick();
+          if (mobile && !reduced && !assemblePlayed) {
+            assemblePlayed = true;
+            assembleTween?.play();
+          }
         },
-        { rootMargin: "80px 0px" }
+        { rootMargin: "40px 0px", threshold: 0.12 }
       );
       visor.observe(container);
-
-      let scrollTween = null;
-      if (!reduced) {
-        scrollTween = gsap.to(state, {
-          progress: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: container,
-            start: "top 85%",
-            end: "top 18%",
-            scrub: mobile ? 0.45 : 0.85,
-            onUpdate: kick,
-          },
-        });
-        ScrollTrigger.refresh();
-      }
 
       let lastWidth = container.clientWidth;
       const onResize = () => {
@@ -440,8 +471,9 @@ export default function FenixDiagramCanvas() {
         cancelAnimationFrame(frame);
         visor.disconnect();
         window.removeEventListener("resize", onResize);
-        scrollTween?.scrollTrigger?.kill();
-        scrollTween?.kill();
+        assembleTween?.scrollTrigger?.kill();
+        assembleTween?.kill();
+        host?.classList.remove("arquitectura__canvas--live");
         geometry.dispose();
         material.dispose();
         renderer.dispose();

@@ -24,6 +24,14 @@
   /* The Story — plate dissolve */
   --story-plate-distance: var(--space-8);
 
+  /* The Story — colophon bottom dissolve (readable caption over the plate) */
+  --story-colophon-dissolve-height: 34%;
+  --story-colophon-veil-base: 90%;
+  --story-colophon-veil-mid: 46%;
+  --story-colophon-veil-mid-stop: 54%;
+  --story-colophon-dissolve-height-bands: 22%;
+  --story-colophon-veil-base-bands: 55%;
+
   /* Museum claim — blueprint field */
   --museum-blueprint-opacity: 0.07;
   --museum-stroke-axis: 1.15px;

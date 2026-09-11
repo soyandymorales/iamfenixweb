@@ -1,16 +1,54 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   mainNavigation,
   navigationCta,
 } from "@/content/navigation/main";
 import BrandWordmark from "@/components/ui/BrandWordmark";
+import { prefersReducedMotion } from "@/lib/motion";
+
+function scrollToAnchor(id, behavior) {
+  const el = document.getElementById(id);
+  if (!el) return false;
+
+  const padding =
+    parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+  const margin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+  const top = Math.max(
+    0,
+    Math.round(el.getBoundingClientRect().top + window.scrollY - (padding + margin))
+  );
+
+  window.scrollTo({ top, behavior });
+  return true;
+}
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [overStory, setOverStory] = useState(false);
+
+  const onHashClick = useCallback((event) => {
+    const href = event.currentTarget.getAttribute("href");
+    if (!href || !href.includes("#")) return;
+
+    const url = new URL(href, window.location.href);
+    const here = window.location.pathname.replace(/\/$/, "") || "/";
+    const there = url.pathname.replace(/\/$/, "") || "/";
+    if (here !== there) return;
+
+    const id = decodeURIComponent(url.hash.replace(/^#/, ""));
+    if (!id || !document.getElementById(id)) return;
+
+    event.preventDefault();
+    const behavior = prefersReducedMotion() ? "auto" : "smooth";
+    scrollToAnchor(id, behavior);
+    if (window.location.hash !== url.hash) {
+      history.pushState(null, "", url.hash);
+    }
+    setMenuOpen(false);
+  }, []);
 
   useEffect(() => {
     let last = window.scrollY > 24;
@@ -42,6 +80,22 @@ export default function Header() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const alignHash = () => {
+      const id = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+      if (id) scrollToAnchor(id, "auto");
+    };
+
+    const frame = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(alignHash);
+    });
+    window.addEventListener("hashchange", alignHash);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("hashchange", alignHash);
+    };
+  }, []);
+
   const headerClass = [
     "site-header",
     overStory && !menuOpen ? "site-header--over-story" : "",
@@ -53,13 +107,23 @@ export default function Header() {
   return (
     <header className={headerClass}>
       <div className="site-header__inner">
-        <a href="/#top" className="site-header__logo" aria-label="i.am Fénix — inicio">
+        <a
+          href="/#top"
+          className="site-header__logo"
+          aria-label="i.am Fénix — inicio"
+          onClick={onHashClick}
+        >
           <BrandWordmark className="wordmark site-header__wordmark" priority />
         </a>
 
         <nav className="site-header__nav" aria-label="Navegación principal">
           {mainNavigation.map((item) => (
-            <a key={item.href} href={item.href} className="site-header__link">
+            <a
+              key={item.href}
+              href={item.href}
+              className="site-header__link"
+              onClick={onHashClick}
+            >
               {item.label}
             </a>
           ))}
@@ -96,7 +160,7 @@ export default function Header() {
               key={item.href}
               href={item.href}
               className="site-header__link"
-              onClick={() => setMenuOpen(false)}
+              onClick={onHashClick}
             >
               {item.label}
             </a>
@@ -104,7 +168,7 @@ export default function Header() {
           <a
             href={navigationCta.href}
             className="btn btn--solid"
-            onClick={() => setMenuOpen(false)}
+            onClick={onHashClick}
           >
             {navigationCta.label}
           </a>
