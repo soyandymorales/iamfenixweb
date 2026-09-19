@@ -1,6 +1,8 @@
-import { atelierWelcome } from "@/content/services/tiers";
+import { getAtelierWelcome } from "@/content/services/tiers";
 
-export default function BienvenidaAtelier() {
+export default function BienvenidaAtelier({ locale }) {
+  const atelierWelcome = getAtelierWelcome(locale);
+
   return (
     <section
       id="bienvenida"

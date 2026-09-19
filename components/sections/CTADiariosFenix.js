@@ -2,19 +2,25 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { domains } from "@/content/domains/domains";
 
-/* La captura de leads vive aquí desde que el hero cambió a botón CTA:
-   el botón "Diarios del Fénix" del hero ancla a esta sección. */
+import { getDomains } from "@/content/domains/domains";
+import { getHomeCopy } from "@/content/metadata/home";
+import { useLocale } from "@/hooks/useLocale";
+import { localizeHref } from "@/libs/locale";
+
 export default function CTADiariosFenix() {
+  const locale = useLocale();
+  const copy = getHomeCopy(locale).lead;
+  const domains = getDomains(locale);
+  const diariosHref = localizeHref("/diarios", locale);
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
 
   useEffect(() => {
-    router.prefetch("/diarios");
-  }, [router]);
+    router.prefetch(diariosHref);
+  }, [router, diariosHref]);
 
   function markIdle() {
     if (status !== "idle") setStatus("idle");
@@ -31,7 +37,7 @@ export default function CTADiariosFenix() {
         body: JSON.stringify({ name, email }),
       });
       if (!res.ok) throw new Error("lead_failed");
-      router.push("/diarios");
+      router.push(diariosHref);
     } catch {
       setStatus("error");
     }
@@ -45,16 +51,16 @@ export default function CTADiariosFenix() {
     >
       <div className="container cta-final__inner">
         <span className="eyebrow" data-reveal>
-          Diarios del Fénix
+          {copy.eyebrow}
         </span>
         <h2 id="cta-title" className="cta-final__headline" data-reveal>
-          Arquitecta tu vida como un artesano crea su obra maestra.
+          {copy.title}
         </h2>
         <div className="cta-final__architectures">
           <p className="cta-final__meta-kicker" data-reveal>
-            Eleva en 21 días tus 3 Arquitecturas
+            {copy.architecturesKicker}
           </p>
-          <ul className="cta-final__meta" aria-label="3 Arquitecturas">
+          <ul className="cta-final__meta" aria-label={copy.architecturesLabel}>
             {domains.map((domain) => (
               <li key={domain.id} data-domain={domain.id} data-reveal>
                 <span className="cta-final__meta-numeral">{domain.numeral}</span>
@@ -63,26 +69,26 @@ export default function CTADiariosFenix() {
             ))}
           </ul>
           <p className="cta-final__meta-offer" data-reveal>
-            Acceso gratuito a los planos
+            {copy.offer}
           </p>
         </div>
         <form
           className="cta-final__form"
           data-reveal
           onSubmit={handleSubmit}
-          aria-label="Acceso a Diarios del Fénix"
+          aria-label={copy.formLabel}
         >
           <div className="cta-final__fields">
             <div className="cta-final__field">
               <label htmlFor="cta-name" className="sr-only">
-                Tu nombre
+                {copy.nameLabel}
               </label>
               <input
                 id="cta-name"
                 className="cta-final__input"
                 type="text"
                 name="name"
-                placeholder="Tu nombre"
+                placeholder={copy.namePlaceholder}
                 value={name}
                 onChange={(event) => {
                   setName(event.target.value);
@@ -95,14 +101,14 @@ export default function CTADiariosFenix() {
             </div>
             <div className="cta-final__field">
               <label htmlFor="cta-email" className="sr-only">
-                Tu correo
+                {copy.emailLabel}
               </label>
               <input
                 id="cta-email"
                 className="cta-final__input"
                 type="email"
                 name="email"
-                placeholder="Tu correo"
+                placeholder={copy.emailPlaceholder}
                 value={email}
                 onChange={(event) => {
                   setEmail(event.target.value);
@@ -118,14 +124,10 @@ export default function CTADiariosFenix() {
             className="btn btn--solid cta-final__submit"
             disabled={status === "loading"}
           >
-            {status === "loading"
-              ? "Enviando…"
-              : "Iniciar Diarios del Fénix"}
+            {status === "loading" ? copy.submitting : copy.submit}
           </button>
           <p className="cta-final__note" role="status">
-            {status === "error"
-              ? "Algo interrumpió el envío. Intenta de nuevo con calma."
-              : ""}
+            {status === "error" ? copy.error : ""}
           </p>
         </form>
       </div>

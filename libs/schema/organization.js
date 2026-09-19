@@ -1,13 +1,18 @@
-import { siteMetadata } from "@/content/metadata/site";
+import { getSiteCopy, siteMetadata } from "@/content/metadata/site";
+import { htmlLang } from "@/libs/locale";
 
-export function buildOrganizationSchema() {
+export function buildOrganizationSchema(locale) {
+  const copy = getSiteCopy(locale);
+
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${siteMetadata.url}/#organization`,
     name: siteMetadata.name,
     url: siteMetadata.url,
-    description: siteMetadata.description,
+    description: copy.description,
+    availableLanguage: ["es", "en"],
+    inLanguage: htmlLang(locale),
     sameAs: [siteMetadata.social.youtube, siteMetadata.social.linkedin],
     founder: { "@id": `${siteMetadata.url}/#founder` },
   };

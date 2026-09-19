@@ -3,35 +3,10 @@
 import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 
-import { pilares } from "@/content/domains/filosofia";
+import { getPilares } from "@/content/domains/filosofia";
+import { pickLocale } from "@/libs/locale";
 
-const pillarsById = Object.fromEntries(pilares.map((pillar) => [pillar.id, pillar]));
-
-function domainTitle(domain) {
-  return pillarsById[domain]?.title ?? domain;
-}
-
-function plateAnnouncement(folio, plate, total) {
-  const parts = [`${folio.kicker} ${plate.numeral} de ${total}`];
-
-  if (plate.domain) {
-    parts.push(domainTitle(plate.domain));
-  }
-
-  if (plate.bands?.length) {
-    parts.push(
-      plate.bands
-        .map((band) => [band.title, band.line].filter(Boolean).join(", "))
-        .join(". ")
-    );
-  } else if (plate.caption) {
-    parts.push(plate.caption);
-  }
-
-  return parts.join(". ");
-}
-
-function PlateMock({ plate, empty }) {
+function PlateMock({ plate, empty, domainTitle }) {
   return (
     <div className="story__mock" aria-hidden="true">
       <span className="story__mock-numeral">{plate.numeral}</span>
@@ -42,7 +17,38 @@ function PlateMock({ plate, empty }) {
   );
 }
 
-export default function StoryFolio({ folio, founderName }) {
+export default function StoryFolio({ folio, founderName, locale }) {
+  const lang = pickLocale(locale);
+  const ofWord = lang === "en" ? "of" : "de";
+  const pilares = getPilares(lang);
+  const pillarsById = Object.fromEntries(
+    pilares.map((pillar) => [pillar.id, pillar])
+  );
+
+  function domainTitle(domain) {
+    return pillarsById[domain]?.title ?? domain;
+  }
+
+  function plateAnnouncement(plate, total) {
+    const parts = [`${folio.kicker} ${plate.numeral} ${ofWord} ${total}`];
+
+    if (plate.domain) {
+      parts.push(domainTitle(plate.domain));
+    }
+
+    if (plate.bands?.length) {
+      parts.push(
+        plate.bands
+          .map((band) => [band.title, band.line].filter(Boolean).join(", "))
+          .join(". ")
+      );
+    } else if (plate.caption) {
+      parts.push(plate.caption);
+    }
+
+    return parts.join(". ");
+  }
+
   const plates = folio?.plates ?? [];
   const [activeIndex, setActiveIndex] = useState(0);
   const pointer = useRef(null);
@@ -123,13 +129,13 @@ export default function StoryFolio({ folio, founderName }) {
     <aside
       className="story__folio"
       role="region"
-      aria-label={`${folio.label} de ${founderName}`}
+      aria-label={`${folio.label} ${ofWord} ${founderName}`}
       tabIndex={0}
       onKeyDown={handleKeyDown}
       data-reveal
     >
       <p className="sr-only" aria-live="polite">
-        {plateAnnouncement(folio, active, total)}
+        {plateAnnouncement(active, total)}
       </p>
 
       <figure
@@ -151,7 +157,11 @@ export default function StoryFolio({ folio, founderName }) {
                 className="story__image"
               />
             ) : (
-              <PlateMock plate={active} empty={folio.empty} />
+              <PlateMock
+                plate={active}
+                empty={folio.empty}
+                domainTitle={domainTitle}
+              />
             )}
 
             {hasBands ? (
@@ -159,7 +169,9 @@ export default function StoryFolio({ folio, founderName }) {
                 {active.bands.map((band) => (
                   <li key={band.title} className="story__band">
                     <span className="story__band-title">{band.title}</span>
-                    {band.line ? <span className="story__band-line">{band.line}</span> : null}
+                    {band.line ? (
+                      <span className="story__band-line">{band.line}</span>
+                    ) : null}
                   </li>
                 ))}
               </ol>
@@ -170,7 +182,9 @@ export default function StoryFolio({ folio, founderName }) {
         <figcaption className={colophonClass}>
           <div className="story__colophon-meta">
             <span className="story__colophon-numeral">{active.numeral}</span>
-            {active.caption ? <p className="story__colophon-caption">{active.caption}</p> : null}
+            {active.caption ? (
+              <p className="story__colophon-caption">{active.caption}</p>
+            ) : null}
           </div>
           <div className="story__colophon-nav">
             <button
@@ -179,7 +193,7 @@ export default function StoryFolio({ folio, founderName }) {
               onClick={() => goTo(activeIndex - 1)}
               aria-label={folio.previous}
             >
-              Anterior
+              {folio.previous}
             </button>
             <span className="story__count" aria-hidden="true">
               {active.numeral} / {total}
@@ -190,7 +204,7 @@ export default function StoryFolio({ folio, founderName }) {
               onClick={() => goTo(activeIndex + 1)}
               aria-label={folio.next}
             >
-              Siguiente
+              {folio.next}
             </button>
           </div>
         </figcaption>

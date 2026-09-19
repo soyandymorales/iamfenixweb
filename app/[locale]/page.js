@@ -12,30 +12,31 @@ import Metrics from "@/components/sections/Metrics";
 import BibliotecaArquitecto from "@/components/sections/BibliotecaArquitecto";
 import CTADiariosFenix from "@/components/sections/CTADiariosFenix";
 
-import { siteMetadata } from "@/content/metadata/site";
+import { getSiteCopy } from "@/content/metadata/site";
 import { buildOrganizationSchema } from "@/libs/schema/organization";
 import { buildPersonSchema } from "@/libs/schema/person";
 import { buildDiariosCourseSchema } from "@/libs/schema/course";
+import { buildPageMetadata } from "@/libs/seo";
+import { pickLocale } from "@/libs/locale";
 
-export const metadata = {
-  title: siteMetadata.title,
-  description: siteMetadata.description,
-  alternates: { canonical: siteMetadata.url },
-  openGraph: {
-    title: siteMetadata.title,
-    description: siteMetadata.description,
-    url: siteMetadata.url,
-    siteName: siteMetadata.brand,
-    locale: "es_CO",
-    type: "website",
-  },
-};
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  const copy = getSiteCopy(locale);
+  return buildPageMetadata({
+    locale,
+    pathname: "/",
+    title: copy.title,
+    description: copy.description,
+  });
+}
 
-export default function HomePage() {
+export default async function HomePage({ params }) {
+  const { locale: rawLocale } = await params;
+  const locale = pickLocale(rawLocale);
   const schemas = [
-    buildOrganizationSchema(),
-    buildPersonSchema(),
-    buildDiariosCourseSchema(),
+    buildOrganizationSchema(locale),
+    buildPersonSchema(locale),
+    buildDiariosCourseSchema(locale),
   ];
 
   return (
@@ -52,15 +53,15 @@ export default function HomePage() {
 
       <main>
         <Hero />
-        <SocialProofLogos />
-        <TheEcosystem />
+        <SocialProofLogos locale={locale} />
+        <TheEcosystem locale={locale} />
         <ArquitecturaFenix />
-        <FilosofiaFenix />
+        <FilosofiaFenix locale={locale} />
         <CTADiariosFenix />
-        <TheStory />
-        <Testimonials />
-        <Metrics />
-        <BibliotecaArquitecto />
+        <TheStory locale={locale} />
+        <Testimonials locale={locale} />
+        <Metrics locale={locale} />
+        <BibliotecaArquitecto locale={locale} />
       </main>
 
       <Footer />

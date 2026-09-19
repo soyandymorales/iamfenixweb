@@ -1,7 +1,9 @@
+import { getFounder } from "@/content/entities/founder";
 import { siteMetadata } from "@/content/metadata/site";
-import { founder } from "@/content/entities/founder";
 
-export function buildPersonSchema() {
+export function buildPersonSchema(locale) {
+  const founder = getFounder(locale);
+
   return {
     "@context": "https://schema.org",
     "@type": "Person",

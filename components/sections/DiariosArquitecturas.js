@@ -3,7 +3,7 @@ import Image from "next/image";
 import bodyFigure from "@/public/images/Body.png";
 import happeaceFigure from "@/public/images/Happeace.png";
 import moneyFigure from "@/public/images/Money.png";
-import { domains, domainsGateway } from "@/content/domains/domains";
+import { getDomains, getDomainsGateway } from "@/content/domains/domains";
 
 const FIGURES = {
   body: bodyFigure,
@@ -11,7 +11,9 @@ const FIGURES = {
   money: moneyFigure,
 };
 
-export default function DiariosArquitecturas() {
+export default function DiariosArquitecturas({ locale }) {
+  const domains = getDomains(locale);
+  const domainsGateway = getDomainsGateway(locale);
   return (
     <section
       className="diarios-gates"

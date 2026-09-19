@@ -4,11 +4,16 @@ import WorkCard from "@/components/ui/WorkCard";
 import SocialLinks from "@/components/ui/SocialLinks";
 import FenixMark from "@/components/ui/FenixMark";
 import andyBio from "@/public/images/andybio.jpg";
-import { founder } from "@/content/entities/founder";
+import { getFounder } from "@/content/entities/founder";
 import { siteMetadata } from "@/content/metadata/site";
-import { laHouseEmpty, laHouseIntro, works } from "@/content/works/works";
+import { getLaHouseEmpty, getLaHouseIntro, getWorks } from "@/content/works/works";
 
-export default function LaCasa() {
+export default function LaCasa({ locale }) {
+  const founder = getFounder(locale);
+  const laHouseIntro = getLaHouseIntro(locale);
+  const laHouseEmpty = getLaHouseEmpty(locale);
+  const works = getWorks(locale);
+
   return (
     <section
       id="la-house"

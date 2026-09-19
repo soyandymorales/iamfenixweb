@@ -4,32 +4,34 @@ import LayoutClient from "@/components/layout/LayoutClient";
 import LaCasa from "@/components/sections/LaCasa";
 
 import { siteMetadata } from "@/content/metadata/site";
-import { laHouseIntro } from "@/content/works/works";
+import { getLaHouseIntro } from "@/content/works/works";
+import { pickLocale } from "@/libs/locale";
 import { buildPersonSchema } from "@/libs/schema/person";
 import { buildBreadcrumbSchema } from "@/libs/schema/breadcrumb";
 import { buildHouseCollectionSchema } from "@/libs/schema/collection";
+import { buildPageMetadata, publicUrl } from "@/libs/seo";
 
-export const metadata = {
-  title: `${laHouseIntro.heading} — ${siteMetadata.name}`,
-  description: laHouseIntro.subtitle,
-  alternates: { canonical: `${siteMetadata.url}/house` },
-  openGraph: {
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  const laHouseIntro = getLaHouseIntro(locale);
+  return buildPageMetadata({
+    locale,
+    pathname: "/house",
     title: `${laHouseIntro.heading} — ${siteMetadata.name}`,
     description: laHouseIntro.subtitle,
-    url: `${siteMetadata.url}/house`,
-    siteName: siteMetadata.brand,
-    locale: "es_CO",
-    type: "website",
-  },
-};
+  });
+}
 
-export default function HousePage() {
+export default async function HousePage({ params }) {
+  const { locale: rawLocale } = await params;
+  const locale = pickLocale(rawLocale);
+  const laHouseIntro = getLaHouseIntro(locale);
   const schemas = [
-    buildHouseCollectionSchema(),
-    buildPersonSchema(),
+    buildHouseCollectionSchema(locale),
+    buildPersonSchema(locale),
     buildBreadcrumbSchema([
       { name: siteMetadata.name, url: siteMetadata.url },
-      { name: laHouseIntro.heading, url: `${siteMetadata.url}/house` },
+      { name: laHouseIntro.heading, url: publicUrl("/house", locale) },
     ]),
   ];
 
@@ -46,7 +48,7 @@ export default function HousePage() {
       <Header />
 
       <main>
-        <LaCasa />
+        <LaCasa locale={locale} />
       </main>
 
       <Footer />

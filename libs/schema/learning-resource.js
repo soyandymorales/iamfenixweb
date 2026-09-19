@@ -1,14 +1,17 @@
 import { siteMetadata } from "@/content/metadata/site";
+import { htmlLang } from "@/libs/locale";
 
-export function buildArchitectureResourceSchema(course) {
+export function buildArchitectureResourceSchema(course, locale) {
+  const url = `${siteMetadata.url}${course.href}`;
+
   return {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "@id": `${siteMetadata.url}${course.href}#resource`,
+    "@id": `${url}#resource`,
     name: course.title,
     description: course.definition,
-    url: `${siteMetadata.url}${course.href}`,
-    inLanguage: siteMetadata.locale,
+    url,
+    inLanguage: htmlLang(locale),
     learningResourceType: "Practice",
     timeRequired: "P7D",
     isPartOf: { "@id": `${siteMetadata.url}/#diarios-del-fenix` },

@@ -6,10 +6,12 @@ import {
   youtubeEmbedSrc,
   youtubeThumbSrc,
 } from "@/content/diarios/courses";
+import { localizeHref } from "@/libs/locale";
 
 export default function DiariosCourse({ lesson }) {
-  const { course, current } = lesson;
+  const { course, current, ui, locale } = lesson;
   const embedSrc = youtubeEmbedSrc(current);
+  const diariosHref = localizeHref("/diarios", locale);
 
   return (
     <section
@@ -20,19 +22,20 @@ export default function DiariosCourse({ lesson }) {
       <div className="container diario-curso__inner">
         <header className="diario-curso__mast">
           <Breadcrumb
+            label={ui.location}
             items={[
-              { label: "El Diario", href: "/diarios" },
+              { label: ui.journal, href: diariosHref },
               { label: course.title, href: course.href },
-              { label: `Día ${current.day}` },
+              { label: `${ui.day} ${current.day}` },
             ]}
           />
           <p className="diario-curso__status">
-            {course.trademark} · Día {current.day} de 21
+            {course.trademark} · {ui.day} {current.day} {ui.of} 21
           </p>
         </header>
 
         <div className="diario-curso__board">
-          <p className="diario-curso__kicker">Tu progreso</p>
+          <p className="diario-curso__kicker">{ui.progress}</p>
 
           <div className="diario-curso__main">
             <div className="diario-curso__watch">
@@ -49,7 +52,7 @@ export default function DiariosCourse({ lesson }) {
                   </div>
                 ) : (
                   <div className="diario-curso__frame diario-curso__frame--empty">
-                    <p>El plano de este día llega pronto.</p>
+                    <p>{ui.empty}</p>
                   </div>
                 )}
               </div>
@@ -59,7 +62,7 @@ export default function DiariosCourse({ lesson }) {
                   {current.title}
                 </h1>
                 <p className="diario-curso__byline">
-                  Día {current.day} · {course.trademark}
+                  {ui.day} {current.day} · {course.trademark}
                 </p>
                 <p className="diario-curso__outcome">{current.learns}</p>
               </div>
@@ -67,7 +70,7 @@ export default function DiariosCourse({ lesson }) {
           </div>
 
           <aside className="diario-curso__rail">
-            <ol className="diario-curso__queue" aria-label="Tu progreso">
+            <ol className="diario-curso__queue" aria-label={ui.progress}>
               {course.practices.map((practice) => {
                 const isCurrent = practice.day === current.day;
                 const thumb = youtubeThumbSrc(practice);
@@ -92,7 +95,7 @@ export default function DiariosCourse({ lesson }) {
                           </span>
                         )}
                         <span className="diario-curso__day">
-                          Día {practice.day}
+                          {ui.day} {practice.day}
                         </span>
                       </span>
                       <span className="diario-curso__item-copy">

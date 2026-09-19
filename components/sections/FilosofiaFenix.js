@@ -1,8 +1,12 @@
 import Card from "@/components/ui/Card";
 import FenixMark from "@/components/ui/FenixMark";
-import { filosofiaIntro, pilares } from "@/content/domains/filosofia";
+import { getFilosofiaIntro, getPilares } from "@/content/domains/filosofia";
+import { getHomeCopy } from "@/content/metadata/home";
 
-export default function FilosofiaFenix() {
+export default function FilosofiaFenix({ locale }) {
+  const chrome = getHomeCopy(locale).filosofia;
+  const filosofiaIntro = getFilosofiaIntro(locale);
+  const pilares = getPilares(locale);
   return (
     <section
       className="section section--viewport filosofia"
@@ -11,10 +15,10 @@ export default function FilosofiaFenix() {
       <div className="container">
         <header className="section-header section-header--center reading-body">
           <span className="eyebrow" data-reveal>
-            Filosofía Fénix
+            {chrome.eyebrow}
           </span>
           <h2 id="filosofia-title" data-reveal>
-            Devoción Intencional
+            {chrome.title}
           </h2>
           <div className="filosofia__ornament" data-reveal>
             <FenixMark className="filosofia__mark" />

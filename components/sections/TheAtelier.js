@@ -1,7 +1,10 @@
 import TierCard from "@/components/ui/TierCard";
-import { atelierIntro, tiers } from "@/content/services/tiers";
+import { getAtelierIntro, getTiers } from "@/content/services/tiers";
 
-export default function TheAtelier() {
+export default function TheAtelier({ locale }) {
+  const atelierIntro = getAtelierIntro(locale);
+  const tiers = getTiers(locale);
+
   return (
     <section
       id="atelier"
@@ -11,7 +14,7 @@ export default function TheAtelier() {
       <div className="container">
         <header className="section-header section-header--center">
           <span className="eyebrow" data-reveal>
-            La práctica privada
+            {atelierIntro.eyebrow}
           </span>
           <h2 id="atelier-title" data-reveal>
             {atelierIntro.title}
@@ -23,7 +26,7 @@ export default function TheAtelier() {
 
         <div className="atelier__grid">
           {tiers.map((tier) => (
-            <TierCard key={tier.id} tier={tier} />
+            <TierCard key={tier.id} tier={tier} locale={locale} />
           ))}
         </div>
       </div>

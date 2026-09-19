@@ -1,15 +1,19 @@
-import { metrics } from "@/content/metadata/metrics";
+import { getHomeCopy } from "@/content/metadata/home";
+import { getMetrics } from "@/content/metadata/metrics";
 
 function splitValue(value) {
   const match = value.match(/^([\d.,]+)(.*)$/);
   return match ? [match[1], match[2]] : [value, ""];
 }
 
-export default function Metrics() {
+export default function Metrics({ locale }) {
+  const metrics = getMetrics(locale);
+  const label = getHomeCopy(locale).metricsLabel;
+
   return (
     <section
       className="section section--hairline-top section--viewport metrics"
-      aria-label="Métricas relevantes"
+      aria-label={label}
     >
       <div className="container">
         <div className="metrics__diptych">

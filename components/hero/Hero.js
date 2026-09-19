@@ -4,6 +4,9 @@ import { Fragment, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { getHomeCopy } from "@/content/metadata/home";
+import { siteMetadata } from "@/content/metadata/site";
+import { useLocale } from "@/hooks/useLocale";
 import { prefersReducedMotion, simplifyMotion } from "@/lib/motion";
 
 gsap.registerPlugin(useGSAP);
@@ -12,11 +15,7 @@ gsap.registerPlugin(useGSAP);
    artwork under the same name can never serve a stale optimised version. */
 import blueprintField from "@/public/images/blueprinthero.png";
 import andyScene from "@/public/images/andyherofinal.jpg";
-import { siteMetadata } from "@/content/metadata/site";
 
-const HEADLINE = [{ text: "Arquitectura" }, { text: "Humana" }];
-
-/* Labels espaciados a propósito — voz editorial de la composición, no branding oficial. */
 const SOCIAL_LINKS = [
   { label: "Linked in", href: siteMetadata.social.linkedin },
   { label: "You Tube", href: siteMetadata.social.youtube },
@@ -24,6 +23,8 @@ const SOCIAL_LINKS = [
 ];
 
 export default function Hero() {
+  const locale = useLocale();
+  const copy = getHomeCopy(locale);
   const rootRef = useRef(null);
 
   useGSAP(
@@ -99,7 +100,7 @@ export default function Hero() {
 
       <div className="hero__content">
         <h1 className="hero__headline">
-          {HEADLINE.map((word, i) => (
+          {copy.headline.map((word, i) => (
             <Fragment key={i}>
               <span className="hero__word-mask">
                 <span className="hero__word" data-hero-word>
@@ -111,25 +112,23 @@ export default function Hero() {
         </h1>
 
         <p className="hero__kicker" data-hero-kicker>
-          Estudio el arte de hacer de la vida una obra maestra.
+          {copy.kicker}
         </p>
 
         <p className="hero__subheadline" data-hero-sub>
-          Ayudo a fundadores, ejecutivos y atletas a proteger y expandir{" "}
-          <br className="hero__break" aria-hidden="true" />
-          su energía vital, presencia y libertad sin perder su alma.
+          {copy.subheadline}
         </p>
 
         <div className="hero__bar-cta" data-hero-cta>
           <a href="#empieza-aqui" className="btn btn--solid">
-            Diarios del Fénix
+            {copy.cta}
           </a>
-          <span className="hero__bar-note">Accede gratis a los planos</span>
+          <span className="hero__bar-note">{copy.ctaNote}</span>
         </div>
       </div>
 
       <div className="hero__bar" data-hero-bar>
-        <nav className="hero__bar-links" aria-label="Perfiles de Andy">
+        <nav className="hero__bar-links" aria-label={copy.socialLabel}>
           {SOCIAL_LINKS.map((link) => (
             <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
               {link.label}

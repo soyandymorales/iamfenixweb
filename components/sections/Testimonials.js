@@ -1,7 +1,10 @@
 import TestimonialsGallery from "@/components/testimonials/TestimonialsGallery";
-import { testimonials } from "@/content/testimonials/testimonials";
+import { getHomeCopy } from "@/content/metadata/home";
+import { getTestimonials } from "@/content/testimonials/testimonials";
 
-export default function Testimonials() {
+export default function Testimonials({ locale }) {
+  const chrome = getHomeCopy(locale).testimonials;
+  const testimonials = getTestimonials(locale);
   return (
     <section
       className="section section--parchment section--viewport testimonials"
@@ -10,10 +13,10 @@ export default function Testimonials() {
       <div className="container">
         <header className="section-header section-header--center">
           <span className="eyebrow" data-reveal>
-            Testimonios
+            {chrome.eyebrow}
           </span>
           <h2 id="testimonios-title" data-reveal>
-          Voces del camino
+          {chrome.title}
           </h2>
         </header>
 

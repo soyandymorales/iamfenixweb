@@ -3,14 +3,16 @@ import Link from "next/link";
 
 import atelierFigure from "@/public/images/atelier.png";
 import houseFigure from "@/public/images/house.png";
-import { ecosystem } from "@/content/entities/ecosystem";
+import { getEcosystem } from "@/content/entities/ecosystem";
 
 const FIGURES = {
   atelier: atelierFigure,
   house: houseFigure,
 };
 
-export default function TheEcosystem() {
+export default function TheEcosystem({ locale }) {
+  const ecosystem = getEcosystem(locale);
+
   return (
     <section
       className="ecosystem"

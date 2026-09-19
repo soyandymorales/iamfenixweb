@@ -1,6 +1,8 @@
-import { domains } from "@/content/domains/domains";
-import { diariosGateCards } from "@/content/diarios/welcome";
+import { getDomains } from "@/content/domains/domains";
+import { getDiariosGateCards } from "@/content/diarios/welcome";
 import { siteMetadata } from "@/content/metadata/site";
+import { localize, localizeHref, pickLocale } from "@/libs/locale";
+import { buildPageMetadata } from "@/libs/seo";
 
 const domainIdByRoute = {
   body: "body",
@@ -250,9 +252,134 @@ const weeks = {
   },
 };
 
-function cardForRoute(slug) {
+const weekMeta = {
+  es: {
+    body: { span: "Días 1–7", opening: "Siete días para habitar el cuerpo como templo." },
+    happeace: { span: "Días 8–14", opening: "Siete días para cultivar claridad, presencia y paz interior." },
+    dinero: { span: "Días 15–21", opening: "Siete días para convertir el capital en tiempo, libertad y legado." },
+  },
+  en: {
+    body: { span: "Days 1–7", opening: "Seven days to inhabit the body as a temple." },
+    happeace: { span: "Days 8–14", opening: "Seven days to cultivate clarity, presence, and inner peace." },
+    dinero: { span: "Days 15–21", opening: "Seven days to turn capital into time, freedom, and legacy." },
+  },
+};
+
+const practiceText = {
+  en: {
+    1: {
+      title: "I survived ruin and created Diarios del Fénix",
+      learns: "How the body becomes the first blueprint when life loses its order.",
+    },
+    2: {
+      title: "I detoxed my body and rescued my soul",
+      learns: "How to cleanse the body in order to return clarity to the soul.",
+    },
+    3: {
+      title: "I stopped eating in order to be filled",
+      learns: "How fasting can fill with presence instead of emptying the temple.",
+    },
+    4: {
+      title: "I avoid disease and raise my mental clarity",
+      learns: "How care of the body protects health and raises clarity.",
+    },
+    5: {
+      title: "Multiply my vital energy and inner peace",
+      learns: "How to cultivate vitality and peace from the same daily practice.",
+    },
+    6: {
+      title: "I healed my insomnia and recovered inner rest",
+      learns: "How to restore sleep and guard rest as architecture.",
+    },
+    7: {
+      title: "Master and unlock your creative power",
+      learns: "How an integral body sustains decades of creation and service.",
+    },
+    8: {
+      title: "I escaped the happiness trap",
+      learns: "How to stop chasing a mood and inhabit a peace that does not depend on the moment.",
+    },
+    9: {
+      title: "I silenced anxiety and mental noise",
+      learns: "How to still the inner noise so that presence can return.",
+    },
+    10: {
+      title: "The error that kept me in scarcity",
+      learns: "How to recognize the thought that narrows life and restore its breadth.",
+    },
+    11: {
+      title: "A manual for beginning to prosper today",
+      learns: "How to order the day so that prosperity is born of practice, not haste.",
+    },
+    12: {
+      title: "I overcame anxiety and found inner rest",
+      learns: "How to restore rest when anxiety has occupied the house.",
+    },
+    13: {
+      title: "I attracted better relationships and opportunities",
+      learns: "How an integral presence invites bonds and doors that deserve to remain.",
+    },
+    14: {
+      title: "This is how we work family success",
+      learns: "How to cultivate the home as the first place where peace is tested.",
+    },
+    15: {
+      title: "It brought me out of bankruptcy",
+      learns: "How a new order can lift capital from collapse and return its direction.",
+    },
+    16: {
+      title: "I recovered my source of abundance",
+      learns: "How to recognize the source again and administer it with stewardship.",
+    },
+    17: {
+      title: "From bankruptcy to financial peace",
+      learns: "How to pass from disorder into a peace that can be felt in the accounts.",
+    },
+    18: {
+      title: "Stewardship: the hidden financial education",
+      learns: "How stewardship teaches what money alone cannot form.",
+    },
+    19: {
+      title: "I build more financial peace",
+      learns: "How to build peace in capital by daily practice, not by haste.",
+    },
+    20: {
+      title: "The path to a financial miracle",
+      learns: "How to dispose capital so that it serves a miracle that already has direction.",
+    },
+    21: {
+      title: "Questions and answers: health, happiness, money",
+      learns: "How to close the 21 days by integrating body, peace, and capital into one architecture.",
+    },
+  },
+};
+
+const courseUi = {
+  es: {
+    journal: "El Diario",
+    day: "Día",
+    of: "de",
+    progress: "Tu progreso",
+    empty: "El plano de este día llega pronto.",
+    location: "Ubicación",
+  },
+  en: {
+    journal: "The Journal",
+    day: "Day",
+    of: "of",
+    progress: "Your progress",
+    empty: "This day’s blueprint arrives soon.",
+    location: "You are here",
+  },
+};
+
+export function getDiariosCourseUi(locale) {
+  return localize(courseUi, locale);
+}
+
+function cardForRoute(slug, locale) {
   const domainId = domainIdByRoute[slug];
-  return diariosGateCards.find((item) => item.id === domainId) ?? null;
+  return getDiariosGateCards(locale).find((item) => item.id === domainId) ?? null;
 }
 
 export function youtubeEmbedSrc(practice) {
@@ -267,15 +394,26 @@ export function youtubeThumbSrc(practice) {
   return `https://i.ytimg.com/vi/${practice.youtubeId}/mqdefault.jpg`;
 }
 
-export function getDiariosCourse(slug) {
+export function getDiariosCourse(slug, locale) {
+  const lang = pickLocale(locale);
   const week = weeks[slug];
   const domainId = domainIdByRoute[slug];
-  const domain = domains.find((item) => item.id === domainId);
-  const card = cardForRoute(slug);
+  const domain = getDomains(lang).find((item) => item.id === domainId);
+  const card = cardForRoute(slug, lang);
   if (!week || !domain || !card) return null;
+
+  const meta = localize(weekMeta, lang)[slug];
+  const overlay = lang === "en" ? practiceText.en : null;
 
   return {
     ...week,
+    href: localizeHref(week.href, lang),
+    span: meta.span,
+    opening: meta.opening,
+    practices: week.practices.map((practice) => ({
+      ...practice,
+      ...(overlay?.[practice.day] ?? {}),
+    })),
     numeral: domain.numeral,
     title: card.title,
     trademark: domain.trademark,
@@ -283,8 +421,8 @@ export function getDiariosCourse(slug) {
   };
 }
 
-export function getCourseLesson(slug, rawDia) {
-  const course = getDiariosCourse(slug);
+export function getCourseLesson(slug, rawDia, locale) {
+  const course = getDiariosCourse(slug, locale);
   if (!course) return null;
 
   const days = course.practices.map((practice) => practice.day);
@@ -297,7 +435,7 @@ export function getCourseLesson(slug, rawDia) {
 
   const routeIndex = routeSequence.indexOf(slug);
   const nextRoute = routeSequence[routeIndex + 1] ?? null;
-  const nextArchitecture = nextRoute ? cardForRoute(nextRoute) : null;
+  const nextArchitecture = nextRoute ? cardForRoute(nextRoute, locale) : null;
 
   return {
     course,
@@ -307,6 +445,8 @@ export function getCourseLesson(slug, rawDia) {
     nextArchitecture,
     weekIndex: index + 1,
     weekTotal: course.practices.length,
+    locale: pickLocale(locale),
+    ui: getDiariosCourseUi(locale),
   };
 }
 
@@ -314,28 +454,27 @@ export function lessonHref(courseHref, day) {
   return `${courseHref}?dia=${day}`;
 }
 
-export function diariosCourseMetadata(slug, rawDia) {
-  const lesson = getCourseLesson(slug, rawDia);
+export function diariosCourseMetadata(slug, rawDia, locale) {
+  const lang = pickLocale(locale);
+  const ui = getDiariosCourseUi(lang);
+  const lesson = getCourseLesson(slug, rawDia, lang);
   if (!lesson) {
-    return { title: `Diarios del Fénix — ${siteMetadata.name}` };
+    return buildPageMetadata({
+      locale: lang,
+      pathname: `/${slug}`,
+      title: `Diarios del Fénix — ${siteMetadata.name}`,
+    });
   }
 
   const { course, current } = lesson;
-  const pageUrl = `${siteMetadata.url}${lessonHref(course.href, current.day)}`;
-  const title = `Día ${current.day} — ${course.title}`;
+  const pathname = lessonHref(weeks[slug].href, current.day);
+  const title = `${ui.day} ${current.day} — ${course.title}`;
   const description = current.title || course.definition;
 
-  return {
+  return buildPageMetadata({
+    locale: lang,
+    pathname,
     title: `${title} — Diarios del Fénix`,
     description,
-    alternates: { canonical: pageUrl },
-    openGraph: {
-      title: `${title} — Diarios del Fénix`,
-      description,
-      url: pageUrl,
-      siteName: siteMetadata.brand,
-      locale: "es_CO",
-      type: "website",
-    },
-  };
+  });
 }

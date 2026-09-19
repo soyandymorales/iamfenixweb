@@ -1,9 +1,14 @@
 import Link from "next/link";
 
 import FenixMark from "@/components/ui/FenixMark";
-import { diariosGateCards, diariosWelcome } from "@/content/diarios/welcome";
+import { getDiariosGateCards, getDiariosWelcome } from "@/content/diarios/welcome";
+import { localizeHref } from "@/libs/locale";
 
-export default function DiariosWelcome() {
+export default function DiariosWelcome({ locale }) {
+  const diariosWelcome = getDiariosWelcome(locale);
+  const diariosGateCards = getDiariosGateCards(locale);
+  const homeHref = localizeHref("/", locale);
+
   return (
     <section
       className="section section--parchment section--viewport diarios-gate"
@@ -12,7 +17,7 @@ export default function DiariosWelcome() {
       <div className="container diarios-gate__inner">
         <header className="diarios-gate__header">
           <Link
-            href="/"
+            href={homeHref}
             className="diarios-gate__mark"
             aria-label={diariosWelcome.markLabel}
             data-reveal

@@ -1,26 +1,25 @@
 import Image from "next/image";
 
-import { domains } from "@/content/domains/domains";
+import { getDomains, getDomainsGateway } from "@/content/domains/domains";
 
-export default function HowItWorks() {
+export default function HowItWorks({ locale }) {
+  const domains = getDomains(locale);
+  const gateway = getDomainsGateway(locale);
+
   return (
     <section className="section dominios" aria-labelledby="dominios-title">
       <div className="container">
         <header className="dominios__masthead">
           <div className="dominios__edition" data-reveal>
-            <span>Como funciona</span>
-            <span>Diarios del Fénix</span>
+            <span>{gateway.kicker}</span>
+            <span>{gateway.product}</span>
           </div>
 
           <div className="dominios__intro">
             <h2 id="dominios-title" data-reveal>
-              Los <em>3</em>
-              <span>Dominios</span>
+              {gateway.title}
             </h2>
-            <p data-reveal>
-              Un cuerpo con energía. Una mente en calma. Un hogar lleno de amor.
-              Una obra de vida con propósito.
-            </p>
+            <p data-reveal>{gateway.intro}</p>
           </div>
         </header>
 
@@ -58,13 +57,9 @@ export default function HowItWorks() {
 
         <div className="dominios__closing">
           <div className="dominios__closing-body">
-            <p data-reveal>
-              Cada arquitectura se diseña alrededor de tu realidad. Tu familia.
-              Tu negocio. Tu vocación. Tus valores. No existen planos
-              universales — solo arquitecturas profundamente personales.
-            </p>
+            <p data-reveal>{gateway.closing}</p>
             <a href="#atelier" className="dominios__link" data-reveal>
-              <span>Comenzar arquitectura privada</span>
+              <span>{gateway.cta}</span>
               <span aria-hidden="true">↗</span>
             </a>
           </div>

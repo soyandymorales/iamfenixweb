@@ -1,4 +1,4 @@
-import { founder } from "@/content/entities/founder";
+import { getFounder } from "@/content/entities/founder";
 import { siteMetadata } from "@/content/metadata/site";
 import StoryFolio from "@/components/sections/StoryFolio";
 import { SocialIcon } from "@/components/ui/SocialLinks";
@@ -18,7 +18,8 @@ function emphasize(text, phrase) {
   );
 }
 
-export default function TheStory() {
+export default function TheStory({ locale }) {
+  const founder = getFounder(locale);
   const { story } = founder;
   const [openingLine, rebuildLine] = story.opening;
   const linkedinHref = siteMetadata.social.linkedin;
@@ -29,7 +30,7 @@ export default function TheStory() {
         <div className="story__column">
           <header className="story__masthead">
             <p className="story__kicker" data-reveal>
-              Historia — {founder.name}
+              {story.kicker} — {founder.name}
             </p>
 
             <h2 id="story-title" className="story__headline" data-reveal>
@@ -50,7 +51,7 @@ export default function TheStory() {
                 className="btn btn--solid story__cta"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${story.cta.label} — ${story.cta.destination} de ${founder.name}`}
+                aria-label={`${story.cta.label} — ${story.cta.destination}`}
               >
                 <SocialIcon id="linkedin" />
                 {story.cta.label}
@@ -59,7 +60,7 @@ export default function TheStory() {
           </div>
         </div>
 
-        <StoryFolio folio={story.folio} founderName={founder.name} />
+        <StoryFolio folio={story.folio} founderName={founder.name} locale={locale} />
       </div>
     </section>
   );

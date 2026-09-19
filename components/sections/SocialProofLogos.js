@@ -1,11 +1,13 @@
 import Image from "next/image";
-import { socialProof } from "@/content/metadata/metrics";
+import { getSocialProof } from "@/content/metadata/metrics";
+import { getHomeCopy } from "@/content/metadata/home";
 
-export default function SocialProofLogos() {
-  const { title, logos } = socialProof;
+export default function SocialProofLogos({ locale }) {
+  const { title, logos } = getSocialProof(locale);
+  const label = getHomeCopy(locale).proofLabel;
 
   return (
-    <section className="proof section--viewport" aria-label="Trayectoria">
+    <section className="proof section--viewport" aria-label={label}>
       <div className="container">
         <p className="proof__title" data-reveal>
           {title}

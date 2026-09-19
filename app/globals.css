@@ -187,16 +187,13 @@ button {
   inset-inline: 0;
   top: 0;
   z-index: var(--z-nav);
-  transition: background-color var(--motion-duration) var(--motion-easing),
-    border-color var(--motion-duration) var(--motion-easing);
-  border-bottom: 1px solid transparent;
+  transition: background-color var(--motion-duration) var(--motion-easing);
   background-color: transparent;
 }
 
 .site-header--scrolled {
   background-color: rgba(248, 246, 241, 0.92);
   backdrop-filter: blur(12px);
-  border-bottom-color: var(--color-hairline);
 }
 
 @media (max-width: 768px) {
@@ -209,17 +206,58 @@ button {
 .site-header--over-story {
   background-color: transparent;
   backdrop-filter: none;
-  border-bottom-color: transparent;
+}
+
+.site-header__tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
 }
 
 .site-header--over-story .site-header__nav .site-header__link,
-.site-header--over-story .site-header__toggle {
+.site-header--over-story .site-header__toggle,
+.site-header--over-story .language-toggle__link {
   color: var(--color-chalk-white);
 }
 
 .site-header--over-story .site-header__nav .site-header__link:hover,
-.site-header--over-story .site-header__toggle:hover {
+.site-header--over-story .site-header__toggle:hover,
+.site-header--over-story .language-toggle__link:hover,
+.site-header--over-story .language-toggle__link[aria-current="true"] {
   color: var(--color-ember);
+}
+
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  letter-spacing: 0.06em;
+}
+
+.language-toggle__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.language-toggle__rule {
+  color: var(--color-ash-stone);
+}
+
+.language-toggle__link {
+  color: var(--color-ash-stone);
+  transition: color var(--motion-duration-fast) var(--motion-easing);
+}
+
+.language-toggle__link:hover,
+.language-toggle__link[aria-current="true"] {
+  color: var(--color-ember);
+}
+
+.footer__colophon .language-toggle {
+  margin-top: var(--space-16);
 }
 
 /* Full-bleed con gutters: el logo y la navegación anclan a los bordes del
@@ -469,7 +507,7 @@ button {
   font-style: normal;
   line-height: var(--leading-body);
   color: var(--color-charcoal);
-  white-space: nowrap;
+  white-space: pre-line;
   -webkit-font-smoothing: auto;
 }
 

@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import { getHomeCopy } from "@/content/metadata/home";
+import { useLocale } from "@/hooks/useLocale";
 import { canAffordHeavyMotion, simplifyMotion } from "@/lib/motion";
 
 // Heavy WebGL piece: client-only, and only near the viewport.
@@ -13,6 +15,8 @@ const FenixDiagramCanvas = dynamic(() => import("./FenixDiagramCanvas"), {
 const PHOENIX_PLATE = encodeURI("/images/fenixiso_Mesa de trabajo 1.svg");
 
 export default function ArquitecturaFenix() {
+  const locale = useLocale();
+  const copy = getHomeCopy(locale).arquitectura;
   const sectionRef = useRef(null);
   const [inView, setInView] = useState(false);
 
@@ -57,7 +61,7 @@ export default function ArquitecturaFenix() {
       <div className="container">
         <header className="section-header section-header--center">
           <span id="arquitectura-label" className="eyebrow" data-reveal>
-            Arquitectura Fénix
+            {copy.eyebrow}
           </span>
         </header>
 
@@ -71,8 +75,8 @@ export default function ArquitecturaFenix() {
           />
           {inView ? <FenixDiagramCanvas /> : null}
           <div className="arquitectura__canvas-labels">
-            <span>Desalineación y Fragmentación</span>
-            <span className="arquitectura__accent">Alineación y Integración</span>
+            <span>{copy.misalignment}</span>
+            <span className="arquitectura__accent">{copy.alignment}</span>
           </div>
         </div>
       </div>

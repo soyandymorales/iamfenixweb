@@ -1,7 +1,7 @@
-import { theProblem } from "@/content/essays/the-problem";
+import { getTheProblem } from "@/content/essays/the-problem";
 
-export default function TheProblem() {
-  const { eyebrow, title, exterior, interior } = theProblem;
+export default function TheProblem({ locale }) {
+  const { eyebrow, product, title, exterior, interior } = getTheProblem(locale);
   const total = String(interior.fragments.length).padStart(2, "0");
 
   return (
@@ -13,12 +13,12 @@ export default function TheProblem() {
         <header className="problem__masthead">
           <div className="problem__edition" data-reveal>
             <span>{eyebrow}</span>
-            <span>Diarios del Fénix</span>
+            <span>{product}</span>
           </div>
 
           <div className="problem__intro">
             <h2 id="problem-title" data-reveal>
-              {title.lead} <em>{title.accent}</em>
+              {title.lead} <em>{title.accent}</em>{" "}
               <span>{title.rest}</span>
             </h2>
             <p data-reveal>{exterior.lines.join(" ")}</p>
