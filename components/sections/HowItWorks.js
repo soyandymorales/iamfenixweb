@@ -54,16 +54,6 @@ export default function HowItWorks({ locale }) {
             </article>
           ))}
         </div>
-
-        <div className="dominios__closing">
-          <div className="dominios__closing-body">
-            <p data-reveal>{gateway.closing}</p>
-            <a href="#atelier" className="dominios__link" data-reveal>
-              <span>{gateway.cta}</span>
-              <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );

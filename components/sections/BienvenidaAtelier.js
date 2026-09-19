@@ -17,9 +17,6 @@ export default function BienvenidaAtelier({ locale }) {
           <h2 id="bienvenida-title" data-reveal>
             {atelierWelcome.title}
           </h2>
-          <p className="section-lead" data-reveal>
-            {atelierWelcome.lead}
-          </p>
         </header>
 
         <div className="bienvenida__stage">
@@ -46,7 +43,6 @@ export default function BienvenidaAtelier({ locale }) {
               key={action.label}
               href={action.href}
               className={`btn btn--${action.variant}`}
-              data-reveal
             >
               {action.label}
             </a>

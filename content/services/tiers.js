@@ -17,7 +17,6 @@ const welcome = {
   es: {
     eyebrow: "El Atelier",
     title: "Bienvenida al Atelier",
-    lead: "Este video te orienta antes de elegir tu arquitectura.",
     videoTitle: "Bienvenida al Atelier",
     embedSrc: "",
     actions: [
@@ -28,7 +27,6 @@ const welcome = {
   en: {
     eyebrow: "The Atelier",
     title: "Welcome to the Atelier",
-    lead: "This film orients you before you choose your architecture.",
     videoTitle: "Welcome to the Atelier",
     embedSrc: "",
     actions: [

@@ -7,9 +7,6 @@ const gateway = {
     product: "Diarios del Fénix",
     intro:
       "Un cuerpo con energía. Una mente en calma. Un hogar lleno de amor. Una obra de vida con propósito.",
-    closing:
-      "Cada arquitectura se diseña alrededor de tu realidad. Tu familia. Tu negocio. Tu vocación. Tus valores. No existen planos universales — solo arquitecturas profundamente personales.",
-    cta: "Comenzar arquitectura privada",
   },
   en: {
     kicker: "How it works",
@@ -17,9 +14,6 @@ const gateway = {
     product: "Diarios del Fénix",
     intro:
       "A body with energy. A mind at rest. A home filled with love. A life’s work with purpose.",
-    closing:
-      "Each architecture is designed around your reality. Your family. Your work. Your vocation. Your values. There are no universal blueprints — only architectures that are deeply personal.",
-    cta: "Begin private architecture",
   },
 };
 

@@ -2,7 +2,6 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import LayoutClient from "@/components/layout/LayoutClient";
 import BienvenidaAtelier from "@/components/sections/BienvenidaAtelier";
-import TheProblem from "@/components/sections/TheProblem";
 import HowItWorks from "@/components/sections/HowItWorks";
 import TheAtelier from "@/components/sections/TheAtelier";
 
@@ -32,7 +31,6 @@ export default async function AtelierPage({ params }) {
 
       <main>
         <BienvenidaAtelier locale={locale} />
-        <TheProblem locale={locale} />
         <HowItWorks locale={locale} />
         <TheAtelier locale={locale} />
       </main>
