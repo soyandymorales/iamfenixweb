@@ -1577,72 +1577,12 @@ button {
 
 .dominios {
   position: relative;
-  overflow: hidden;
-  background-color: var(--color-warm-parchment);
-  border-top: 1px solid var(--color-hairline);
-}
-
-.dominios__masthead {
-  margin-bottom: clamp(4rem, 8vw, 7.5rem);
-}
-
-.dominios__edition {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-block: var(--space-16);
-  border-bottom: 1px solid var(--color-hairline);
-  font-size: var(--text-micro);
-  font-weight: 500;
-  letter-spacing: var(--tracking-eyebrow);
-  text-transform: uppercase;
-}
-
-.dominios__intro {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(17rem, 1fr);
-  gap: var(--space-64);
-  align-items: end;
-  padding-top: clamp(2.5rem, 6vw, 5.5rem);
-}
-
-.dominios__intro h2 {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 0.18em;
-  max-width: 8ch;
-  font-size: clamp(4.75rem, 10.5vw, 10.5rem);
-  font-weight: 400;
-  letter-spacing: -0.065em;
-  line-height: 0.76;
-}
-
-.dominios__intro h2 em {
-  color: var(--color-ember);
-  font-family: var(--font-display);
-  font-size: 0.82em;
-  font-weight: 400;
-}
-
-.dominios__intro h2 span {
-  flex-basis: 100%;
-  padding-left: 0.42em;
-}
-
-.dominios__intro > p {
-  max-width: 28rem;
-  color: var(--color-ash-stone);
-  font-family: var(--font-body);
-  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
-  line-height: 1.45;
 }
 
 .dominios__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1rem, 2.4vw, 2.25rem);
-  margin-bottom: clamp(5rem, 10vw, 9rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-24);
 }
 
 .dominio {
@@ -1655,6 +1595,7 @@ button {
   display: flex;
   justify-content: space-between;
   padding-bottom: var(--space-16);
+  font-family: var(--font-body);
   font-size: var(--text-micro);
   font-weight: 500;
   letter-spacing: var(--tracking-eyebrow);
@@ -1680,8 +1621,8 @@ button {
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    rgba(20, 18, 16, 0.52) 0%,
-    rgba(20, 18, 16, 0.18) 28%,
+    color-mix(in srgb, var(--color-charcoal) 52%, transparent) 0%,
+    color-mix(in srgb, var(--color-charcoal) 18%, transparent) 28%,
     transparent 48%
   );
 }
@@ -1706,17 +1647,6 @@ button {
   object-position: center 42%;
 }
 
-.dominio__content {
-  position: relative;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding-top: var(--space-24);
-  padding-right: 0;
-  padding-bottom: var(--space-32);
-  padding-left: 0;
-}
-
 @media (hover: hover) and (pointer: fine) {
   .dominio:hover .dominio__photo {
     transform: scale(var(--image-scale-hover));
@@ -1728,9 +1658,6 @@ button {
   top: 0;
   left: 0;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
   max-width: 90%;
   padding: var(--space-16);
   pointer-events: none;
@@ -1739,69 +1666,19 @@ button {
 .dominio__name {
   max-width: 13ch;
   color: var(--color-chalk-white);
-  font-size: clamp(1.5rem, 2.2vw, 2.15rem);
-  font-weight: 400;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
-}
-
-.dominio__tm {
-  font-size: var(--text-micro);
-  letter-spacing: var(--tracking-eyebrow);
-  text-transform: uppercase;
-  color: var(--color-chalk-white);
-  opacity: 0.78;
+  font-size: var(--text-h3);
+  line-height: var(--leading-tight);
 }
 
 .dominio__definition {
-  width: 100%;
-  max-width: none;
+  padding-top: var(--space-24);
   color: var(--color-ash-stone);
 }
 
-@media (max-width: 900px) {
-  .dominios__intro {
-    grid-template-columns: 1fr;
-  }
-
-  .dominios__intro > p {
-    margin-left: auto;
-  }
-
+@media (max-width: 768px) {
   .dominios__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .dominio:last-child {
-    grid-column: 2;
-  }
-
-}
-
-@media (max-width: 640px) {
-  .dominios__edition span:last-child {
-    display: none;
-  }
-
-  .dominios__intro {
-    gap: var(--space-48);
-  }
-
-  .dominios__intro h2 {
-    font-size: clamp(4rem, 24vw, 6.5rem);
-  }
-
-  .dominios__intro h2 span {
-    padding-left: 0;
-  }
-
-  .dominios__grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-64);
-  }
-
-  .dominio:last-child {
-    grid-column: auto;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-32);
   }
 }
 
@@ -2680,24 +2557,6 @@ button {
 /* ---------------------------------------------------------------------------
    The Atelier
 --------------------------------------------------------------------------- */
-
-.atelier__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-24);
-}
-
-@media (max-width: 1024px) {
-  .atelier__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .atelier__grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 .tier-card {
   display: flex;

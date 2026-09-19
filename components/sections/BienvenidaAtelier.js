@@ -38,15 +38,21 @@ export default function BienvenidaAtelier({ locale }) {
         </div>
 
         <div className="bienvenida__actions">
-          {atelierWelcome.actions.map((action) => (
-            <a
-              key={action.label}
-              href={action.href}
-              className={`btn btn--${action.variant}`}
-            >
-              {action.label}
-            </a>
-          ))}
+          {atelierWelcome.actions.map((action) => {
+            const isExternal = action.href.startsWith("http");
+            return (
+              <a
+                key={action.label}
+                href={action.href}
+                className={`btn btn--${action.variant}`}
+                {...(isExternal
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
+                {action.label}
+              </a>
+            );
+          })}
         </div>
       </div>
     </section>

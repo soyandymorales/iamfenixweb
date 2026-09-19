@@ -16,12 +16,12 @@ const intro = {
 const welcome = {
   es: {
     eyebrow: "El Atelier",
-    title: "Bienvenida al Atelier",
+    title: "Bienvenido al Atelier",
     videoTitle: "Bienvenida al Atelier",
     embedSrc: "",
     actions: [
       { label: "Diarios del Fénix", href: "/#empieza-aqui", variant: "outline" },
-      { label: "Agenda Privado", href: "#atelier", variant: "solid" },
+      { label: "Agenda Privado", href: "https://wa.link/ou2gi0", variant: "solid" },
     ],
   },
   en: {
@@ -31,7 +31,7 @@ const welcome = {
     embedSrc: "",
     actions: [
       { label: "Diarios del Fénix", href: "/#empieza-aqui", variant: "outline" },
-      { label: "Private Agenda", href: "#atelier", variant: "solid" },
+      { label: "Private Agenda", href: "https://wa.link/ou2gi0", variant: "solid" },
     ],
   },
 };

@@ -7,20 +7,21 @@ export default function HowItWorks({ locale }) {
   const gateway = getDomainsGateway(locale);
 
   return (
-    <section className="section dominios" aria-labelledby="dominios-title">
+    <section
+      className="section section--parchment section--hairline-top dominios"
+      aria-labelledby="dominios-title"
+    >
       <div className="container">
-        <header className="dominios__masthead">
-          <div className="dominios__edition" data-reveal>
-            <span>{gateway.kicker}</span>
-            <span>{gateway.product}</span>
-          </div>
-
-          <div className="dominios__intro">
-            <h2 id="dominios-title" data-reveal>
-              {gateway.title}
-            </h2>
-            <p data-reveal>{gateway.intro}</p>
-          </div>
+        <header className="section-header section-header--center">
+          <span className="eyebrow" data-reveal>
+            {gateway.kicker}
+          </span>
+          <h2 id="dominios-title" data-reveal>
+            {gateway.title}
+          </h2>
+          <p className="section-lead" data-reveal>
+            {gateway.intro}
+          </p>
         </header>
 
         <div className="dominios__grid">
@@ -44,13 +45,10 @@ export default function HowItWorks({ locale }) {
                   className="dominio__photo"
                 />
                 <div className="dominio__heading">
-                  <h3 className="dominio__name">{domain.name}</h3>
-                  <p className="dominio__tm">{domain.trademark}</p>
+                  <h3 className="dominio__name">{domain.trademark}</h3>
                 </div>
               </div>
-              <div className="dominio__content">
-                <p className="dominio__definition">{domain.definition}</p>
-              </div>
+              <p className="dominio__definition">{domain.definition}</p>
             </article>
           ))}
         </div>

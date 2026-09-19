@@ -2,7 +2,7 @@ import { localize } from "@/libs/locale";
 
 const gateway = {
   es: {
-    kicker: "Como funciona",
+    kicker: "Cómo funciona",
     title: "Las 3 Arquitecturas",
     product: "Diarios del Fénix",
     intro:
