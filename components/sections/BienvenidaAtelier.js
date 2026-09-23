@@ -1,4 +1,5 @@
 import { getAtelierWelcome } from "@/content/services/tiers";
+import { localizeHref } from "@/libs/locale";
 
 export default function BienvenidaAtelier({ locale }) {
   const atelierWelcome = getAtelierWelcome(locale);
@@ -43,7 +44,7 @@ export default function BienvenidaAtelier({ locale }) {
             return (
               <a
                 key={action.label}
-                href={action.href}
+                href={isExternal ? action.href : localizeHref(action.href, locale)}
                 className={`btn btn--${action.variant}`}
                 {...(isExternal
                   ? { target: "_blank", rel: "noopener noreferrer" }

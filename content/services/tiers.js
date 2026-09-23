@@ -20,7 +20,7 @@ const welcome = {
     videoTitle: "Bienvenida al Atelier",
     embedSrc: "",
     actions: [
-      { label: "Diarios del Fénix", href: "/#empieza-aqui", variant: "outline" },
+      { label: "Diarios del Fénix", href: "/diarios", variant: "outline" },
       { label: "Agenda Privado", href: "https://wa.link/ou2gi0", variant: "solid" },
     ],
   },
@@ -30,7 +30,7 @@ const welcome = {
     videoTitle: "Welcome to the Atelier",
     embedSrc: "",
     actions: [
-      { label: "Diarios del Fénix", href: "/#empieza-aqui", variant: "outline" },
+      { label: "Diarios del Fénix", href: "/diarios", variant: "outline" },
       { label: "Private Agenda", href: "https://wa.link/ou2gi0", variant: "solid" },
     ],
   },

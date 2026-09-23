@@ -92,18 +92,33 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
+    let frame = 0;
     const alignHash = () => {
       const id = decodeURIComponent(window.location.hash.replace(/^#/, ""));
       if (id) scrollToAnchor(id, "auto");
+      document.documentElement.style.scrollBehavior = "";
     };
 
-    const frame = window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(alignHash);
-    });
+    const schedule = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(alignHash);
+      });
+    };
+
+    schedule();
     window.addEventListener("hashchange", alignHash);
+    window.addEventListener("load", schedule);
+    let cancelled = false;
+    document.fonts?.ready?.then(() => {
+      if (!cancelled) schedule();
+    });
+
     return () => {
+      cancelled = true;
       window.cancelAnimationFrame(frame);
       window.removeEventListener("hashchange", alignHash);
+      window.removeEventListener("load", schedule);
     };
   }, []);
 

@@ -57,7 +57,7 @@ export default async function RootLayout({ children }) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add("js");`,
+            __html: `document.documentElement.classList.add("js");if(location.hash==="#empieza-aqui"){document.documentElement.style.scrollBehavior="auto";}`,
           }}
         />
       </head>

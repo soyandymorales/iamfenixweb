@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { getHomeCopy } from "@/content/metadata/home";
 import { siteMetadata } from "@/content/metadata/site";
 import { useLocale } from "@/hooks/useLocale";
+import { localizeHref } from "@/libs/locale";
 import { prefersReducedMotion, simplifyMotion } from "@/lib/motion";
 
 gsap.registerPlugin(useGSAP);
@@ -25,6 +26,7 @@ const SOCIAL_LINKS = [
 export default function Hero() {
   const locale = useLocale();
   const copy = getHomeCopy(locale);
+  const diariosHref = localizeHref("/diarios", locale);
   const rootRef = useRef(null);
 
   useGSAP(
@@ -120,7 +122,7 @@ export default function Hero() {
         </p>
 
         <div className="hero__bar-cta" data-hero-cta>
-          <a href="#empieza-aqui" className="btn btn--solid">
+          <a href={diariosHref} className="btn btn--solid">
             {copy.cta}
           </a>
           <span className="hero__bar-note">{copy.ctaNote}</span>

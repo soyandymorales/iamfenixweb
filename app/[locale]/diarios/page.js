@@ -1,8 +1,12 @@
+import { cookies } from "next/headers";
+
 import LayoutClient from "@/components/layout/LayoutClient";
+import DiariosEntry from "@/components/sections/DiariosEntry";
 import DiariosWelcome from "@/components/sections/DiariosWelcome";
 
 import { getDiariosWelcome } from "@/content/diarios/welcome";
 import { siteMetadata } from "@/content/metadata/site";
+import { DIARIOS_ACCESS_COOKIE } from "@/libs/diarios-access";
 import { pickLocale } from "@/libs/locale";
 import { buildBreadcrumbSchema } from "@/libs/schema/breadcrumb";
 import { buildDiariosCourseSchema } from "@/libs/schema/course";
@@ -22,6 +26,8 @@ export async function generateMetadata({ params }) {
 export default async function DiariosPage({ params }) {
   const { locale: rawLocale } = await params;
   const locale = pickLocale(rawLocale);
+  const jar = await cookies();
+  const unlocked = jar.get(DIARIOS_ACCESS_COOKIE)?.value === "1";
   const schemas = [
     buildDiariosCourseSchema(locale),
     buildBreadcrumbSchema([
@@ -41,7 +47,9 @@ export default async function DiariosPage({ params }) {
       ))}
 
       <main>
-        <DiariosWelcome locale={locale} />
+        <DiariosEntry unlocked={unlocked}>
+          <DiariosWelcome locale={locale} />
+        </DiariosEntry>
       </main>
     </LayoutClient>
   );

@@ -3366,6 +3366,8 @@ button {
   width: 100%;
   padding-block: 0;
   box-sizing: border-box;
+  /* Anula el scroll-padding del header: la sección ocupa el viewport. */
+  scroll-margin-top: calc(var(--header-height) * -1);
 }
 
 .cta-final.section--viewport {
@@ -3392,6 +3394,27 @@ button {
 @media (max-width: 768px) {
   .cta-final.section--viewport {
     height: auto;
+  }
+}
+
+html:has(.cta-final--solo),
+body:has(.cta-final--solo) {
+  overflow: hidden;
+  height: var(--height-viewport);
+}
+
+.cta-final--solo.section--viewport {
+  height: var(--height-viewport);
+  min-height: var(--height-viewport);
+}
+
+.cta-final--solo .cta-final__inner {
+  padding-block: var(--space-48);
+}
+
+@media (max-width: 768px) {
+  .cta-final--solo.section--viewport {
+    height: var(--height-viewport);
   }
 }
 
