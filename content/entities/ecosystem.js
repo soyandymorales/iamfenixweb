@@ -10,7 +10,7 @@ const copy = {
         room: "Atelier",
         kicker: "Práctica privada",
         description:
-          "Arquitectura personalizada para fundadores, ejecutivos y atletas.",
+          "Arquitectura humana personalizada para fundadores, ejecutivos y atletas.",
         cta: "Entrar",
         href: "/atelier",
         illustration: {
