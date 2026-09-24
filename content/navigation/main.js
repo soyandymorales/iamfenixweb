@@ -14,8 +14,8 @@ const main = {
 };
 
 const cta = {
-  es: { label: "Empieza Aquí", href: "/#empieza-aqui" },
-  en: { label: "Begin Here", href: "/#empieza-aqui" },
+  es: { label: "Empieza Aquí", href: "/diarios" },
+  en: { label: "Begin Here", href: "/diarios" },
 };
 
 const footer = {
