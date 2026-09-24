@@ -13,12 +13,15 @@ const intro = {
   },
 };
 
+const ATELIER_WELCOME_EMBED =
+  "https://www.youtube-nocookie.com/embed/gNGuCj7PUdM?rel=0";
+
 const welcome = {
   es: {
     eyebrow: "El Atelier",
     title: "Bienvenido al Atelier",
     videoTitle: "Bienvenida al Atelier",
-    embedSrc: "",
+    embedSrc: ATELIER_WELCOME_EMBED,
     actions: [
       { label: "Diarios del Fénix", href: "/diarios", variant: "outline" },
       { label: "Agenda Privado", href: "https://wa.link/ou2gi0", variant: "solid" },
@@ -28,7 +31,7 @@ const welcome = {
     eyebrow: "The Atelier",
     title: "Welcome to the Atelier",
     videoTitle: "Welcome to the Atelier",
-    embedSrc: "",
+    embedSrc: ATELIER_WELCOME_EMBED,
     actions: [
       { label: "Diarios del Fénix", href: "/diarios", variant: "outline" },
       { label: "Private Agenda", href: "https://wa.link/ou2gi0", variant: "solid" },
