@@ -45,7 +45,9 @@ export default function HowItWorks({ locale }) {
                   className="dominio__photo"
                 />
                 <div className="dominio__heading">
-                  <h3 className="dominio__name">{domain.trademark}</h3>
+                  <h3 className="dominio__name">
+                    {domain.trademark.replace(" ", "\n")}
+                  </h3>
                 </div>
               </div>
               <p className="dominio__definition">{domain.definition}</p>

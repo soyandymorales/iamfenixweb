@@ -1664,10 +1664,10 @@ button {
 }
 
 .dominio__name {
-  max-width: 13ch;
   color: var(--color-chalk-white);
   font-size: var(--text-h3);
   line-height: var(--leading-tight);
+  white-space: pre;
 }
 
 .dominio__definition {
