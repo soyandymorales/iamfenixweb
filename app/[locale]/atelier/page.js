@@ -3,6 +3,7 @@ import Footer from "@/components/layout/Footer";
 import LayoutClient from "@/components/layout/LayoutClient";
 import BienvenidaAtelier from "@/components/sections/BienvenidaAtelier";
 import HowItWorks from "@/components/sections/HowItWorks";
+import AtelierOffers from "@/components/sections/AtelierOffers";
 
 import { siteMetadata } from "@/content/metadata/site";
 import { getAtelierIntro } from "@/content/services/tiers";
@@ -31,6 +32,7 @@ export default async function AtelierPage({ params }) {
       <main>
         <BienvenidaAtelier locale={locale} />
         <HowItWorks locale={locale} />
+        <AtelierOffers locale={locale} />
       </main>
 
       <Footer />

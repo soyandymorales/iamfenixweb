@@ -2559,93 +2559,287 @@ button {
    The Atelier
 --------------------------------------------------------------------------- */
 
+.atelier-offers {
+  background-color: var(--color-chalk-white);
+}
+
+.atelier-offers__header {
+  display: block;
+  max-width: none;
+  margin-bottom: var(--space-80);
+}
+
+.atelier-offers__edition {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-16);
+  border-bottom: var(--border-hairline) solid var(--color-hairline);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-ash-stone);
+}
+
+.atelier-offers__masthead {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--space-64);
+  padding-block: var(--space-64);
+  border-bottom: var(--border-hairline) solid var(--color-hairline);
+}
+
+.atelier-offers__masthead h2 {
+  max-width: var(--reading-body);
+  font-size: var(--text-chamber);
+  letter-spacing: -0.04em;
+}
+
+.atelier-offers__masthead .section-lead {
+  align-self: end;
+  max-width: var(--reading-card);
+}
+
+.atelier-offers__grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: stretch;
+  gap: var(--space-24);
+}
+
+.atelier-offers__grid .tier-card:nth-child(-n + 2) {
+  grid-column: span 3;
+}
+
+.atelier-offers__grid .tier-card:nth-child(n + 3) {
+  grid-column: span 2;
+}
+
 .tier-card {
   display: flex;
   flex-direction: column;
   gap: var(--space-24);
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
   padding: var(--space-32);
   background-color: var(--color-chalk-white);
-  border: 1px solid var(--color-hairline);
+  border: var(--border-hairline) solid var(--color-hairline);
   border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
 }
 
-.tier-card__mission {
-  font-size: var(--text-micro);
-  letter-spacing: var(--tracking-eyebrow);
-  text-transform: uppercase;
-  color: var(--color-ember);
+.tier-card--private {
+  background-color: var(--color-charcoal);
+  color: var(--color-chalk-white);
+  border-color: var(--color-hairline-on-dark);
 }
 
-.tier-card__name {
-  font-size: var(--text-h3);
-}
-
-.tier-card__variant {
-  font-size: var(--text-small);
-  color: var(--color-ash-stone);
-  letter-spacing: var(--tracking-wide);
-}
-
-.tier-card__facts {
+.tier-card__header {
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
-  margin: 0;
-  padding-block: var(--space-16);
-  border-block: 1px solid var(--color-line-soft);
 }
 
-.tier-card__fact {
+.tier-card__folio {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: var(--space-16);
-  font-size: var(--text-small);
-}
-
-.tier-card__fact dt {
-  color: var(--color-ash-stone);
-}
-
-.tier-card__fact dd {
-  margin: 0;
-  text-align: right;
-}
-
-.tier-card__domains {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  flex: 1;
-}
-
-.tier-card__domain-label {
-  display: block;
+  min-height: var(--space-24);
   font-size: var(--text-micro);
-  letter-spacing: var(--tracking-wide);
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--color-ash-stone);
-  margin-bottom: 2px;
 }
 
-.tier-card__domain-copy {
+.tier-card__folio span:first-child {
+  color: var(--color-ember);
+}
+
+.tier-card--private .tier-card__folio {
+  color: var(--color-limestone);
+}
+
+.tier-card__name {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: var(--text-display);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.tier-card--private .tier-card__name {
+  color: var(--color-chalk-white);
+}
+
+.tier-card--private .tier-card__brand {
+  display: block;
+  color: var(--color-ember);
+}
+
+.tier-card__cadence {
   font-size: var(--text-small);
+  color: var(--color-ash-stone);
+  letter-spacing: var(--tracking-wide);
+}
+
+.tier-card--private .tier-card__cadence {
+  color: var(--color-limestone);
+}
+
+.tier-card__promise {
+  color: var(--color-ash-stone);
+}
+
+.tier-card--private .tier-card__promise {
+  color: var(--color-warm-parchment);
+}
+
+.tier-card__details {
+  padding-block: var(--space-16);
+  border-block: var(--border-hairline) solid var(--color-line-soft);
+}
+
+.tier-card--private .tier-card__details {
+  border-color: var(--color-line-on-dark);
+}
+
+.tier-card__details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  list-style: none;
   color: var(--color-charcoal);
+  cursor: pointer;
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+}
+
+.tier-card__details summary::-webkit-details-marker {
+  display: none;
+}
+
+.tier-card__details summary::after {
+  content: "+";
+  color: var(--color-ember);
+}
+
+.tier-card__details[open] summary::after {
+  content: "−";
+}
+
+.tier-card--private .tier-card__details summary {
+  color: var(--color-chalk-white);
+}
+
+.tier-card__features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: var(--space-24) 0 0;
+  padding-left: var(--space-24);
+  color: var(--color-ash-stone);
+  font-size: var(--text-small);
+}
+
+.tier-card__features li::marker {
+  color: var(--color-ember);
+}
+
+.tier-card--private .tier-card__features {
+  color: var(--color-limestone);
+}
+
+.tier-card__boundary {
+  margin-top: var(--space-24);
+  padding-left: var(--space-16);
+  border-left: var(--border-hairline) solid var(--color-line);
+  font-size: var(--text-small);
+  font-style: italic;
+  color: var(--color-ash-stone);
+}
+
+.tier-card--private .tier-card__boundary {
+  border-color: var(--color-line-on-dark);
+  color: var(--color-limestone);
 }
 
 .tier-card__investment {
+  margin-top: auto;
+  font-family: var(--font-display);
   font-size: var(--text-body);
 }
 
 .tier-card__investment span {
   display: block;
+  margin-bottom: var(--space-8);
+  font-family: var(--font-body);
   font-size: var(--text-micro);
+  font-weight: 500;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--color-ash-stone);
-  margin-bottom: 2px;
+}
+
+.tier-card--private .tier-card__investment span {
+  color: var(--color-limestone);
+}
+
+.tier-card .btn {
+  width: 100%;
+}
+
+.tier-card:not(.tier-card--private) .btn--outline {
+  border-color: var(--color-ember);
+  background-color: var(--color-ember);
+  color: var(--color-chalk-white);
+}
+
+.tier-card:not(.tier-card--private) .btn--outline:hover,
+.tier-card:not(.tier-card--private) .btn--outline:focus-visible {
+  border-color: var(--color-burnt-cedar);
+  background-color: var(--color-burnt-cedar);
+  color: var(--color-chalk-white);
+}
+
+@media (max-width: 1023px) {
+  .atelier-offers__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .atelier-offers__grid .tier-card:nth-child(n) {
+    grid-column: auto;
+  }
+
+  .atelier-offers__grid .tier-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .atelier-offers__header {
+    margin-bottom: var(--space-64);
+  }
+
+  .atelier-offers__masthead {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-24);
+    padding-block: var(--space-48);
+  }
+
+  .atelier-offers__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .atelier-offers__grid .tier-card:last-child {
+    grid-column: auto;
+  }
 }
 
 /* ---------------------------------------------------------------------------

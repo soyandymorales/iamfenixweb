@@ -39,135 +39,222 @@ const welcome = {
   },
 };
 
-const facts = {
+const offersIntro = {
   es: {
-    role: "Rol",
-    outcome: "Resultado",
-    duration: "Duración",
+    eyebrow: "Cómo funciona cada nivel de profundidad",
+    title: "Fénix Atelier",
+    intro:
+      "Me cuentas tu problema y si es un problema que he resuelto podemos avanzar en la solución que mejor funcione para ti.",
     investment: "Inversión",
+    includes: "Lo que incluye",
+    applicationOnly: "Solo por aplicación",
   },
   en: {
-    role: "Role",
-    outcome: "Outcome",
-    duration: "Duration",
+    eyebrow: "How each level of depth works",
+    title: "Fénix Atelier",
+    intro:
+      "Tell me about your problem, and if it is one I have solved, we can move forward with the solution that works best for you.",
     investment: "Investment",
+    includes: "What is included",
+    applicationOnly: "Application only",
   },
-};
-
-const domainLabels = {
-  es: [
-    { key: "body", label: "Arquitectura del Cuerpo" },
-    { key: "happeace", label: "Arquitectura Happeace" },
-    { key: "money", label: "Arquitectura del Dinero" },
-  ],
-  en: [
-    { key: "body", label: "Body Architecture" },
-    { key: "happeace", label: "Happeace Architecture" },
-    { key: "money", label: "Money Architecture" },
-  ],
 };
 
 const tiersBase = [
   {
-    id: "consultation",
-    duration: "90 min",
-    investment: "US$197",
+    id: "circle",
+    numeral: "01",
+    investment: "US$97 / mes",
+    href: "https://wa.link/h5xkb0",
+    applicationOnly: false,
+  },
+  {
+    id: "clarity",
+    numeral: "02",
+    investment: "US$247",
+    href: "https://wa.link/gcu7nq",
+    applicationOnly: false,
   },
   {
     id: "blueprint",
-    duration: "4 semanas",
-    durationEn: "4 weeks",
+    numeral: "03",
     investment: "US$997",
+    href: "https://wa.link/99u64r",
+    applicationOnly: true,
   },
   {
     id: "build",
-    duration: "12 semanas",
-    durationEn: "12 weeks",
+    numeral: "04",
     investment: "US$2,997",
+    href: "https://wa.link/rsumnj",
+    applicationOnly: true,
+  },
+  {
+    id: "private-office",
+    numeral: "05",
+    investment: "US$3,997",
+    href: "https://wa.link/36uoah",
+    applicationOnly: true,
   },
 ];
 
 const tiersCopy = {
   es: {
-    consultation: {
-      tier: "Arquitecto",
-      variant: "Consulta",
-      role: "Arquitecto",
-      mission: "Diagnosticar",
-      outcome: "Claridad",
-      cta: "Solicitar Consulta",
-      domains: {
-        body: "Identifica los cuellos de botella que limitan tu vitalidad.",
-        happeace: "Identifica lo que perturba tu paz.",
-        money: "Identifica los puntos ciegos financieros.",
-      },
+    circle: {
+      tier: "Fénix Circle",
+      cadence: "Membresía grupal · mensual",
+      promise:
+        "Aprende, y avanza en una comunidad que construye con intención.",
+      features: [
+        "Acceso al catálogo digital de House incluido en la membresía.",
+        "Cuatro sesiones grupales mensuales de 60 minutos.",
+        "1 Sesión Body Architecture™",
+        "1 Sesión Happeace Architecture™",
+        "1 Sesión Money Architecture™",
+        "1 sesión con Invitado Experto en una Arquitectura.",
+        "Comunidad privada con reglas claras de participación.",
+      ],
+      cta: "Solicitar acceso",
+    },
+    clarity: {
+      tier: "Fénix Clarity",
+      cadence: "Sesión privada · 90 minutos",
+      promise:
+        "Resuelve una decisión importante con mayor claridad y criterio.",
+      features: [
+        "Formulario previo para delimitar la decisión.",
+        "Revisión breve del contexto que compartas.",
+        "Sesión privada de 90 minutos con Andy Morales.",
+        "Análisis de alternativas, supuestos, riesgos y trade-offs.",
+        "Recomendación razonada y siguientes pasos.",
+        "Resumen escrito de decisiones, acciones y preguntas pendientes.",
+      ],
+      boundary:
+        "No incluye implementación, seguimiento ilimitado, auditorías exhaustivas ni servicios profesionales regulados.",
+      cta: "Solicitar sesión",
     },
     blueprint: {
-      tier: "Plano",
-      variant: "Básico",
-      role: "Arquitecto Principal",
-      mission: "Diseñar",
-      outcome: "Arquitectura",
-      cta: "Aplicar al Plano",
-      domains: {
-        body: "Construye la vitalidad que exige tu obra de vida.",
-        happeace: "Crea mayor claridad, enfoque y presencia.",
-        money: "Alinea la riqueza con libertad, propósito y mayordomía.",
-      },
+      tier: "Fénix Blueprint",
+      cadence: "Privado Digital · 4 semanas",
+      promise:
+        "Diseña un sistema personal claro y viable para ejecutar tus prioridades.",
+      features: [
+        "Diagnóstico inicial y definición del objetivo.",
+        "4 llamadas privadas de 45–60 minutos.",
+        "Revisión semanal de obstáculos y decisiones.",
+        "Plan de implementación para los siguientes 30–60 días.",
+      ],
+      cta: "Aplicar a Blueprint",
     },
     build: {
-      tier: "Construcción",
-      variant: "Premium",
-      role: "Arquitecto de Implementación",
-      mission: "Construir",
-      outcome: "Impulso",
-      cta: "Aplicar a Construcción",
-      domains: {
-        body: "Desarrolla fuerza, energía y resiliencia duraderas.",
-        happeace: "Desarrolla resiliencia emocional y presencia sostenible.",
-        money: "Construye sistemas que hacen crecer y protegen la riqueza.",
-      },
+      tier: "Fénix Build",
+      cadence: "Privado Digital · 12 semanas",
+      promise:
+        "Implementa tu arquitectura personal con acompañamiento directo.",
+      features: [
+        "Diagnóstico inicial y definición del objetivo.",
+        "12 llamadas privadas de 45–60 minutos.",
+        "Revisión semanal de obstáculos y decisiones.",
+        "Plan de implementación para los siguientes 30–60 días."
+      ],
+      cta: "Aplicar a Build",
+    },
+    "private-office": {
+      tier: "Fénix Private Office",
+      cadence: "Experiencia presencial · fin de semana",
+      promise:
+        "Fin de semana de pensamiento, trabajo y entrenamiento con Andy.",
+      features: [
+        "Cuestionario previo y conversación de preparación.",
+        "Bloques de trabajo estratégico con Andy.",
+        "Entrenamiento privado con Andy.",
+        "Comidas compartidas y conversación privada.",
+      ],
+      cta: "Aplicar a Private Office",
     },
   },
   en: {
-    consultation: {
-      tier: "Architect",
-      variant: "Consultation",
-      role: "Architect",
-      mission: "Diagnose",
-      outcome: "Clarity",
-      cta: "Request Consultation",
-      domains: {
-        body: "Identify the bottlenecks that limit your vitality.",
-        happeace: "Identify what disturbs your peace.",
-        money: "Identify the financial blind spots.",
-      },
+    circle: {
+      tier: "Fénix Circle",
+      cadence: "Group membership · monthly",
+      promise:
+        "Learn, share, and move forward with people who are also building an intentional life.",
+      features: [
+        "Access to the House digital catalog included with membership.",
+        "Four monthly group sessions of 60 minutes.",
+        "Body Architecture™ + questions and answers.",
+        "Happeace Architecture™ + questions and answers.",
+        "Money Architecture™ + questions and answers.",
+        "One monthly session with a guest specialist.",
+        "Private community with clear participation rules.",
+      ],
+      cta: "Request access",
+    },
+    clarity: {
+      tier: "Fénix Clarity",
+      cadence: "Private session · 90 minutes",
+      promise: "Resolve an important decision with greater clarity and discernment.",
+      features: [
+        "A pre-session form to define the decision.",
+        "A brief review of the context you share.",
+        "A 90-minute private session with Andy Morales.",
+        "Analysis of alternatives, assumptions, risks, and trade-offs.",
+        "A reasoned recommendation and next steps.",
+        "A written summary of decisions, actions, and open questions.",
+      ],
+      boundary:
+        "Implementation, unlimited follow-up, exhaustive audits, and regulated professional services are not included.",
+      cta: "Request a session",
     },
     blueprint: {
-      tier: "Blueprint",
-      variant: "Basic",
-      role: "Lead Architect",
-      mission: "Design",
-      outcome: "Architecture",
+      tier: "Fénix Blueprint",
+      cadence: "Private program · 4 weeks",
+      promise:
+        "Design a clear, viable personal system to execute your priorities.",
+      features: [
+        "Initial diagnosis and objective definition.",
+        "Four private calls of 45–60 minutes.",
+        "A personal architecture document for one priority.",
+        "A weekly priority and planning system.",
+        "Simple indicators to evaluate progress.",
+        "Weekly review of obstacles and decisions.",
+        "An implementation plan for the next 30–60 days.",
+      ],
+      boundary:
+        "Blueprint designs the system. Build supports its implementation.",
       cta: "Apply for Blueprint",
-      domains: {
-        body: "Build the vitality your life’s work requires.",
-        happeace: "Create greater clarity, focus, and presence.",
-        money: "Align wealth with freedom, purpose, and stewardship.",
-      },
     },
     build: {
-      tier: "Build",
-      variant: "Premium",
-      role: "Implementation Architect",
-      mission: "Build",
-      outcome: "Momentum",
+      tier: "Fénix Build",
+      cadence: "Private program · 12 weeks",
+      promise:
+        "Implement your personal architecture with direct guidance.",
+      features: [
+        "Entry diagnosis and agreement on objectives.",
+        "One private 60-minute session each week.",
+        "Weekly action plan and priorities.",
+        "Execution board and agreed metrics.",
+        "Ongoing review of decisions and obstacles.",
+        "Asynchronous channel with defined hours and response times.",
+        "Monthly evaluation and a 90-day continuity plan.",
+      ],
       cta: "Apply for Build",
-      domains: {
-        body: "Develop lasting strength, energy, and resilience.",
-        happeace: "Develop emotional resilience and sustainable presence.",
-        money: "Build systems that grow and protect wealth.",
-      },
+    },
+    "private-office": {
+      tier: "Fénix Private Office",
+      cadence: "In-person experience · weekend",
+      promise:
+        "Share a weekend of thought, work, and training with Andy.",
+      features: [
+        "Pre-work questionnaire and preparation conversation.",
+        "Intensive personal architecture workshop.",
+        "Strategic working sessions with Andy.",
+        "Training adapted to the group’s abilities.",
+        "Shared meals, conversation, and case discussion.",
+        "A personal 90-day plan.",
+        "Group follow-up for the following 30 days.",
+      ],
+      cta: "Request Private Office",
     },
   },
 };
@@ -187,20 +274,14 @@ export function getAtelierWelcome(locale) {
   };
 }
 
-export function getTierFacts(locale) {
-  return localize(facts, locale);
-}
-
-export function getTierDomainLabels(locale) {
-  return localize(domainLabels, locale);
+export function getOffersIntro(locale) {
+  return localize(offersIntro, locale);
 }
 
 export function getTiers(locale) {
   const localized = localize(tiersCopy, locale);
-  const isEn = locale === "en";
   return tiersBase.map((tier) => ({
     ...tier,
-    duration: isEn && tier.durationEn ? tier.durationEn : tier.duration,
     ...localized[tier.id],
   }));
 }

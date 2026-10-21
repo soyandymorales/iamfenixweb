@@ -1,49 +1,50 @@
-import { getTierDomainLabels, getTierFacts } from "@/content/services/tiers";
-import { localizeHref } from "@/libs/locale";
-
-export default function TierCard({ tier, locale }) {
-  const facts = getTierFacts(locale);
-  const labels = getTierDomainLabels(locale);
-  const ctaHref = localizeHref("/#empieza-aqui", locale);
+export default function TierCard({ tier, labels }) {
+  const privateTier = tier.applicationOnly;
+  const darkTier = tier.id === "blueprint" || privateTier;
+  const [brandName, ...tierName] = tier.tier.split(" ");
 
   return (
-    <article className="tier-card" data-reveal>
-      <header>
-        <p className="tier-card__mission">{tier.mission}</p>
-        <h3 className="tier-card__name">{tier.tier}</h3>
-        <p className="tier-card__variant">{tier.variant}</p>
+    <article
+      className={`tier-card${darkTier ? " tier-card--private" : ""}`}
+      data-reveal
+    >
+      <header className="tier-card__header">
+        <div className="tier-card__folio">
+          <span>{tier.numeral}</span>
+          {privateTier ? <span>{labels.applicationOnly}</span> : null}
+        </div>
+        <h3 className="tier-card__name">
+          <span className="tier-card__brand">{brandName}</span>
+          {tierName.length ? ` ${tierName.join(" ")}` : ""}
+        </h3>
+        <p className="tier-card__cadence">{tier.cadence}</p>
       </header>
 
-      <dl className="tier-card__facts">
-        <div className="tier-card__fact">
-          <dt>{facts.role}</dt>
-          <dd>{tier.role}</dd>
-        </div>
-        <div className="tier-card__fact">
-          <dt>{facts.outcome}</dt>
-          <dd>{tier.outcome}</dd>
-        </div>
-        <div className="tier-card__fact">
-          <dt>{facts.duration}</dt>
-          <dd>{tier.duration}</dd>
-        </div>
-      </dl>
+      <p className="tier-card__promise">{tier.promise}</p>
 
-      <ul className="tier-card__domains">
-        {labels.map(({ key, label }) => (
-          <li key={key}>
-            <span className="tier-card__domain-label">{label}</span>
-            <span className="tier-card__domain-copy">{tier.domains[key]}</span>
-          </li>
-        ))}
-      </ul>
+      <details className="tier-card__details">
+        <summary>{labels.includes}</summary>
+        <ul className="tier-card__features">
+          {tier.features.map((feature) => (
+            <li key={feature}>{feature}</li>
+          ))}
+        </ul>
+        {tier.boundary ? (
+          <p className="tier-card__boundary">{tier.boundary}</p>
+        ) : null}
+      </details>
 
       <p className="tier-card__investment">
-        <span>{facts.investment}</span>
+        <span>{labels.investment}</span>
         {tier.investment}
       </p>
 
-      <a href={ctaHref} className="btn btn--outline">
+      <a
+        href={tier.href}
+        className={`btn ${darkTier ? "btn--solid" : "btn--outline"}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {tier.cta}
       </a>
     </article>
