@@ -50,13 +50,13 @@ const offersIntro = {
     applicationOnly: "Solo por aplicación",
   },
   en: {
-    eyebrow: "How each level of depth works",
+    eyebrow: "How each level of support works",
     title: "Fénix Atelier",
     intro:
-      "Tell me about your problem, and if it is one I have solved, we can move forward with the solution that works best for you.",
+      "Tell me about your problem. If it is one I have solved before, we can move forward with the solution that works best for you.",
     investment: "Investment",
     includes: "What is included",
-    applicationOnly: "Application only",
+    applicationOnly: "By application only",
   },
 };
 
@@ -177,16 +177,17 @@ const tiersCopy = {
     circle: {
       tier: "Fénix Circle",
       cadence: "Group membership · monthly",
+      investment: "US$97 / month",
       promise:
-        "Learn, share, and move forward with people who are also building an intentional life.",
+        "Learn and move forward in a community that builds with intention.",
       features: [
         "Access to the House digital catalog included with membership.",
-        "Four monthly group sessions of 60 minutes.",
-        "Body Architecture™ + questions and answers.",
-        "Happeace Architecture™ + questions and answers.",
-        "Money Architecture™ + questions and answers.",
-        "One monthly session with a guest specialist.",
-        "Private community with clear participation rules.",
+        "Four monthly 60-minute group sessions.",
+        "1 Body Architecture™ session.",
+        "1 Happeace Architecture™ session.",
+        "1 Money Architecture™ session.",
+        "1 session with a Guest Expert in one of the Architectures.",
+        "Private community with clear rules of participation.",
       ],
       cta: "Request access",
     },
@@ -208,35 +209,27 @@ const tiersCopy = {
     },
     blueprint: {
       tier: "Fénix Blueprint",
-      cadence: "Private program · 4 weeks",
+      cadence: "Private online program · 4 weeks",
       promise:
         "Design a clear, viable personal system to execute your priorities.",
       features: [
         "Initial diagnosis and objective definition.",
-        "Four private calls of 45–60 minutes.",
-        "A personal architecture document for one priority.",
-        "A weekly priority and planning system.",
-        "Simple indicators to evaluate progress.",
+        "4 private calls of 45–60 minutes.",
         "Weekly review of obstacles and decisions.",
         "An implementation plan for the next 30–60 days.",
       ],
-      boundary:
-        "Blueprint designs the system. Build supports its implementation.",
       cta: "Apply for Blueprint",
     },
     build: {
       tier: "Fénix Build",
-      cadence: "Private program · 12 weeks",
+      cadence: "Private online program · 12 weeks",
       promise:
         "Implement your personal architecture with direct guidance.",
       features: [
-        "Entry diagnosis and agreement on objectives.",
-        "One private 60-minute session each week.",
-        "Weekly action plan and priorities.",
-        "Execution board and agreed metrics.",
-        "Ongoing review of decisions and obstacles.",
-        "Asynchronous channel with defined hours and response times.",
-        "Monthly evaluation and a 90-day continuity plan.",
+        "Initial diagnosis and objective definition.",
+        "12 private calls of 45–60 minutes.",
+        "Weekly review of obstacles and decisions.",
+        "An implementation plan for the next 30–60 days.",
       ],
       cta: "Apply for Build",
     },
@@ -244,17 +237,14 @@ const tiersCopy = {
       tier: "Fénix Private Office",
       cadence: "In-person experience · weekend",
       promise:
-        "Share a weekend of thought, work, and training with Andy.",
+        "A weekend of thinking, working, and training with Andy.",
       features: [
         "Pre-work questionnaire and preparation conversation.",
-        "Intensive personal architecture workshop.",
         "Strategic working sessions with Andy.",
-        "Training adapted to the group’s abilities.",
-        "Shared meals, conversation, and case discussion.",
-        "A personal 90-day plan.",
-        "Group follow-up for the following 30 days.",
+        "Private training with Andy.",
+        "Shared meals and private conversation.",
       ],
-      cta: "Request Private Office",
+      cta: "Apply for Private Office",
     },
   },
 };
