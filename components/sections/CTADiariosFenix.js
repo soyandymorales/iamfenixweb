@@ -9,20 +9,19 @@ import { useLocale } from "@/hooks/useLocale";
 import { grantDiariosAccess } from "@/libs/diarios-access";
 import { localizeHref } from "@/libs/locale";
 
-export default function CTADiariosFenix({ onUnlocked }) {
+export default function CTADiariosFenix() {
   const locale = useLocale();
   const copy = getHomeCopy(locale).lead;
   const domains = getDomains(locale);
-  const diariosHref = localizeHref("/diarios", locale);
+  const confirmationHref = localizeHref("/diarios/bienvenido", locale);
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");
-  const staysHere = typeof onUnlocked === "function";
 
   useEffect(() => {
-    if (!staysHere) router.prefetch(diariosHref);
-  }, [router, diariosHref, staysHere]);
+    router.prefetch(confirmationHref);
+  }, [router, confirmationHref]);
 
   function markIdle() {
     if (status !== "idle") setStatus("idle");
@@ -40,11 +39,7 @@ export default function CTADiariosFenix({ onUnlocked }) {
       });
       if (!res.ok) throw new Error("lead_failed");
       grantDiariosAccess();
-      if (staysHere) {
-        onUnlocked();
-        return;
-      }
-      router.push(diariosHref);
+      router.push(confirmationHref);
     } catch {
       setStatus("error");
     }
@@ -53,7 +48,7 @@ export default function CTADiariosFenix({ onUnlocked }) {
   return (
     <section
       id="empieza-aqui"
-      className={`section section--parchment section--viewport cta-final${staysHere ? " cta-final--solo" : ""}`}
+      className="section section--parchment section--viewport cta-final"
       aria-labelledby="cta-title"
     >
       <div className="container cta-final__inner">

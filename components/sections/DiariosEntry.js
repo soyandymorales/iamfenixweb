@@ -23,7 +23,7 @@ export default function DiariosEntry({ unlocked, children }) {
   }, [open]);
 
   if (!open) {
-    return <CTADiariosFenix onUnlocked={() => setOpen(true)} />;
+    return <CTADiariosFenix />;
   }
 
   return children;
