@@ -4104,7 +4104,7 @@ body:has(.diarios-confirmation) {
 
 .diarios-confirmation__page {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr);
   gap: clamp(var(--space-16), 3vh, var(--space-32));
   width: min(100%, var(--reading-hero));
   height: 100%;
@@ -4116,9 +4116,8 @@ body:has(.diarios-confirmation) {
 
 .diarios-confirmation__masthead {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--space-16);
+  justify-content: center;
 }
 
 .diarios-confirmation__mark {
@@ -4129,18 +4128,6 @@ body:has(.diarios-confirmation) {
 .diarios-confirmation__mark svg {
   width: var(--space-48);
   height: auto;
-}
-
-.diarios-confirmation__identity {
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  font-size: var(--text-micro);
-  font-weight: 500;
-  letter-spacing: var(--tracking-wide);
-  line-height: 1.2;
-  text-transform: uppercase;
-  color: var(--color-ash-stone);
 }
 
 .diarios-confirmation__message {
@@ -4178,7 +4165,6 @@ body:has(.diarios-confirmation) {
   max-width: var(--reading-cta);
   margin-top: clamp(var(--space-8), 1.5vh, var(--space-16));
   padding-top: clamp(var(--space-16), 2.5vh, var(--space-24));
-  border-top: var(--border-hairline) solid var(--color-line);
 }
 
 .diarios-confirmation__inbox-kicker {
@@ -4200,19 +4186,6 @@ body:has(.diarios-confirmation) {
   color: var(--color-ash-stone);
 }
 
-.diarios-confirmation__colophon {
-  display: flex;
-  justify-content: center;
-}
-
-.diarios-confirmation__colophon > p {
-  font-family: var(--font-body);
-  font-size: var(--text-micro);
-  font-style: italic;
-  text-align: center;
-  color: var(--color-burnt-cedar);
-}
-
 @media (max-width: 820px) {
   .diarios-confirmation__page {
     gap: clamp(var(--space-16), 2.5vh, var(--space-24));
@@ -4229,12 +4202,6 @@ body:has(.diarios-confirmation) {
 
   .diarios-confirmation__inbox {
     padding: var(--space-16) 0 0;
-  }
-}
-
-@media (max-width: 520px) {
-  .diarios-confirmation__identity {
-    letter-spacing: var(--tracking-wide);
   }
 }
 
@@ -4260,7 +4227,6 @@ body:has(.diarios-confirmation) {
 
 @media (max-width: 820px) and (max-height: 620px) {
   .diarios-confirmation__page {
-    grid-template-rows: auto minmax(0, 1fr);
     gap: var(--space-8);
     padding-block: 12px;
   }
@@ -4289,19 +4255,11 @@ body:has(.diarios-confirmation) {
     padding-top: 12px;
   }
 
-  .diarios-confirmation__colophon {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .diarios-confirmation__message,
-  .diarios-confirmation__colophon {
+  .diarios-confirmation__message {
     animation: diarios-confirmation-enter 900ms var(--motion-easing) both;
-  }
-
-  .diarios-confirmation__colophon {
-    animation-delay: 160ms;
   }
 }
 

@@ -22,11 +22,6 @@ export default function DiariosConfirmation({ locale }) {
           >
             <FenixMark />
           </Link>
-          <div className="diarios-confirmation__identity">
-            <p>{copy.edition}</p>
-            <span aria-hidden="true">·</span>
-            <p>{copy.folio}</p>
-          </div>
         </header>
 
         <article className="diarios-confirmation__message">
@@ -50,9 +45,6 @@ export default function DiariosConfirmation({ locale }) {
           </section>
         </article>
 
-        <footer className="diarios-confirmation__colophon">
-          <p>{copy.closing}</p>
-        </footer>
       </section>
     </main>
   );
