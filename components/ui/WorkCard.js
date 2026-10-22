@@ -28,21 +28,16 @@ export default function WorkCard({ work }) {
       <div className="work-card__content">
         <div className="work-card__meta">
           <span className="work-card__type">{work.type}</span>
-          <span
-            className={`work-card__tag work-card__tag--${
-              work.status === "live" ? "live" : "queue"
-            }`}
-          >
-            {work.tag}
-          </span>
+          {work.status === "live" ? null : (
+            <span className="work-card__tag work-card__tag--queue">
+              {work.tag}
+            </span>
+          )}
         </div>
 
         <div className="work-card__title-group">
           <h2 className="work-card__title">{work.title}</h2>
           <p className="work-card__description">{work.description}</p>
-          {work.cta ? (
-            <span className="work-card__cta">{work.cta}</span>
-          ) : null}
         </div>
       </div>
     </Tag>

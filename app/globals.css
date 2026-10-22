@@ -3645,33 +3645,8 @@ button {
   color: var(--color-chalk-white);
 }
 
-.work-card__tag--live {
-  background-color: var(--color-house-label-live);
-  color: var(--color-charcoal);
-}
-
 .work-card__tag--queue {
   background-color: var(--color-house-label-queue);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .work-card__tag--live {
-    animation: work-card-live-pulse 2.4s ease-out infinite;
-  }
-}
-
-@keyframes work-card-live-pulse {
-  0% {
-    box-shadow: 0 0 0 0
-      color-mix(in srgb, var(--color-house-label-live) 36%, transparent);
-    transform: scale(1);
-  }
-
-  70%,
-  100% {
-    box-shadow: 0 0 0 8px transparent;
-    transform: scale(1.02);
-  }
 }
 
 .work-card__title {
@@ -3683,20 +3658,6 @@ button {
   max-width: var(--reading-card);
   font-size: var(--text-small);
   color: var(--color-house-label);
-}
-
-.work-card__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: var(--space-8);
-  padding: var(--space-8) var(--space-16);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-ember);
-  color: var(--color-chalk-white);
-  font-size: var(--text-small);
-  letter-spacing: var(--tracking-wide);
 }
 
 @media (hover: hover) and (pointer: fine) {
