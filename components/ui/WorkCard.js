@@ -3,8 +3,16 @@ import Link from "next/link";
 
 export default function WorkCard({ work }) {
   const isLinked = Boolean(work.href);
-  const Tag = isLinked ? Link : "article";
-  const extra = isLinked ? { href: work.href } : {};
+  const isExternal = /^https?:\/\//.test(work.href ?? "");
+  const Tag = isExternal ? "a" : isLinked ? Link : "article";
+  const extra = isLinked
+    ? {
+        href: work.href,
+        ...(isExternal
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {}),
+      }
+    : {};
 
   return (
     <Tag className="work-card" data-reveal {...extra}>

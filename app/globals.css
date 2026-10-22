@@ -3288,41 +3288,26 @@ button {
    La House
 --------------------------------------------------------------------------- */
 
-.house-site-header {
-  position: fixed;
-  z-index: var(--z-nav);
-  inset: 0 0 auto;
-  height: var(--header-height);
-  background-color: var(--color-chalk-white);
-}
-
-.house-site-header__inner {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  max-width: none;
-  margin-inline: 0;
-}
-
-.house-site-header__brand {
+.house__brand {
   display: inline-flex;
   align-items: center;
   gap: var(--space-16);
+  width: fit-content;
 }
 
-.house-site-header__mark {
+.house__brand-mark {
   width: var(--wordmark-icon-size);
   height: auto;
   color: var(--color-ember);
 }
 
-.house-site-header__brand .wordmark em:not(:first-child) {
+.house__brand .wordmark em:not(:first-child) {
   color: var(--color-charcoal);
 }
 
 .house {
   min-height: var(--height-viewport);
-  padding-block: calc(var(--header-height) + var(--space-32)) var(--space-120);
+  padding-block: var(--space-48) var(--space-120);
   background-color: var(--color-chalk-white);
 }
 
@@ -3331,6 +3316,7 @@ button {
   grid-template-columns: 1fr;
   grid-template-areas:
     "profile"
+    "header"
     "main";
   gap: var(--space-64);
   align-items: start;
@@ -3361,13 +3347,15 @@ button {
 @media (min-width: 769px) {
   .house__layout {
     grid-template-columns: var(--house-profile-width) minmax(0, 1fr);
-    grid-template-areas: "profile main";
-    gap: var(--space-80);
+    grid-template-areas:
+      "profile header"
+      "profile main";
+    gap: var(--space-32) var(--space-80);
   }
 
   .house__profile {
     position: sticky;
-    top: calc(var(--header-height) + var(--space-32));
+    top: var(--space-48);
     align-items: flex-start;
     text-align: left;
   }
@@ -3391,7 +3379,7 @@ button {
 
 .house__portrait-image {
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
   filter: var(--image-filter-editorial);
 }
 
@@ -3403,14 +3391,13 @@ button {
 
 .house__name {
   font-family: var(--font-display);
-  font-size: var(--text-display);
+  font-size: var(--text-hero-kicker);
   line-height: var(--leading-tight);
 }
 
 .house__line {
   font-size: var(--text-micro);
   letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
   color: var(--color-ash-stone);
 }
 
@@ -3465,7 +3452,7 @@ button {
   outline: none;
   background: transparent;
   font-family: var(--font-body);
-  font-size: var(--text-small);
+  font-size: var(--text-body);
   color: var(--color-charcoal);
 }
 
@@ -3539,6 +3526,7 @@ button {
 }
 
 .house__header {
+  grid-area: header;
   display: flex;
   flex-direction: column;
   gap: var(--space-24);
@@ -3582,7 +3570,7 @@ button {
   display: block;
   aspect-ratio: var(--house-card-current-aspect, var(--house-card-aspect));
   overflow: hidden;
-  border: var(--border-hairline) solid var(--color-hairline);
+  border: none;
   border-radius: var(--radius-lg);
   background-color: var(--color-limestone);
   color: var(--color-chalk-white);
@@ -3648,10 +3636,31 @@ button {
 
 .work-card__tag--live {
   background-color: var(--color-house-label-live);
+  color: var(--color-charcoal);
 }
 
 .work-card__tag--queue {
   background-color: var(--color-house-label-queue);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .work-card__tag--live {
+    animation: work-card-live-pulse 2.4s ease-out infinite;
+  }
+}
+
+@keyframes work-card-live-pulse {
+  0% {
+    box-shadow: 0 0 0 0
+      color-mix(in srgb, var(--color-house-label-live) 36%, transparent);
+    transform: scale(1);
+  }
+
+  70%,
+  100% {
+    box-shadow: 0 0 0 8px transparent;
+    transform: scale(1.02);
+  }
 }
 
 .work-card__title {
@@ -3678,12 +3687,26 @@ button {
 
 @media (max-width: 768px) {
   .house {
-    padding-block: calc(var(--header-height) + var(--space-48)) var(--space-80);
+    padding-block: var(--space-48) var(--space-80);
   }
 
   .house__header {
     align-items: center;
     text-align: center;
+  }
+
+  .house__brand {
+    gap: var(--space-8);
+  }
+
+  .house__brand-mark {
+    width: var(--space-24);
+  }
+
+  .house__brand .site-header__wordmark {
+    gap: var(--space-8);
+    font-size: var(--text-micro);
+    letter-spacing: 0.06em;
   }
 }
 

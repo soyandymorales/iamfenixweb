@@ -21,7 +21,7 @@ const copy = {
       },
     },
     portrait: {
-      alt: "Andy Morales corriendo una carrera de fondo",
+      alt: "Retrato de Andy Morales",
     },
     cta: {
       label: "Escribir",
@@ -161,7 +161,7 @@ const copy = {
       },
     },
     portrait: {
-      alt: "Andy Morales running a long-distance race",
+      alt: "Portrait of Andy Morales",
     },
     cta: {
       label: "Write",

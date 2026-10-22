@@ -1,9 +1,10 @@
 import Image from "next/image";
 
 import DiariosLeadForm from "@/components/forms/DiariosLeadForm";
+import HouseBrand from "@/components/layout/HouseBrand";
 import WorkCard from "@/components/ui/WorkCard";
 import SocialLinks from "@/components/ui/SocialLinks";
-import andyBio from "@/public/images/andybio.jpg";
+import andyProfile from "@/public/images/andyProfile.jpg";
 import { getFounder } from "@/content/entities/founder";
 import { siteMetadata } from "@/content/metadata/site";
 import { getLaHouseEmpty, getLaHouseIntro, getWorks } from "@/content/works/works";
@@ -21,10 +22,21 @@ export default function LaCasa({ locale }) {
       aria-labelledby="house-title"
     >
       <div className="container house__layout">
-        <aside className="house__profile" data-reveal>
+        <header className="house__header">
+          <HouseBrand locale={locale} />
+          <h1 id="house-title" data-reveal>
+            {laHouseIntro.title}
+          </h1>
+        </header>
+
+        <aside
+          className="house__profile"
+          aria-labelledby="house-profile-name"
+          data-reveal
+        >
           <div className="house__portrait">
             <Image
-              src={andyBio}
+              src={andyProfile}
               alt={founder.portrait.alt}
               fill
               priority
@@ -34,7 +46,9 @@ export default function LaCasa({ locale }) {
           </div>
 
           <div className="house__identity">
-            <p className="house__name">{founder.name}</p>
+            <p id="house-profile-name" className="house__name">
+              {founder.name}
+            </p>
             <p className="house__line">{founder.houseProfile.role}</p>
           </div>
 
@@ -51,12 +65,6 @@ export default function LaCasa({ locale }) {
         </aside>
 
         <div className="house__main">
-          <header className="house__header">
-            <h1 id="house-title" data-reveal>
-              {laHouseIntro.title}
-            </h1>
-          </header>
-
           {works.length > 0 ? (
             <div className="works__grid">
               {works.map((work) => (

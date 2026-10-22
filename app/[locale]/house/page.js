@@ -1,4 +1,3 @@
-import HouseHeader from "@/components/layout/HouseHeader";
 import Footer from "@/components/layout/Footer";
 import LayoutClient from "@/components/layout/LayoutClient";
 import LaCasa from "@/components/sections/LaCasa";
@@ -44,8 +43,6 @@ export default async function HousePage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-
-      <HouseHeader locale={locale} />
 
       <main>
         <LaCasa locale={locale} />
