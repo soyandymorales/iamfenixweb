@@ -8,9 +8,11 @@ export const siteMetadata = {
   founder: "Andy Morales",
   locale: "es",
   social: {
-    youtube: "https://www.youtube.com/@soyandymorales",
     linkedin: "https://www.linkedin.com/in/soyandymorales/",
+    youtube: "https://www.youtube.com/@soyandymorales",
     strava: "https://strava.app.link/Et4cll8Y35b",
+    instagram:
+      "https://www.instagram.com/stories/highlights/17990753008607651/",
   },
 };
 

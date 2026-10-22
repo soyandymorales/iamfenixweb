@@ -1,8 +1,8 @@
 import Image from "next/image";
 
+import DiariosLeadForm from "@/components/forms/DiariosLeadForm";
 import WorkCard from "@/components/ui/WorkCard";
 import SocialLinks from "@/components/ui/SocialLinks";
-import FenixMark from "@/components/ui/FenixMark";
 import andyBio from "@/public/images/andybio.jpg";
 import { getFounder } from "@/content/entities/founder";
 import { siteMetadata } from "@/content/metadata/site";
@@ -21,17 +21,40 @@ export default function LaCasa({ locale }) {
       aria-labelledby="house-title"
     >
       <div className="container house__layout">
+        <aside className="house__profile" data-reveal>
+          <div className="house__portrait">
+            <Image
+              src={andyBio}
+              alt={founder.portrait.alt}
+              fill
+              priority
+              sizes="192px"
+              className="house__portrait-image"
+            />
+          </div>
+
+          <div className="house__identity">
+            <p className="house__name">{founder.name}</p>
+            <p className="house__line">{founder.houseProfile.role}</p>
+          </div>
+
+          <div className="house__profile-copy">
+            <p className="house__guide">{founder.houseProfile.guide}</p>
+          </div>
+
+          <DiariosLeadForm
+            variant="house"
+            copy={founder.houseProfile.form}
+          />
+
+          <SocialLinks links={siteMetadata.social} />
+        </aside>
+
         <div className="house__main">
           <header className="house__header">
-            <div className="house__brand" data-reveal>
-              <span className="house__seal" aria-hidden="true">
-                <FenixMark className="house__seal-mark" />
-              </span>
-              <h1 id="house-title">{laHouseIntro.heading}</h1>
-            </div>
-            <p className="house__lead" data-reveal>
-              {laHouseIntro.subtitle}
-            </p>
+            <h1 id="house-title" data-reveal>
+              {laHouseIntro.title}
+            </h1>
           </header>
 
           {works.length > 0 ? (
@@ -46,26 +69,6 @@ export default function LaCasa({ locale }) {
             </p>
           )}
         </div>
-
-        <aside className="house__profile" data-reveal>
-          <div className="house__portrait">
-            <Image
-              src={andyBio}
-              alt={founder.portrait.alt}
-              fill
-              sizes="160px"
-              className="house__portrait-image"
-            />
-          </div>
-
-          <p className="house__name">{founder.givenName}</p>
-          <p className="house__line">{founder.line}</p>
-          <SocialLinks links={siteMetadata.social} />
-          <p className="house__bio">{founder.bio}</p>
-          <a href={founder.cta.href} className="btn btn--solid">
-            {founder.cta.label}
-          </a>
-        </aside>
       </div>
     </section>
   );

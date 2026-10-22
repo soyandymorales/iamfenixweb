@@ -16,6 +16,15 @@
   --color-hairline-on-dark: rgba(248, 246, 241, 0.14);
   --color-line-on-dark: rgba(239, 233, 221, 0.2);
   --color-fill-on-dark: rgba(248, 246, 241, 0.06);
+  --color-house-veil: linear-gradient(
+    to bottom,
+    rgba(42, 41, 38, 0.08) 0%,
+    rgba(42, 41, 38, 0.2) 42%,
+    rgba(42, 41, 38, 0.9) 100%
+  );
+  --color-house-label: rgba(248, 246, 241, 0.88);
+  --color-house-label-live: rgba(181, 106, 58, 0.92);
+  --color-house-label-queue: rgba(42, 41, 38, 0.68);
 
   /* Typography — 3.2: display for headlines/editorial; body for copy/UI */
   --font-display: var(--font-marcellus), "Marcellus", serif;
@@ -38,6 +47,7 @@
   --image-filter-editorial: saturate(0.72) sepia(0.12) contrast(0.96);
   --image-scale-rest: 1;
   --image-scale-hover: 1.025;
+  --house-image-filter: saturate(0.62) sepia(0.16) contrast(0.92);
 
   /* Motion */
   --motion-duration-fast: 300ms;
@@ -63,6 +73,7 @@
   --reading-cta: 540px;
   --reading-card-min: 280px;
   --reading-card: 360px;
+  --wordmark-icon-size: 30px;
   --height-viewport: 100svh;
   --header-height: 72px;
   --diario-video-w: 16;
@@ -70,6 +81,14 @@
   --diario-video-aspect: var(--diario-video-w) / var(--diario-video-h);
   --diario-thumb-width: calc(var(--space-120) + var(--space-48));
   --diario-learn-reserve: calc(var(--space-120) + var(--space-32));
+  --house-profile-width: clamp(
+    calc(var(--space-120) + var(--space-80) + var(--space-80)),
+    24vw,
+    var(--reading-card)
+  );
+  --house-portrait-size: calc(var(--space-120) + var(--space-48));
+  --house-card-aspect: 4 / 5;
+  --house-card-aspect-desktop: 3 / 4;
 
   /* The Story — reconstruction folio (colophon overlays the plate) */
   --story-plate-ratio: 4 / 5;

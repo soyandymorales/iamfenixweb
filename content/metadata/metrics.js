@@ -1,7 +1,7 @@
 import { localize } from "@/libs/locale";
+import { siteMetadata } from "@/content/metadata/site";
 
-const TRAJECTORY_HIGHLIGHT =
-  "https://www.instagram.com/stories/highlights/17990753008607651/";
+const TRAJECTORY_HIGHLIGHT = siteMetadata.social.instagram;
 const EL_PAIS_ARTICLE =
   "https://elpais.com/cultura/2016/04/22/actualidad/1461324741_187329.html";
 

@@ -10,6 +10,16 @@ const copy = {
   es: {
     line: "Arquitecto Humano · Atleta Híbrido",
     bio: "Diseño libros, herramientas y experiencias para el arte de vivir — una casa donde el alma pueda habitar el trabajo.",
+    houseProfile: {
+      role: "Arquitecto Humano",
+      guide:
+        "Eleva tu vitalidad, paz interior y financiera.",
+      form: {
+        formLabel: "Suscripción a Diarios del Fénix",
+        submit: "Suscribirme",
+        submitting: "Enviando…",
+      },
+    },
     portrait: {
       alt: "Andy Morales corriendo una carrera de fondo",
     },
@@ -140,6 +150,16 @@ const copy = {
   en: {
     line: "Human Architect · Hybrid Athlete",
     bio: "I design books, tools, and experiences for the art of living — a house where the soul can inhabit the work.",
+    houseProfile: {
+      role: "Human Architect",
+      guide:
+        "How to elevate your vitality, inner peace, and financial freedom.",
+      form: {
+        formLabel: "Subscribe to Fénix Diaries",
+        submit: "Subscribe",
+        submitting: "Sending…",
+      },
+    },
     portrait: {
       alt: "Andy Morales running a long-distance race",
     },

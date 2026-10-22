@@ -27,12 +27,28 @@ const ICONS = {
       />
     </svg>
   ),
+  instagram: (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+      <rect
+        x="4"
+        y="4"
+        width="16"
+        height="16"
+        rx="4"
+        stroke="currentColor"
+        strokeWidth="1.25"
+      />
+      <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.25" />
+      <circle cx="17.25" cy="6.75" r="0.75" fill="currentColor" />
+    </svg>
+  ),
 };
 
 const LABELS = {
   youtube: "YouTube",
   linkedin: "LinkedIn",
   strava: "Strava",
+  instagram: "Instagram",
 };
 
 export function SocialIcon({ id }) {

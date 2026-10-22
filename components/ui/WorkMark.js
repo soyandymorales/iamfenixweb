@@ -26,6 +26,12 @@ const MARKS = {
       <path d="M12 20v-7" />
     </g>
   ),
+  blueprint: (
+    <g fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="4" y="5" width="16" height="14" rx="1.5" />
+      <path d="M8 5v14M4 10h16M12 10v9M8 15h4M16 10v5h4" />
+    </g>
+  ),
 };
 
 export default function WorkMark({ mark, label }) {
