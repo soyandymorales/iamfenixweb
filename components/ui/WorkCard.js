@@ -40,6 +40,9 @@ export default function WorkCard({ work }) {
         <div className="work-card__title-group">
           <h2 className="work-card__title">{work.title}</h2>
           <p className="work-card__description">{work.description}</p>
+          {work.cta ? (
+            <span className="work-card__cta">{work.cta}</span>
+          ) : null}
         </div>
       </div>
     </Tag>

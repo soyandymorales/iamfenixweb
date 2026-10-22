@@ -3311,6 +3311,17 @@ button {
   background-color: var(--color-chalk-white);
 }
 
+.house__locale {
+  position: fixed;
+  z-index: var(--z-nav);
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+  padding-inline: var(--gutter);
+}
+
 .house__layout {
   display: grid;
   grid-template-columns: 1fr;
@@ -3672,6 +3683,20 @@ button {
   max-width: var(--reading-card);
   font-size: var(--text-small);
   color: var(--color-house-label);
+}
+
+.work-card__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: var(--space-8);
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-ember);
+  color: var(--color-chalk-white);
+  font-size: var(--text-small);
+  letter-spacing: var(--tracking-wide);
 }
 
 @media (hover: hover) and (pointer: fine) {

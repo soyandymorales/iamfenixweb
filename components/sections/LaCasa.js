@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import DiariosLeadForm from "@/components/forms/DiariosLeadForm";
 import HouseBrand from "@/components/layout/HouseBrand";
+import LanguageToggle from "@/components/layout/LanguageToggle";
 import WorkCard from "@/components/ui/WorkCard";
 import SocialLinks from "@/components/ui/SocialLinks";
 import andyProfile from "@/public/images/andyProfile.jpg";
@@ -21,6 +22,10 @@ export default function LaCasa({ locale }) {
       className="house"
       aria-labelledby="house-title"
     >
+      <div className="house__locale">
+        <LanguageToggle />
+      </div>
+
       <div className="container house__layout">
         <header className="house__header">
           <HouseBrand locale={locale} />

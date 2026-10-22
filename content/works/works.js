@@ -105,7 +105,7 @@ const worksCopy = {
       tag: "Live",
       description: "Corre el mundo, colecciona memorias inolvidables con tu crew.",
       imageAlt: "Andy Morales durante una carrera de fondo.",
-      cta: "Descubrir",
+      cta: "Visitar",
     },
     kingdominion: {
       type: "App",
@@ -127,7 +127,7 @@ const worksCopy = {
       tag: "Live",
       description: "Eleva la arquitectura de tu cuerpo, paz interior y financiera en 21 días.",
       imageAlt: "Una mano descansa sobre una Biblia abierta al trabajo interior.",
-      cta: "Comenzar",
+      cta: "Comprar $37",
     },
   },
   en: {
@@ -144,7 +144,7 @@ const worksCopy = {
       tag: "Live",
       description: "Run the world and collect unforgettable memories with your crew.",
       imageAlt: "Andy Morales during a long-distance race.",
-      cta: "Discover",
+      cta: "Visit",
     },
     kingdominion: {
       type: "App",
@@ -166,7 +166,7 @@ const worksCopy = {
       description:
         "Elevate the architecture of your body, inner peace, and finances in 21 days.",
       imageAlt: "A hand rests on a Bible opened for inner work.",
-      cta: "Begin",
+      cta: "Buy $37",
     },
   },
 };
