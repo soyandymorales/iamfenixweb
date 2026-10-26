@@ -15,7 +15,7 @@ const routeSequence = ["body", "happeace", "dinero"];
 const weeks = {
   body: {
     slug: "body",
-    href: "/body",
+    href: "/diarios/arquitecturas/body",
     volume: "I / III",
     span: "Días 1–7",
     opening: "Siete días para habitar el cuerpo como templo.",
@@ -94,7 +94,7 @@ const weeks = {
   },
   happeace: {
     slug: "happeace",
-    href: "/happeace",
+    href: "/diarios/arquitecturas/happeace",
     volume: "II / III",
     span: "Días 8–14",
     opening: "Siete días para cultivar claridad, presencia y paz interior.",
@@ -173,7 +173,7 @@ const weeks = {
   },
   dinero: {
     slug: "dinero",
-    href: "/dinero",
+    href: "/diarios/arquitecturas/dinero",
     volume: "III / III",
     span: "Días 15–21",
     opening: "Siete días para convertir el capital en tiempo, libertad y legado.",
@@ -357,6 +357,7 @@ const practiceText = {
 const courseUi = {
   es: {
     journal: "El Diario",
+    architectures: "Arquitecturas",
     day: "Día",
     of: "de",
     progress: "Tu progreso",
@@ -365,6 +366,7 @@ const courseUi = {
   },
   en: {
     journal: "The Journal",
+    architectures: "Architectures",
     day: "Day",
     of: "of",
     progress: "Your progress",
@@ -450,8 +452,20 @@ export function getCourseLesson(slug, rawDia, locale) {
   };
 }
 
-export function lessonHref(courseHref, day) {
-  return `${courseHref}?dia=${day}`;
+export function lessonHref(slug, day) {
+  return `/diarios/arquitecturas/${slug}${day}`;
+}
+
+export function parseCourseSegment(segment) {
+  const match = /^(body|happeace|dinero)(\d{1,2})?$/.exec(String(segment || ""));
+  if (!match) return null;
+  const slug = match[1];
+  const week = weeks[slug];
+  if (!week) return null;
+  if (!match[2]) return { kind: "architecture", slug };
+  const day = Number.parseInt(match[2], 10);
+  if (!week.practices.some((practice) => practice.day === day)) return null;
+  return { kind: "lesson", slug, day };
 }
 
 export function diariosCourseMetadata(slug, rawDia, locale) {
@@ -467,7 +481,7 @@ export function diariosCourseMetadata(slug, rawDia, locale) {
   }
 
   const { course, current } = lesson;
-  const pathname = lessonHref(weeks[slug].href, current.day);
+  const pathname = lessonHref(slug, current.day);
   const title = `${ui.day} ${current.day} — ${course.title}`;
   const description = current.title || course.definition;
 

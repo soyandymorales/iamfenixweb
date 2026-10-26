@@ -3697,6 +3697,93 @@ button {
 }
 
 /* ---------------------------------------------------------------------------
+   Diarios — oferta editorial
+--------------------------------------------------------------------------- */
+
+.diarios-offer {
+  padding-top: calc(var(--header-height) + var(--space-64));
+  padding-bottom: var(--space-100);
+}
+
+.diarios-offer__sheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-48);
+  width: min(100%, var(--reading-body));
+}
+
+.diarios-offer__mast {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-24);
+}
+
+.diarios-offer__mast h1 {
+  margin: 0;
+  max-width: 14ch;
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: 400;
+  line-height: var(--leading-snug);
+  text-wrap: balance;
+}
+
+.diarios-offer__mast p,
+.diarios-offer__note {
+  margin: 0;
+  max-width: 36em;
+  font-size: var(--text-lead);
+  line-height: var(--leading-body);
+  color: var(--color-ash-stone);
+}
+
+.diarios-offer__contents {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--border-hairline) solid var(--color-hairline);
+}
+
+.diarios-offer__contents li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding-block: var(--space-16);
+  border-bottom: var(--border-hairline) solid var(--color-hairline);
+}
+
+.diarios-offer__name {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  line-height: var(--leading-snug);
+}
+
+.diarios-offer__span {
+  flex-shrink: 0;
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-ash-stone);
+}
+
+.diarios-offer__price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+  margin: 0;
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
+  color: var(--color-charcoal);
+}
+
+/* ---------------------------------------------------------------------------
    CTA — Diarios del Fénix
 --------------------------------------------------------------------------- */
 

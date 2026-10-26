@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import BrandWordmark from "@/components/ui/BrandWordmark";
 import LanguageToggle from "@/components/layout/LanguageToggle";
@@ -11,55 +12,22 @@ import {
 } from "@/content/navigation/main";
 import { useLocale } from "@/hooks/useLocale";
 import { localizeHref } from "@/libs/locale";
-import { prefersReducedMotion } from "@/lib/motion";
-
-function scrollToAnchor(id, behavior) {
-  const el = document.getElementById(id);
-  if (!el) return false;
-
-  const padding =
-    parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
-  const margin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
-  const top = Math.max(
-    0,
-    Math.round(el.getBoundingClientRect().top + window.scrollY - (padding + margin))
-  );
-
-  window.scrollTo({ top, behavior });
-  return true;
-}
 
 export default function Header() {
   const locale = useLocale();
+  const pathname = usePathname();
   const mainNavigation = getMainNavigation(locale);
   const navigationCta = getNavigationCta(locale);
   const chrome = getNavigationChrome(locale);
-  const homeHref = localizeHref("/#top", locale);
+  const homeHref = localizeHref("/home", locale);
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [overStory, setOverStory] = useState(false);
 
-  const onHashClick = useCallback((event) => {
-    const href = event.currentTarget.getAttribute("href");
-    if (!href || !href.includes("#")) return;
-
-    const url = new URL(href, window.location.href);
-    const here = window.location.pathname.replace(/\/$/, "") || "/";
-    const there = url.pathname.replace(/\/$/, "") || "/";
-    if (here !== there) return;
-
-    const id = decodeURIComponent(url.hash.replace(/^#/, ""));
-    if (!id || !document.getElementById(id)) return;
-
-    event.preventDefault();
-    const behavior = prefersReducedMotion() ? "auto" : "smooth";
-    scrollToAnchor(id, behavior);
-    if (window.location.hash !== url.hash) {
-      history.pushState(null, "", url.hash);
-    }
+  useEffect(() => {
     setMenuOpen(false);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     let last = window.scrollY > 24;
@@ -91,37 +59,6 @@ export default function Header() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    let frame = 0;
-    const alignHash = () => {
-      const id = decodeURIComponent(window.location.hash.replace(/^#/, ""));
-      if (id) scrollToAnchor(id, "auto");
-      document.documentElement.style.scrollBehavior = "";
-    };
-
-    const schedule = () => {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => {
-        window.requestAnimationFrame(alignHash);
-      });
-    };
-
-    schedule();
-    window.addEventListener("hashchange", alignHash);
-    window.addEventListener("load", schedule);
-    let cancelled = false;
-    document.fonts?.ready?.then(() => {
-      if (!cancelled) schedule();
-    });
-
-    return () => {
-      cancelled = true;
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("hashchange", alignHash);
-      window.removeEventListener("load", schedule);
-    };
-  }, []);
-
   const headerClass = [
     "site-header",
     overStory && !menuOpen ? "site-header--over-story" : "",
@@ -137,7 +74,7 @@ export default function Header() {
           href={homeHref}
           className="site-header__logo"
           aria-label={chrome.homeLabel}
-          onClick={onHashClick}
+          onClick={() => setMenuOpen(false)}
         >
           <BrandWordmark className="wordmark site-header__wordmark" priority />
         </a>
@@ -148,7 +85,7 @@ export default function Header() {
               key={item.href}
               href={item.href}
               className="site-header__link"
-              onClick={onHashClick}
+              onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </a>
@@ -189,7 +126,7 @@ export default function Header() {
               key={item.href}
               href={item.href}
               className="site-header__link"
-              onClick={onHashClick}
+              onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </a>
@@ -197,7 +134,7 @@ export default function Header() {
           <a
             href={navigationCta.href}
             className="btn btn--solid"
-            onClick={onHashClick}
+            onClick={() => setMenuOpen(false)}
           >
             {navigationCta.label}
           </a>

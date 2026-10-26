@@ -18,7 +18,7 @@ export default function Footer() {
   const footerNavigation = getFooterNavigation(locale);
   const chrome = getNavigationChrome(locale);
   const copy = getSiteCopy(locale);
-  const homeHref = localizeHref("/#top", locale);
+  const homeHref = localizeHref("/home", locale);
 
   return (
     <footer className="footer">

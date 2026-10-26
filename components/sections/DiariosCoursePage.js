@@ -2,8 +2,8 @@ import LayoutClient from "@/components/layout/LayoutClient";
 import DiariosCourse from "@/components/sections/DiariosCourse";
 import { getCourseLesson, lessonHref } from "@/content/diarios/courses";
 import { siteMetadata } from "@/content/metadata/site";
+import { localizedPath } from "@/libs/locale";
 import { buildBreadcrumbSchema } from "@/libs/schema/breadcrumb";
-import { buildDiariosCourseSchema } from "@/libs/schema/course";
 import { buildArchitectureResourceSchema } from "@/libs/schema/learning-resource";
 import { buildLessonVideoSchema } from "@/libs/schema/video";
 import { publicUrl } from "@/libs/seo";
@@ -15,8 +15,8 @@ export default function DiariosCoursePage({ slug, dia, locale }) {
 
   const { course, current, ui } = lesson;
   const videoSchema = buildLessonVideoSchema(course, current, locale);
+  const lessonPath = localizedPath(lessonHref(slug, current.day), locale);
   const schemas = [
-    buildDiariosCourseSchema(locale),
     buildArchitectureResourceSchema(course, locale),
     buildBreadcrumbSchema([
       { name: siteMetadata.name, url: siteMetadata.url },
@@ -24,7 +24,7 @@ export default function DiariosCoursePage({ slug, dia, locale }) {
       { name: course.title, url: `${siteMetadata.url}${course.href}` },
       {
         name: `${ui.day} ${current.day}`,
-        url: `${siteMetadata.url}${lessonHref(course.href, current.day)}`,
+        url: `${siteMetadata.url}${lessonPath}`,
       },
     ]),
   ];

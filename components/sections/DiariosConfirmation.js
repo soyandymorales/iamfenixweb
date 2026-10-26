@@ -4,8 +4,8 @@ import FenixMark from "@/components/ui/FenixMark";
 import { getDiariosConfirmation } from "@/content/diarios/confirmation";
 import { localizeHref } from "@/libs/locale";
 
-export default function DiariosConfirmation({ locale }) {
-  const copy = getDiariosConfirmation(locale);
+export default function DiariosConfirmation({ locale, copy: providedCopy }) {
+  const copy = providedCopy || getDiariosConfirmation(locale);
   const homeHref = localizeHref("/", locale);
 
   return (

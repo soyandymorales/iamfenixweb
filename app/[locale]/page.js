@@ -1,5 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import HomeSectionScroll from "@/components/layout/HomeSectionScroll";
 import LayoutClient from "@/components/layout/LayoutClient";
 import Hero from "@/components/hero/Hero";
 import TheEcosystem from "@/components/sections/TheEcosystem";
@@ -49,6 +50,7 @@ export default async function HomePage({ params }) {
         />
       ))}
 
+      <HomeSectionScroll />
       <Header />
 
       <main>

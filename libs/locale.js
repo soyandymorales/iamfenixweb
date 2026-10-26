@@ -44,6 +44,26 @@ export function stripLocalePrefix(pathname) {
   return path;
 }
 
+const PATH_READINGS = [
+  { es: "/planosddf", en: "/blueprintsddf" },
+  { es: "/planosddf/bienvenido", en: "/blueprintsddf/bienvenido" },
+];
+
+function barePathname(pathname) {
+  const path = stripLocalePrefix(String(pathname || "/").split("?")[0]);
+  if (path.length > 1 && path.endsWith("/")) return path.slice(0, -1);
+  return path || "/";
+}
+
+export function localizedPath(pathname, locale) {
+  const bare = barePathname(pathname);
+  const reading = PATH_READINGS.find(
+    (item) => item.es === bare || item.en === bare
+  );
+  const next = reading ? reading[pickLocale(locale)] : bare;
+  return withLocalePrefix(next, locale);
+}
+
 export function withLocalePrefix(pathname, locale) {
   const path = pathname?.startsWith("/") ? pathname : `/${pathname || ""}`;
   const bare = stripLocalePrefix(path) || "/";
@@ -70,7 +90,7 @@ export function localizeHref(href, locale) {
   const hashIndex = href.indexOf("#");
   const path = hashIndex === -1 ? href : href.slice(0, hashIndex);
   const hash = hashIndex === -1 ? "" : href.slice(hashIndex);
-  const localized = withLocalePrefix(path || "/", locale);
+  const localized = localizedPath(path || "/", locale);
   return `${localized}${hash}`;
 }
 

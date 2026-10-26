@@ -12,6 +12,7 @@ export default function DiariosCourse({ lesson }) {
   const { course, current, ui, locale } = lesson;
   const embedSrc = youtubeEmbedSrc(current);
   const diariosHref = localizeHref("/diarios", locale);
+  const architecturesHref = localizeHref("/diarios/arquitecturas", locale);
 
   return (
     <section
@@ -25,6 +26,7 @@ export default function DiariosCourse({ lesson }) {
             label={ui.location}
             items={[
               { label: ui.journal, href: diariosHref },
+              { label: ui.architectures, href: architecturesHref },
               { label: course.title, href: course.href },
               { label: `${ui.day} ${current.day}` },
             ]}
@@ -77,7 +79,7 @@ export default function DiariosCourse({ lesson }) {
                 return (
                   <li key={practice.day}>
                     <Link
-                      href={lessonHref(course.href, practice.day)}
+                      href={localizeHref(lessonHref(course.slug, practice.day), locale)}
                       className="diario-curso__item"
                       aria-current={isCurrent ? "step" : undefined}
                     >

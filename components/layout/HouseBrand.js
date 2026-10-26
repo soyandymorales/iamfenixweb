@@ -4,7 +4,7 @@ import { localizeHref } from "@/libs/locale";
 
 export default function HouseBrand({ locale }) {
   const copy = getLaHouseIntro(locale);
-  const homeHref = localizeHref("/#top", locale);
+  const homeHref = localizeHref("/home", locale);
 
   return (
     <a href={homeHref} className="house__brand" aria-label={copy.eyebrow}>

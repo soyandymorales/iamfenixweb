@@ -11,6 +11,7 @@ import "../styles/utilities.css";
 import "./globals.css";
 
 import { getSiteCopy, siteMetadata } from "@/content/metadata/site";
+import { homeSectionHeadScript } from "@/libs/home-sections";
 import {
   DEFAULT_LOCALE,
   htmlLang,
@@ -57,7 +58,7 @@ export default async function RootLayout({ children }) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add("js");if(location.hash==="#empieza-aqui"){document.documentElement.style.scrollBehavior="auto";}`,
+            __html: homeSectionHeadScript,
           }}
         />
       </head>

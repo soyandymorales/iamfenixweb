@@ -31,9 +31,9 @@ const copy = {
 };
 
 const gateHrefs = {
-  body: "/body",
-  happeace: "/happeace",
-  money: "/dinero",
+  body: "/diarios/arquitecturas/body",
+  happeace: "/diarios/arquitecturas/happeace",
+  money: "/diarios/arquitecturas/dinero",
 };
 
 export function getDiariosWelcome(locale) {

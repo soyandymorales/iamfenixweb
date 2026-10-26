@@ -1,12 +1,9 @@
-import { cookies } from "next/headers";
-
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 import LayoutClient from "@/components/layout/LayoutClient";
-import DiariosEntry from "@/components/sections/DiariosEntry";
-import DiariosWelcome from "@/components/sections/DiariosWelcome";
-
-import { getDiariosWelcome } from "@/content/diarios/welcome";
+import DiariosOffer from "@/components/sections/DiariosOffer";
+import { getDiariosOffer } from "@/content/diarios/offer";
 import { siteMetadata } from "@/content/metadata/site";
-import { DIARIOS_ACCESS_COOKIE } from "@/libs/diarios-access";
 import { pickLocale } from "@/libs/locale";
 import { buildBreadcrumbSchema } from "@/libs/schema/breadcrumb";
 import { buildDiariosCourseSchema } from "@/libs/schema/course";
@@ -14,20 +11,20 @@ import { buildPageMetadata, publicUrl } from "@/libs/seo";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  const welcome = getDiariosWelcome(locale);
+  const lang = pickLocale(locale);
+  const offer = getDiariosOffer(lang);
   return buildPageMetadata({
-    locale,
+    locale: lang,
     pathname: "/diarios",
     title: `Diarios del Fénix — ${siteMetadata.name}`,
-    description: `${welcome.title} ${welcome.question}`,
+    description: offer.metadataDescription,
   });
 }
 
-export default async function DiariosPage({ params }) {
+export default async function DiariosPage({ params, searchParams }) {
   const { locale: rawLocale } = await params;
   const locale = pickLocale(rawLocale);
-  const jar = await cookies();
-  const unlocked = jar.get(DIARIOS_ACCESS_COOKIE)?.value === "1";
+  const query = await searchParams;
   const schemas = [
     buildDiariosCourseSchema(locale),
     buildBreadcrumbSchema([
@@ -45,12 +42,11 @@ export default async function DiariosPage({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-
+      <Header />
       <main>
-        <DiariosEntry unlocked={unlocked}>
-          <DiariosWelcome locale={locale} />
-        </DiariosEntry>
+        <DiariosOffer locale={locale} linkError={query?.acceso === "enlace"} />
       </main>
+      <Footer />
     </LayoutClient>
   );
 }

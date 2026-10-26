@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 
 import { getHomeCopy } from "@/content/metadata/home";
 import { useLocale } from "@/hooks/useLocale";
-import { grantDiariosAccess } from "@/libs/diarios-access";
 import { localizeHref } from "@/libs/locale";
 
 const CLASS_NAMES = {
@@ -36,7 +35,7 @@ export default function DiariosLeadForm({
   const defaultCopy = getHomeCopy(locale).lead;
   const copy = { ...defaultCopy, ...copyOverride };
   const classes = CLASS_NAMES[variant] ?? CLASS_NAMES.final;
-  const confirmationHref = localizeHref("/diarios/bienvenido", locale);
+  const confirmationHref = localizeHref("/planosddf/bienvenido", locale);
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -63,7 +62,6 @@ export default function DiariosLeadForm({
       });
 
       if (!response.ok) throw new Error("lead_failed");
-      grantDiariosAccess();
       router.push(confirmationHref);
     } catch {
       setStatus("error");

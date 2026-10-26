@@ -1,30 +1,8 @@
-import DiariosConfirmation from "@/components/sections/DiariosConfirmation";
-import { getDiariosConfirmation } from "@/content/diarios/confirmation";
-import { pickLocale } from "@/libs/locale";
-import { buildPageMetadata } from "@/libs/seo";
+import { redirect } from "next/navigation";
 
-export async function generateMetadata({ params }) {
-  const { locale: rawLocale } = await params;
-  const locale = pickLocale(rawLocale);
-  const copy = getDiariosConfirmation(locale);
+import { localizedPath } from "@/libs/locale";
 
-  return {
-    ...buildPageMetadata({
-      locale,
-      pathname: "/diarios/bienvenido",
-      title: copy.metadataTitle,
-      description: copy.metadataDescription,
-    }),
-    robots: {
-      index: false,
-      follow: false,
-    },
-  };
-}
-
-export default async function DiariosConfirmationPage({ params }) {
-  const { locale: rawLocale } = await params;
-  const locale = pickLocale(rawLocale);
-
-  return <DiariosConfirmation locale={locale} />;
+export default async function LegacyDiariosWelcome({ params }) {
+  const { locale } = await params;
+  redirect(localizedPath("/planosddf/bienvenido", locale));
 }

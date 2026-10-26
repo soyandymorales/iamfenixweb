@@ -26,7 +26,7 @@ const SOCIAL_LINKS = [
 export default function Hero() {
   const locale = useLocale();
   const copy = getHomeCopy(locale);
-  const diariosHref = localizeHref("/diarios", locale);
+  const diariosHref = localizeHref("/planosddf", locale);
   const rootRef = useRef(null);
 
   useGSAP(

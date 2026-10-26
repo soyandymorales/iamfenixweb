@@ -3,12 +3,12 @@ import {
   DEFAULT_LOCALE,
   ogLocale,
   pickLocale,
-  withLocalePrefix,
+  localizedPath,
 } from "@/libs/locale";
 
 export function publicUrl(pathname = "/", locale = DEFAULT_LOCALE) {
   const base = siteMetadata.url.replace(/\/$/, "");
-  const path = withLocalePrefix(pathname || "/", locale);
+  const path = localizedPath(pathname || "/", locale);
   return path === "/" ? base : `${base}${path}`;
 }
 

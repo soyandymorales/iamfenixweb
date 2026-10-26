@@ -25,7 +25,7 @@ const copy = {
     },
     cta: {
       label: "Escribir",
-      href: "/#empieza-aqui",
+      href: "/empieza-aqui",
     },
     story: {
       kicker: "Historia",
@@ -165,7 +165,7 @@ const copy = {
     },
     cta: {
       label: "Write",
-      href: "/#empieza-aqui",
+      href: "/empieza-aqui",
     },
     story: {
       kicker: "Story",

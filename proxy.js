@@ -7,8 +7,8 @@ import {
   isEnglishOnlyAcceptLanguage,
   LOCALE_COOKIE,
   LOCALE_HEADER,
+  localizedPath,
   stripLocalePrefix,
-  withLocalePrefix,
 } from "@/libs/locale";
 
 const PUBLIC_FILE = /\.[^/]+$/;
@@ -57,7 +57,7 @@ export function proxy(request) {
 
     if (wantsEnglish) {
       const url = request.nextUrl.clone();
-      url.pathname = withLocalePrefix(barePath, "en");
+      url.pathname = localizedPath(barePath, "en");
       const response = NextResponse.redirect(url);
       response.cookies.set(LOCALE_COOKIE, "en", cookieOptions());
       return withLocaleHeader(response, "en");
