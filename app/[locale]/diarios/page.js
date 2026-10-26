@@ -1,4 +1,3 @@
-import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import LayoutClient from "@/components/layout/LayoutClient";
 import DiariosOffer from "@/components/sections/DiariosOffer";
@@ -46,7 +45,6 @@ export default async function DiariosPage({ params, searchParams }) {
       <main>
         <DiariosOffer locale={locale} linkError={query?.acceso === "enlace"} />
       </main>
-      <Footer />
     </LayoutClient>
   );
 }
