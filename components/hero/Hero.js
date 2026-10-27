@@ -34,9 +34,9 @@ export default function Hero() {
   const diariosHref = localizeHref("/planosddf", locale);
   const rootRef = useRef(null);
   const videoRef = useRef(null);
+  const narrowRef = useRef(null);
   const [videoOn, setVideoOn] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
-  const [videoSrc, setVideoSrc] = useState(HERO_VIDEO_DESKTOP);
 
   useEffect(() => {
     const mobile = window.matchMedia("(max-width: 768px)");
@@ -44,9 +44,9 @@ export default function Hero() {
 
     const update = () => {
       const saveData = navigator.connection?.saveData === true;
-      setVideoSrc(mobile.matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP);
-      setVideoReady(false);
-      setVideoOn(!reduced.matches && !saveData);
+      const allowed = !mobile.matches && !reduced.matches && !saveData;
+      setVideoOn(allowed);
+      if (!allowed) setVideoReady(false);
     };
 
     update();
@@ -87,7 +87,70 @@ export default function Hero() {
       document.removeEventListener("visibilitychange", onVisibility);
       video.pause();
     };
-  }, [videoOn, videoSrc]);
+  }, [videoOn]);
+
+  useEffect(() => {
+    const video = narrowRef.current;
+    const root = rootRef.current;
+    if (!video || !root) return undefined;
+
+    const mobile = window.matchMedia("(max-width: 768px)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const arm = (node) => {
+      node.muted = true;
+      node.defaultMuted = true;
+      node.playsInline = true;
+      node.setAttribute("muted", "");
+      node.setAttribute("playsinline", "");
+      node.setAttribute("webkit-playsinline", "true");
+    };
+
+    const play = () => {
+      if (!mobile.matches || reduced.matches || document.hidden) {
+        video.pause();
+        return;
+      }
+      if (navigator.connection?.saveData) {
+        video.pause();
+        return;
+      }
+      arm(video);
+      video.play().catch(() => {});
+    };
+
+    arm(video);
+    play();
+    video.addEventListener("canplay", play);
+    video.addEventListener("loadeddata", play);
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) play();
+      else video.pause();
+    });
+    observer.observe(root);
+
+    const onGesture = () => play();
+    window.addEventListener("touchstart", onGesture, { passive: true });
+    window.addEventListener("pointerdown", onGesture);
+
+    const onVisibility = () => play();
+    document.addEventListener("visibilitychange", onVisibility);
+    mobile.addEventListener("change", play);
+    reduced.addEventListener("change", play);
+
+    return () => {
+      video.removeEventListener("canplay", play);
+      video.removeEventListener("loadeddata", play);
+      observer.disconnect();
+      window.removeEventListener("touchstart", onGesture);
+      window.removeEventListener("pointerdown", onGesture);
+      document.removeEventListener("visibilitychange", onVisibility);
+      mobile.removeEventListener("change", play);
+      reduced.removeEventListener("change", play);
+      video.pause();
+    };
+  }, []);
 
   useGSAP(
     () => {
@@ -139,10 +202,9 @@ export default function Hero() {
         />
         {videoOn ? (
           <video
-            key={videoSrc}
             ref={videoRef}
-            className={`hero__figure-video${videoReady ? " is-ready" : ""}`}
-            src={videoSrc}
+            className={`hero__figure-video hero__figure-video--wide${videoReady ? " is-ready" : ""}`}
+            src={HERO_VIDEO_DESKTOP}
             poster={heroPoster}
             muted
             loop
@@ -152,6 +214,20 @@ export default function Hero() {
             disablePictureInPicture
           />
         ) : null}
+        {/* In the first HTML: iOS only autoplays a muted inline video that
+            was parsed with the page, not one inserted after hydration. */}
+        <video
+          ref={narrowRef}
+          className="hero__figure-video hero__figure-video--narrow"
+          src={HERO_VIDEO_MOBILE}
+          muted
+          loop
+          playsInline
+          autoPlay
+          preload="auto"
+          disablePictureInPicture
+          webkit-playsinline="true"
+        />
       </div>
 
       <div className="hero__blueprint" aria-hidden="true" data-hero-blueprint>
