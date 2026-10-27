@@ -1,10 +1,10 @@
 :root {
-  /* Hero atmospheric fade */
-  --hero-glow-opacity: 0.1;
+  /* Hero atmospheric fade — más carga sobre el video de escritorio */
+  --hero-glow-opacity: 0.22;
   --hero-glow-size: 80%;
-  --hero-bloom-opacity: 0.07;
+  --hero-bloom-opacity: 0.16;
   --hero-blur-radius: 90px;
-  --hero-dissolve-height: 35%;
+  --hero-dissolve-height: 48%;
 
   /* Hero — escena full-bleed: texto a la izquierda, Andy anclado a la derecha */
   --hero-blueprint-opacity: 0.16;
@@ -13,9 +13,9 @@
 
   /* Hero — veladuras de izquierda a derecha (warm parchment → chalk white) */
   --hero-veil-parchment-opacity: 0.96;
-  --hero-veil-parchment-reach: 54%;
-  --hero-veil-chalk-opacity: 0.42;
-  --hero-veil-chalk-edge-opacity: 0.08;
+  --hero-veil-parchment-reach: 70%;
+  --hero-veil-chalk-opacity: 0.62;
+  --hero-veil-chalk-edge-opacity: 0.22;
 
   /* Reveal motion */
   --reveal-distance: 28px;
@@ -59,8 +59,12 @@
     --hero-figure-position: 60% 28%;
     --hero-figure-scale: 1;
     --hero-blueprint-opacity: 0.1;
-    --hero-veil-parchment-reach: 48%;
-    --hero-veil-chalk-opacity: 0.38;
+    --hero-veil-parchment-reach: 74%;
+    --hero-veil-chalk-opacity: 0.55;
+    --hero-veil-chalk-edge-opacity: 0.16;
+    --hero-glow-opacity: 0.1;
+    --hero-bloom-opacity: 0.07;
+    --hero-dissolve-height: 35%;
     --hero-blur-radius: 0px;
     --hero-glow-size: 120%;
     --reveal-distance: 12px;

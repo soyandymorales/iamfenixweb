@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useRef } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -17,6 +17,11 @@ gsap.registerPlugin(useGSAP);
 import blueprintField from "@/public/images/blueprinthero.png";
 import andyScene from "@/public/images/andyherofinal.jpg";
 
+/* Public files. Bump the query when an mp4 is replaced so caches drop the previous cut. */
+const HERO_VIDEO_DESKTOP = "/images/andyhero.mp4?v=202610261944";
+const HERO_VIDEO_MOBILE = "/images/andyheromobile.mp4?v=202610261948";
+const heroPoster = andyScene.src ?? andyScene;
+
 const SOCIAL_LINKS = [
   { label: "Linked in", href: siteMetadata.social.linkedin },
   { label: "You Tube", href: siteMetadata.social.youtube },
@@ -28,6 +33,61 @@ export default function Hero() {
   const copy = getHomeCopy(locale);
   const diariosHref = localizeHref("/planosddf", locale);
   const rootRef = useRef(null);
+  const videoRef = useRef(null);
+  const [videoOn, setVideoOn] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [videoSrc, setVideoSrc] = useState(HERO_VIDEO_DESKTOP);
+
+  useEffect(() => {
+    const mobile = window.matchMedia("(max-width: 768px)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const update = () => {
+      const saveData = navigator.connection?.saveData === true;
+      setVideoSrc(mobile.matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP);
+      setVideoReady(false);
+      setVideoOn(!reduced.matches && !saveData);
+    };
+
+    update();
+    mobile.addEventListener("change", update);
+    reduced.addEventListener("change", update);
+    return () => {
+      mobile.removeEventListener("change", update);
+      reduced.removeEventListener("change", update);
+    };
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const root = rootRef.current;
+    if (!videoOn || !video || !root) return undefined;
+
+    video.muted = true;
+
+    const play = () => {
+      if (document.hidden) return;
+      video.play().then(() => setVideoReady(true)).catch(() => {});
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) play();
+      else video.pause();
+    });
+    observer.observe(root);
+
+    const onVisibility = () => {
+      if (document.hidden) video.pause();
+      else play();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+      video.pause();
+    };
+  }, [videoOn, videoSrc]);
 
   useGSAP(
     () => {
@@ -77,6 +137,21 @@ export default function Hero() {
           sizes="(max-width: 768px) 100vw, 120vw"
           className="hero__figure-image"
         />
+        {videoOn ? (
+          <video
+            key={videoSrc}
+            ref={videoRef}
+            className={`hero__figure-video${videoReady ? " is-ready" : ""}`}
+            src={videoSrc}
+            poster={heroPoster}
+            muted
+            loop
+            playsInline
+            autoPlay
+            preload="auto"
+            disablePictureInPicture
+          />
+        ) : null}
       </div>
 
       <div className="hero__blueprint" aria-hidden="true" data-hero-blueprint>
