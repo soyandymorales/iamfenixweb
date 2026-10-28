@@ -3937,14 +3937,10 @@ body:has(.diarios-cart) {
   display: flex;
   flex-direction: column;
   justify-content: safe center;
-  height: 100svh;
-  height: 100dvh;
-  max-height: 100svh;
-  max-height: 100dvh;
-  min-height: 0;
+  min-height: 100svh;
+  min-height: 100dvh;
   padding: clamp(16px, 3dvh, 48px) 0;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: visible;
   color: var(--color-chalk-white);
 }
 
