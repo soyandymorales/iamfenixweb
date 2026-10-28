@@ -15,7 +15,7 @@ export default function WorkCard({ work }) {
     : {};
 
   return (
-    <Tag className="work-card" data-reveal {...extra}>
+    <Tag className="work-card" data-status={work.status} data-reveal {...extra}>
       <Image
         src={work.image.src}
         alt={work.imageAlt}
