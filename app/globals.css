@@ -3932,10 +3932,19 @@ body:has(.diarios-cart) {
   background-color: var(--color-charcoal);
 }
 
-.diarios-cart {
+.section.diarios-cart {
   box-sizing: border-box;
-  min-height: var(--height-viewport);
-  padding: var(--space-80) 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  height: 100svh;
+  height: 100dvh;
+  max-height: 100svh;
+  max-height: 100dvh;
+  min-height: 0;
+  padding: clamp(16px, 3dvh, 48px) 0;
+  overflow-x: hidden;
+  overflow-y: auto;
   color: var(--color-chalk-white);
 }
 
