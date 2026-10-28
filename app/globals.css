@@ -3949,7 +3949,9 @@ body:has(.diarios-cart) {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--space-16) var(--space-24);
   align-items: start;
+  box-sizing: border-box;
   width: min(100%, 68rem);
+  padding-inline: calc(var(--gutter) + var(--space-32));
 }
 
 .diarios-cart__title {
