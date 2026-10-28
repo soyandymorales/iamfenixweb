@@ -153,7 +153,7 @@ export default function StoryFolio({ folio, founderName, locale }) {
                 src={active.image}
                 alt={active.alt}
                 fill
-                sizes="(max-width: 900px) 100vw, 40vw"
+                sizes="(max-width: 1200px) 100vw, 40vw"
                 className="story__image"
               />
             ) : (

@@ -1766,7 +1766,8 @@ button {
   gap: var(--space-24);
   height: 100%;
   min-height: 0;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: auto;
   padding: calc(var(--header-height) + var(--space-24)) var(--gutter) var(--space-32);
 }
 
@@ -1775,8 +1776,8 @@ button {
   flex-direction: column;
   justify-content: center;
   gap: var(--space-16);
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: 1 0 auto;
+  min-height: min-content;
 }
 
 .story__kicker {
@@ -1847,8 +1848,8 @@ button {
 .story__cta svg {
   flex-shrink: 0;
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 18px;
+  height: 18px;
 }
 
 .story__folio {
@@ -2186,7 +2187,7 @@ button {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
   .story {
     height: auto;
     max-height: none;

@@ -52,7 +52,7 @@ export default function TheEcosystem({ locale }) {
             <p className="ecosystem__description" data-reveal>
               {chamber.description}
             </p>
-            <span className="ecosystem__cta" data-reveal>
+            <span className="ecosystem__cta">
               {chamber.cta}
             </span>
           </div>
