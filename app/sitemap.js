@@ -7,6 +7,9 @@ const routes = [
   "/house",
   "/diarios",
   "/planosddf",
+  "/privacidad",
+  "/terminos",
+  "/reembolsos",
 ];
 
 export default function sitemap() {

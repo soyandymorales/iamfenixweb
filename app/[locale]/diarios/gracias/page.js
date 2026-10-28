@@ -1,6 +1,7 @@
 import DiariosConfirmation from "@/components/sections/DiariosConfirmation";
 import { getDiariosThanks } from "@/content/diarios/thanks";
-import { pickLocale } from "@/libs/locale";
+import { getCourseSession } from "@/libs/auth";
+import { localizedPath, pickLocale } from "@/libs/locale";
 import { buildPageMetadata } from "@/libs/seo";
 
 export async function generateMetadata({ params }) {
@@ -21,5 +22,13 @@ export async function generateMetadata({ params }) {
 export default async function DiariosThanksPage({ params }) {
   const { locale: rawLocale } = await params;
   const locale = pickLocale(rawLocale);
-  return <DiariosConfirmation locale={locale} copy={getDiariosThanks(locale)} />;
+  const session = await getCourseSession();
+  return (
+    <DiariosConfirmation
+      locale={locale}
+      copy={getDiariosThanks(locale)}
+      hasAccess={Boolean(session)}
+      courseHref={localizedPath("/diarios/arquitecturas", locale)}
+    />
+  );
 }

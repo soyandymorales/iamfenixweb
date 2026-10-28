@@ -1,3 +1,5 @@
+import { LEGAL_PATH_READINGS } from "@/content/legal/paths";
+
 // Locale contract — two readings of one house: Spanish at `/`, English at `/en`.
 // Country is not a language. Do not add es-MX, en-CA, or other regional clones.
 
@@ -47,6 +49,7 @@ export function stripLocalePrefix(pathname) {
 const PATH_READINGS = [
   { es: "/planosddf", en: "/blueprintsddf" },
   { es: "/planosddf/bienvenido", en: "/blueprintsddf/bienvenido" },
+  ...LEGAL_PATH_READINGS,
 ];
 
 function barePathname(pathname) {

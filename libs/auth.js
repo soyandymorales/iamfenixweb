@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { findBuyerByToken } from "@/libs/buyers";
 
 export const COURSE_COOKIE = "fenix-course";
+export const COURSE_LINK_MAX_AGE_MS = 90 * 24 * 60 * 60 * 1000;
 
 export function courseCookieOptions() {
   return {

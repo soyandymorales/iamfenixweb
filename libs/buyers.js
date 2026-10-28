@@ -3,7 +3,7 @@ import { createHash, randomBytes } from "crypto";
 import { DIARIOS_PRODUCT_CODE } from "@/content/diarios/offer";
 import { getSupabaseServer } from "@/lib/supabase-server";
 
-const PROVIDER = "lemonsqueezy";
+const PROVIDER = "paypal";
 
 export function normalizeEmail(value) {
   return String(value || "").trim().toLowerCase();
@@ -61,17 +61,21 @@ export async function buyerHasAccess(buyerId) {
   return Array.isArray(data) && data.length > 0;
 }
 
-export async function findBuyerByToken(token) {
+export async function findBuyerByToken(token, { maxAgeMs } = {}) {
   if (!token) return null;
   const { data, error } = await db()
     .from("buyers")
-    .select("id, email")
+    .select("id, email, updated_at")
     .eq("access_token_hash", hashAccessToken(token))
     .maybeSingle();
   if (error) throw error;
   if (!data) return null;
+  if (maxAgeMs) {
+    const issued = data.updated_at ? new Date(data.updated_at).getTime() : 0;
+    if (!issued || Date.now() - issued > maxAgeMs) return null;
+  }
   if (!(await buyerHasAccess(data.id))) return null;
-  return data;
+  return { id: data.id, email: data.email };
 }
 
 async function upsertBuyer({ email, fullName }) {

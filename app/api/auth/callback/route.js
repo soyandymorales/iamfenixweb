@@ -1,14 +1,16 @@
 import { NextResponse } from "next/server";
 
 import { findBuyerByToken } from "@/libs/buyers";
-import { COURSE_COOKIE, courseCookieOptions } from "@/libs/auth";
+import { COURSE_COOKIE, COURSE_LINK_MAX_AGE_MS, courseCookieOptions } from "@/libs/auth";
 import { localizedPath, pickLocale } from "@/libs/locale";
 
 export async function GET(request) {
   const token = request.nextUrl.searchParams.get("token") || "";
   const locale = pickLocale(request.nextUrl.searchParams.get("locale"));
   const origin = request.nextUrl.origin;
-  const buyer = token ? await findBuyerByToken(token).catch(() => null) : null;
+  const buyer = token
+    ? await findBuyerByToken(token, { maxAgeMs: COURSE_LINK_MAX_AGE_MS }).catch(() => null)
+    : null;
 
   if (!buyer) {
     const denied = new URL(localizedPath("/diarios", locale), origin);

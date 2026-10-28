@@ -2,6 +2,8 @@
 
 import BrandWordmark from "@/components/ui/BrandWordmark";
 import LanguageToggle from "@/components/layout/LanguageToggle";
+import { getOperator } from "@/content/legal/operator";
+import { getLegalNavigation } from "@/content/legal/navigation";
 import { getFooterNavigation, getNavigationChrome } from "@/content/navigation/main";
 import { getSiteCopy, siteMetadata } from "@/content/metadata/site";
 import { useLocale } from "@/hooks/useLocale";
@@ -16,6 +18,8 @@ const socialLinks = [
 export default function Footer() {
   const locale = useLocale();
   const footerNavigation = getFooterNavigation(locale);
+  const legalNavigation = getLegalNavigation(locale);
+  const legalChrome = getOperator(locale);
   const chrome = getNavigationChrome(locale);
   const copy = getSiteCopy(locale);
   const homeHref = localizeHref("/home", locale);
@@ -60,6 +64,18 @@ export default function Footer() {
             </ul>
           </nav>
         </div>
+
+        <nav className="footer__legal" aria-label={legalChrome.navLabel}>
+          <ul>
+            {legalNavigation.map((item) => (
+              <li key={item.id}>
+                <a href={item.href} className="footer__link">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
         <div className="footer__colophon">
           <p>© {new Date().getFullYear()} Fénix</p>

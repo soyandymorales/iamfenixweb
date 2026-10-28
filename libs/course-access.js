@@ -4,7 +4,7 @@ import {
   saveAccessToken,
 } from "@/libs/buyers";
 import { sendAccessEmail } from "@/libs/email";
-import { accessLink } from "@/libs/lemonsqueezy";
+import { accessLink } from "@/libs/site";
 import { pickLocale } from "@/libs/locale";
 
 export async function deliverCourseAccess({ buyer, providerOrderId, locale }) {
@@ -19,8 +19,5 @@ export async function deliverCourseAccess({ buyer, providerOrderId, locale }) {
     status: result.ok ? "sent" : "failed",
     errorMessage: result.ok ? null : result.error,
   });
-  if (!result.ok && result.error !== "email_not_configured") {
-    throw new Error(result.error);
-  }
-  return result;
+  return { ...result, token };
 }

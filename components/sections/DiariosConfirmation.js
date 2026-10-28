@@ -4,7 +4,7 @@ import FenixMark from "@/components/ui/FenixMark";
 import { getDiariosConfirmation } from "@/content/diarios/confirmation";
 import { localizeHref } from "@/libs/locale";
 
-export default function DiariosConfirmation({ locale, copy: providedCopy }) {
+export default function DiariosConfirmation({ locale, copy: providedCopy, hasAccess = false, courseHref = "" }) {
   const copy = providedCopy || getDiariosConfirmation(locale);
   const homeHref = localizeHref("/", locale);
 
@@ -32,6 +32,18 @@ export default function DiariosConfirmation({ locale, copy: providedCopy }) {
           </h1>
           <p className="diarios-confirmation__promise">{copy.promise}</p>
           <p className="diarios-confirmation__foundation">{copy.foundation}</p>
+          {Array.isArray(copy.steps) ? (
+            <ol className="diarios-confirmation__steps">
+              {copy.steps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          ) : null}
+          {hasAccess && courseHref ? (
+            <a className="btn btn--solid diarios-confirmation__enter" href={courseHref}>
+              {copy.enter}
+            </a>
+          ) : null}
 
           <section
             className="diarios-confirmation__inbox"

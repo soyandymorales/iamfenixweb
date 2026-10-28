@@ -3741,34 +3741,28 @@ button {
 }
 
 /* ---------------------------------------------------------------------------
-   Diarios — oferta editorial
+   Diarios — oferta y checkout
 --------------------------------------------------------------------------- */
-
-html:has(.diarios-offer),
-body:has(.diarios-offer) {
-  height: var(--height-viewport);
-  overflow: hidden;
-}
 
 .section.diarios-offer {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: var(--height-viewport);
+  min-height: 100vh;
   min-height: var(--height-viewport);
-  max-height: var(--height-viewport);
-  padding: calc(var(--header-height) + var(--space-24)) 0 var(--space-32);
-  overflow: hidden;
+  padding: var(--header-height) 0 var(--space-48);
+  scroll-margin-top: calc(var(--header-height) * -1);
 }
 
 .diarios-offer__sheet {
   display: flex;
   flex: 1;
   flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: var(--space-24);
-  min-height: 0;
+  gap: var(--space-32);
   width: min(100%, var(--reading-body));
+  margin-inline: auto;
 }
 
 .diarios-offer__mast {
@@ -3811,7 +3805,7 @@ body:has(.diarios-offer) {
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-16);
-  padding-block: var(--space-16);
+  padding-block: var(--space-8);
   border-bottom: var(--border-hairline) solid var(--color-hairline);
 }
 
@@ -3840,6 +3834,492 @@ body:has(.diarios-offer) {
   font-weight: 400;
   line-height: var(--leading-body);
   color: var(--color-charcoal);
+}
+
+.diarios-offer__includes {
+  margin: 0 0 var(--space-16);
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 400;
+  line-height: var(--leading-snug);
+}
+
+.diarios-offer__cta {
+  align-self: flex-start;
+  text-decoration: none;
+}
+
+.diarios-offer__close {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-24);
+  width: 100%;
+}
+
+.diarios-offer__pair {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16);
+  width: 100%;
+}
+
+.diarios-offer__note:empty {
+  display: none;
+}
+
+body:has(.diarios-cart) {
+  background-color: var(--color-charcoal);
+}
+
+.diarios-cart {
+  box-sizing: border-box;
+  min-height: var(--height-viewport);
+  padding: var(--space-80) 0;
+  color: var(--color-chalk-white);
+}
+
+.diarios-cart__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-16) var(--space-24);
+  align-items: start;
+  width: min(100%, 68rem);
+}
+
+.diarios-cart__title {
+  grid-column: 1 / -1;
+  margin: 0 0 var(--space-16);
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: 400;
+  line-height: var(--leading-snug);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.diarios-cart__summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.diarios-cart__plan,
+.diarios-cart__includes,
+.diarios-cart__panel {
+  border: var(--border-hairline) solid var(--color-hairline-on-dark);
+  border-radius: 16px;
+  background-color: var(--color-fill-on-dark);
+}
+
+.diarios-cart__plan {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--space-16);
+  align-items: start;
+  padding: var(--space-24);
+  border-color: var(--color-ember);
+}
+
+.diarios-cart__mark {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.35rem;
+  border: var(--border-hairline) solid var(--color-ember);
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, var(--color-ember) 0 42%, transparent 46%);
+}
+
+.diarios-cart__plan h2,
+.diarios-cart__includes h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 400;
+  line-height: var(--leading-snug);
+}
+
+.diarios-cart__plan p {
+  margin: var(--space-8) 0 0;
+  color: var(--color-limestone);
+  font-size: var(--text-small);
+  line-height: var(--leading-body);
+}
+
+.diarios-cart__plan-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0;
+  text-align: right;
+}
+
+.diarios-cart__plan-price strong {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 400;
+  color: var(--color-chalk-white);
+}
+
+.diarios-cart__plan-price span {
+  color: var(--color-ash-stone);
+  font-size: var(--text-small);
+}
+
+.diarios-cart__includes {
+  padding: var(--space-24);
+}
+
+.diarios-cart__includes ul {
+  display: grid;
+  gap: var(--space-24);
+  margin: var(--space-24) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.diarios-cart__includes li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.diarios-cart__includes li span:first-child {
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+}
+
+.diarios-cart__includes li span:last-child {
+  color: var(--color-limestone);
+  font-size: var(--text-small);
+}
+
+.diarios-cart__panel {
+  padding: var(--space-24);
+}
+
+.diarios-pay {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  width: 100%;
+}
+
+.diarios-pay__summary,
+.diarios-pay__total {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+
+.diarios-pay__product,
+.diarios-pay__due,
+.diarios-pay__once,
+.diarios-pay__total p {
+  margin: 0;
+}
+
+.diarios-pay__product,
+.diarios-pay__total > div p:first-child {
+  color: var(--color-chalk-white);
+  font-size: var(--text-body);
+}
+
+.diarios-pay__due,
+.diarios-pay__once,
+.diarios-pay__total > div p:last-child {
+  color: var(--color-limestone);
+  font-size: var(--text-small);
+}
+
+.diarios-pay__due {
+  margin-top: var(--space-8);
+}
+
+.diarios-pay__amount {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-8);
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.diarios-pay__amount span {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  color: var(--color-limestone);
+}
+
+.diarios-pay__contact,
+.diarios-pay__methods {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  margin: 0;
+  padding: var(--space-24) 0 0;
+  border: 0;
+  border-top: var(--border-hairline) solid var(--color-hairline-on-dark);
+}
+
+.diarios-pay__contact legend,
+.diarios-pay__methods legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: 0;
+  color: var(--color-chalk-white);
+  font-size: var(--text-body);
+}
+
+.diarios-pay__methods legend svg,
+.diarios-pay__tile svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.diarios-pay__tile .diarios-pay__mark {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.diarios-pay__field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: var(--space-8) var(--space-16);
+  border: var(--border-hairline) solid var(--color-line-on-dark);
+  border-radius: 12px;
+  color: var(--color-limestone);
+  font-size: var(--text-small);
+}
+
+.diarios-pay__field input,
+.diarios-pay__field select {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-chalk-white);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+}
+
+.diarios-pay__field input::placeholder {
+  color: var(--color-ash-stone);
+}
+
+.diarios-pay__field select option {
+  color: var(--color-charcoal);
+}
+
+.diarios-pay__field input:focus {
+  outline: none;
+}
+
+.diarios-pay__field:focus-within {
+  border-color: var(--color-ember);
+}
+
+.diarios-pay__tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-8);
+}
+
+.diarios-pay__tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  min-height: 4.75rem;
+  margin: 0;
+  padding: var(--space-8);
+  border: var(--border-hairline) solid var(--color-line-on-dark);
+  border-radius: 12px;
+  color: var(--color-chalk-white);
+  font-size: var(--text-small);
+  text-align: center;
+  cursor: pointer;
+}
+
+.diarios-pay__tile input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.diarios-pay__tile:has(input:checked) {
+  border-color: var(--color-ember);
+  box-shadow: inset 0 0 0 1px var(--color-ember);
+}
+
+.diarios-pay__tile:focus-within {
+  outline: var(--border-hairline) solid var(--color-ember);
+  outline-offset: 2px;
+}
+
+.diarios-pay__sheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.diarios-pay__sheet[hidden] {
+  display: none;
+}
+
+.diarios-pay__hosted {
+  height: 3.5rem;
+  box-sizing: border-box;
+  border: var(--border-hairline) solid var(--color-limestone);
+  border-radius: 12px;
+  background: var(--color-chalk-white);
+  overflow: hidden;
+}
+
+.diarios-pay__split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-8);
+}
+
+.diarios-pay__close {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding-top: var(--space-24);
+  border-top: var(--border-hairline) solid var(--color-hairline-on-dark);
+}
+
+.diarios-pay__close .diarios-pay__total {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.diarios-pay__agree,
+.diarios-pay__assurance {
+  margin: 0;
+  color: var(--color-limestone);
+  font-size: var(--text-small);
+  line-height: 1.5;
+}
+
+.diarios-pay__agree a {
+  color: var(--color-chalk-white);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.diarios-pay__assurance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  text-align: center;
+}
+
+.diarios-pay__assurance svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+.diarios-pay__total {
+  padding-top: var(--space-16);
+  border-top: var(--border-hairline) solid var(--color-hairline-on-dark);
+}
+
+.diarios-pay apple-pay-button,
+.diarios-pay paypal-button {
+  --apple-pay-button-width: 100%;
+  --apple-pay-button-height: 48px;
+  --apple-pay-button-border-radius: 12px;
+  --paypal-button-border-radius: 12px;
+  display: block;
+  width: 100%;
+  height: 48px;
+}
+
+.diarios-pay__submit {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: var(--space-16) var(--space-24);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-chalk-white);
+  color: var(--color-charcoal);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  white-space: normal;
+  cursor: pointer;
+}
+
+.diarios-pay__submit:hover,
+.diarios-pay__submit:focus-visible {
+  background: var(--color-warm-parchment);
+}
+
+.diarios-pay__submit:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+@media (max-width: 768px) {
+  .diarios-cart__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .diarios-cart__plan {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .diarios-cart__plan-price {
+    grid-column: 2;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+.diarios-offer__pair > .diarios-offer__access {
+  display: contents;
+}
+
+.diarios-offer__access-panel {
+  display: grid;
+  flex: 1 0 100%;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.diarios-offer__access-panel .cta-final__note {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: var(--text-small);
+  min-height: 0;
+}
+
+.diarios-offer__access-panel .cta-final__fields {
+  grid-template-columns: 1fr;
+}
+
+.diarios-offer__access-panel .cta-final__field {
+  padding: var(--space-8) var(--space-16);
+}
+
+.diarios-offer__access-panel .cta-final__submit {
+  width: auto;
+  align-self: center;
 }
 
 /* ---------------------------------------------------------------------------
@@ -4282,6 +4762,7 @@ body:has(.cta-final--solo) {
   grid-template-columns: minmax(0, 1.2fr) auto;
   grid-template-areas:
     "brand meta"
+    "legal legal"
     "colophon colophon";
   column-gap: var(--space-80);
   row-gap: var(--space-64);
@@ -4340,6 +4821,21 @@ body:has(.cta-final--solo) {
   color: var(--color-ember);
 }
 
+.footer__legal {
+  grid-area: legal;
+  padding-top: var(--space-24);
+  border-top: 1px solid var(--color-hairline);
+}
+
+.footer__legal ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8) var(--space-32);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .footer__colophon {
   grid-area: colophon;
   display: flex;
@@ -4378,16 +4874,14 @@ body:has(.diarios-gate) {
 html:has(.diarios-confirmation),
 body:has(.diarios-confirmation) {
   width: 100%;
-  height: var(--height-viewport);
-  overflow: hidden;
-  overscroll-behavior: none;
+  min-height: var(--height-viewport);
+  overflow: auto;
 }
 
 .diarios-confirmation {
   width: 100%;
-  height: 100vh;
-  height: var(--height-viewport);
-  overflow: hidden;
+  min-height: 100vh;
+  min-height: var(--height-viewport);
   background-color: var(--color-warm-parchment);
 }
 
@@ -4444,6 +4938,35 @@ body:has(.diarios-confirmation) {
   max-width: 59ch;
   font-size: var(--text-small);
   color: var(--color-ash-stone);
+}
+
+.diarios-confirmation__steps {
+  display: grid;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: diarios-step;
+  max-width: 42ch;
+  text-align: left;
+}
+
+.diarios-confirmation__steps li {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  gap: var(--space-8);
+  counter-increment: diarios-step;
+  font-size: var(--text-small);
+  line-height: var(--leading-body);
+}
+
+.diarios-confirmation__steps li::before {
+  content: counter(diarios-step);
+  color: var(--color-ember);
+}
+
+.diarios-confirmation__enter {
+  text-decoration: none;
 }
 
 .diarios-confirmation__inbox {
@@ -4754,6 +5277,7 @@ body:has(.diarios-confirmation) {
     grid-template-areas:
       "brand"
       "meta"
+      "legal"
       "colophon";
     row-gap: var(--space-48);
   }
@@ -5123,3 +5647,139 @@ body:has(.diarios-confirmation) {
     scrollbar-gutter: stable;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Legal — privacy, terms, refunds
+--------------------------------------------------------------------------- */
+
+.legal {
+  background-color: var(--color-warm-parchment);
+  color: var(--color-charcoal);
+  padding: calc(var(--header-height) + var(--space-64)) 0 var(--space-100);
+}
+
+body:has(.legal) .site-header,
+body:has(.diarios-offer) .site-header {
+  background-color: rgba(248, 246, 241, 0.94);
+  backdrop-filter: blur(12px);
+}
+
+.legal__sheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-48);
+  width: min(100%, 46rem);
+}
+
+.legal__mast {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-16);
+}
+
+.legal__mast h1 {
+  max-width: 16ch;
+  font-size: var(--text-display);
+}
+
+.legal__updated {
+  font-size: var(--text-small);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ash-stone);
+}
+
+.legal__lead {
+  max-width: 42rem;
+  font-size: var(--text-lead);
+}
+
+.legal a {
+  color: var(--color-burnt-cedar);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.legal a:hover {
+  color: var(--color-ember);
+}
+
+.legal__identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-24);
+  background-color: var(--color-chalk-white);
+  border-left: var(--border-accent) solid var(--color-ember);
+}
+
+.legal__identity h2,
+.legal__section h2 {
+  font-size: var(--text-h3);
+}
+
+.legal__identity dl {
+  display: grid;
+  gap: var(--space-16);
+  margin: 0;
+}
+
+.legal__identity div {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.legal__identity dt {
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-ash-stone);
+}
+
+.legal__identity dd {
+  margin: 0;
+}
+
+.legal__toc ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.legal__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  scroll-margin-top: calc(var(--header-height) + var(--space-24));
+  padding-top: var(--space-32);
+  border-top: 1px solid var(--color-hairline);
+}
+
+.legal__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.legal__note {
+  margin: 0;
+  padding: var(--space-24);
+  background-color: var(--color-chalk-white);
+  border-left: var(--border-accent) solid var(--color-ember);
+}
+
+.legal__related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16) var(--space-32);
+  padding-top: var(--space-32);
+  border-top: 1px solid var(--color-hairline);
+}
+
+
+

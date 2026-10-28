@@ -1,11 +1,16 @@
+import nodemailer from "nodemailer";
+
 import { getAccessEmail } from "@/content/diarios/access-email";
 import { pickLocale } from "@/libs/locale";
 
 function mailConfig() {
-  const apiKey = process.env.EMAIL_API_KEY?.trim();
   const from = process.env.EMAIL_FROM?.trim();
-  if (!apiKey || !from) return null;
-  return { apiKey, from };
+  const host = process.env.SMTP_HOST?.trim();
+  const user = process.env.SMTP_USER?.trim();
+  const pass = process.env.SMTP_PASS?.trim();
+  const port = Number(process.env.SMTP_PORT || 465);
+  if (!from || !host || !user || !pass || !Number.isInteger(port)) return null;
+  return { from, host, user, pass, port };
 }
 
 export function isAccessEmailConfigured() {
@@ -17,25 +22,26 @@ export async function sendAccessEmail({ to, accessUrl, locale }) {
   if (!config) return { ok: false, error: "email_not_configured" };
 
   const message = getAccessEmail(pickLocale(locale), accessUrl);
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${config.apiKey}`,
-      "Content-Type": "application/json",
+  const transport = nodemailer.createTransport({
+    host: config.host,
+    port: config.port,
+    secure: config.port === 465,
+    auth: {
+      user: config.user,
+      pass: config.pass,
     },
-    body: JSON.stringify({
-      from: config.from,
-      to: [to],
-      subject: message.subject,
-      text: message.text,
-    }),
   });
 
-  if (!response.ok) {
-    const detail = await response.text();
-    console.error(detail.slice(0, 500));
+  try {
+    await transport.sendMail({
+      from: config.from,
+      to,
+      subject: message.subject,
+      text: message.text,
+    });
+    return { ok: true };
+  } catch (error) {
+    console.error("access_email", error?.code || "failed");
     return { ok: false, error: "email_failed" };
   }
-
-  return { ok: true };
 }
