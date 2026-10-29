@@ -2,10 +2,11 @@ import { localize } from "@/libs/locale";
 
 const copy = {
   es: {
-    headline: [{ text: "Arquitectura" }, { text: "Humana" }],
-    kicker: "Estudio el arte de hacer de la vida una obra maestra.",
-    subheadline:
-      "Ayudo a fundadores, ejecutivos y atletas a proteger y expandir su\nenergía vital, presencia y libertad sin perder su alma.",
+    headline: [
+      ["Arquitectura", "humana"],
+      ["para", "el", "arte", "de", "vivir."],
+    ],
+    kicker: "Un cuerpo en forma. Una mente en calma. Una cuenta que te da paz",
     cta: "Diarios del Fénix",
     ctaNote: "Accede gratis a los planos",
     socialLabel: "Perfiles de Andy",
@@ -54,10 +55,11 @@ const copy = {
     },
   },
   en: {
-    headline: [{ text: "Human" }, { text: "Architecture" }],
-    kicker: "I study the art of making a life into a masterpiece.",
-    subheadline:
-      "I help founders, executives, and athletes protect and expand their\nvitality, presence, and freedom without losing their soul.",
+    headline: [
+      ["Human", "architecture"],
+      ["for", "the", "art", "of", "living."],
+    ],
+    kicker: "A fit body. A mind at rest. An account that gives you peace.",
     cta: "Fénix Diaries",
     ctaNote: "Free access to the blueprints",
     socialLabel: "Andy’s profiles",

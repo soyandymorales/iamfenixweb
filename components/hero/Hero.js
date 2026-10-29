@@ -178,7 +178,7 @@ export default function Hero() {
           0.75
         )
         .fromTo(
-          "[data-hero-kicker], [data-hero-sub], [data-hero-cta]",
+          "[data-hero-kicker], [data-hero-cta]",
           { autoAlpha: 0, y: 16 },
           { autoAlpha: 1, y: 0, duration: 1, stagger: 0.12 },
           1.25
@@ -253,23 +253,26 @@ export default function Hero() {
 
       <div className="hero__content">
         <h1 className="hero__headline">
-          {copy.headline.map((word, i) => (
-            <Fragment key={i}>
-              <span className="hero__word-mask">
-                <span className="hero__word" data-hero-word>
-                  {word.text}
-                </span>
-              </span>{" "}
-            </Fragment>
+          {copy.headline.map((line, lineIndex) => (
+            <span
+              key={lineIndex}
+              className={`hero__line${lineIndex === 0 ? " hero__line--lead" : ""}`}
+            >
+              {line.map((word, wordIndex) => (
+                <Fragment key={wordIndex}>
+                  <span className="hero__word-mask">
+                    <span className="hero__word" data-hero-word>
+                      {word}
+                    </span>
+                  </span>{" "}
+                </Fragment>
+              ))}
+            </span>
           ))}
         </h1>
 
         <p className="hero__kicker" data-hero-kicker>
           {copy.kicker}
-        </p>
-
-        <p className="hero__subheadline" data-hero-sub>
-          {copy.subheadline}
         </p>
 
         <div className="hero__bar-cta" data-hero-cta>

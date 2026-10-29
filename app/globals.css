@@ -339,7 +339,7 @@ button {
 
 /* Composición horizontal: contenido a la izquierda, figura y plano regulador
    a la derecha, sobre casi todo el viewport horizontal. El contenido ancla al
-   fondo para que el CTA de la barra quede justo debajo del subheadline. */
+   fondo para que el CTA de la barra quede justo debajo del kicker. */
 .hero {
   position: relative;
   display: flex;
@@ -486,20 +486,47 @@ button {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   gap: var(--space-24);
   width: max-content;
   max-width: calc(100% - var(--gutter));
   padding-inline: var(--gutter);
 }
 
-/* Headline > kicker (display subhead) > body. Sizes live in typography tokens. */
+/* The column is as wide as the longer of the lead line and the kicker.
+   The shorter one justifies out to the same edges. */
 .hero__headline {
-  font-size: var(--text-hero);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.04em;
+  max-width: 100%;
+  margin: 0;
   font-weight: 400;
-  letter-spacing: -0.05em;
-  line-height: 1;
+  line-height: 0.95;
+  text-wrap: wrap;
+}
+
+.hero__line {
+  display: block;
+  width: 100%;
+  font-size: calc(var(--text-hero-kicker) * 3.15);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
   white-space: nowrap;
+  text-align: justify;
+  text-align-last: justify;
+}
+
+/* Lead is a fixed multiple of the kicker so "Arquitectura humana"
+   meets both edges of that one line, with a normal word space. */
+.hero__line--lead {
+  width: 100%;
+  font-size: calc(var(--text-hero-kicker) * 3.5);
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  text-align: justify;
+  text-align-last: justify;
 }
 
 .hero__word-mask {
@@ -508,6 +535,14 @@ button {
   vertical-align: bottom;
   padding-bottom: 0.18em;
   margin-bottom: -0.18em;
+}
+
+/* Negative letter-spacing lets the last glyph paint past its box.
+   The mask clips that ink. Extra padding keeps the final letter whole;
+   the matching negative margin holds the line's right edge in place. */
+.hero__line > .hero__word-mask:last-of-type {
+  padding-right: 0.18em;
+  margin-right: -0.18em;
 }
 
 .hero__word {
@@ -525,18 +560,12 @@ button {
   font-weight: 400;
   line-height: var(--leading-snug);
   color: var(--color-ember);
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
   white-space: nowrap;
-}
-
-.hero__subheadline {
-  font-family: var(--font-body);
-  font-size: var(--text-hero-body);
-  font-weight: 400;
-  font-style: normal;
-  line-height: var(--leading-body);
-  color: var(--color-charcoal);
-  white-space: pre-line;
-  -webkit-font-smoothing: auto;
+  text-align: justify;
+  text-align-last: justify;
 }
 
 /* Barra inferior — perfiles a la derecha, alineados con el CTA del contenido. */
@@ -593,12 +622,34 @@ button {
   }
 
   .hero__headline {
-    white-space: normal;
+    width: auto;
+    min-width: 0;
   }
 
-  .hero__kicker,
-  .hero__subheadline {
+  .hero__line,
+  .hero__line--lead {
+    width: auto;
+    max-width: 100%;
     white-space: normal;
+    text-align: start;
+    text-align-last: auto;
+  }
+
+  .hero__line {
+    font-size: 1.625rem;
+  }
+
+  .hero__line--lead {
+    font-size: var(--text-hero-mobile);
+  }
+
+  .hero__kicker {
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    text-align: start;
+    text-align-last: auto;
   }
 }
 
@@ -647,14 +698,16 @@ button {
   }
 
   .hero__headline,
-  .hero__kicker,
-  .hero__subheadline {
+  .hero__kicker {
     white-space: normal;
     max-width: 100%;
   }
 
-  .hero__headline {
-    font-size: var(--text-hero-mobile);
+  .hero__kicker {
+    width: auto;
+    min-width: 0;
+    text-align: start;
+    text-align-last: auto;
   }
 
   /* Las veladuras giran con la composición: de arriba hacia abajo. */
