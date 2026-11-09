@@ -358,7 +358,7 @@ La estructura sigue el sistema Next.js estándar, adaptada a los dominios y al e
 │
 ├── public/
 │   ├── blog/
-│   ├── fonts/                       # Marcellus, Jost
+│   ├── fonts/                       # EB Garamond, Jost
 │   ├── images/
 │   ├── icons/
 │   ├── robots.txt
@@ -419,11 +419,11 @@ Basado en el **Color System** del Whitepaper (Part VI — The Brand World). El c
 
 | Token | Fuente | Uso |
 |---|---|---|
-| `--font-display` | **Marcellus** (Google Fonts) | Titulares, hero, momentos editoriales |
+| `--font-display` | **EB Garamond** (Google Fonts) | Titulares, hero, momentos editoriales |
 | `--font-body` | **Jost** (Google Fonts) | Cuerpo de texto, UI, interfaz |
 
 Alternativas de respaldo:
-- Display: Cormorant Garamond, EB Garamond, Forum, Spectral Display
+- Display: Cormorant Garamond, Marcellus, Forum, Spectral Display
 - Body/Interface: Inter, IBM Plex Sans, Source Sans 3
 
 **Filosofía:** la tipografía nunca compite con las ideas. El display trae memoria (talla, no dibuja); el sans-serif trae claridad (desaparece detrás del contenido). Juntas expresan la dualidad Fénix: tradición + modernidad, sabiduría + tecnología, craft + sistemas.
@@ -659,7 +659,7 @@ Usar `clamp()` para todo tamaño de fuente.
 
 Nunca tamaños de display fijos.
 
-- `--font-display` (Marcellus) crea ritmo, memoria y permanencia.
+- `--font-display` (EB Garamond) crea ritmo, memoria y permanencia.
 - `--font-body` (Jost) crea claridad y funcionalidad silenciosa.
 - La tipografía debe sentirse como arquitectura: estructurada, balanceada, duradera, silenciosa.
 
@@ -1560,7 +1560,7 @@ The existing Fénix performance rules remain active, including:
 
 - Server Components por defecto.
 - Client Components solo cuando sea necesario.
-- Optimizar fonts (Marcellus, Jost autohosted vía `next/font`) e imágenes (fotografía editorial pesa más que iconografía genérica — usar `next/image`, lazy loading y formatos modernos).
+- Optimizar fonts (EB Garamond, Jost autohosted vía `next/font`) e imágenes (fotografía editorial pesa más que iconografía genérica — usar `next/image`, lazy loading y formatos modernos).
 
 ---
 

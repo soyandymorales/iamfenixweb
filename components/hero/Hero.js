@@ -252,6 +252,14 @@ export default function Hero() {
       <div className="hero__dissolve" aria-hidden="true" />
 
       <div className="hero__content">
+        <p className="hero__kicker" data-hero-kicker>
+          {copy.kicker.map((line) => (
+            <span key={line} className="hero__kicker-line">
+              {line}
+            </span>
+          ))}
+        </p>
+
         <h1 className="hero__headline">
           {copy.headline.map((line, lineIndex) => (
             <span
@@ -270,10 +278,6 @@ export default function Hero() {
             </span>
           ))}
         </h1>
-
-        <p className="hero__kicker" data-hero-kicker>
-          {copy.kicker}
-        </p>
 
         <div className="hero__bar-cta" data-hero-cta>
           <a href={diariosHref} className="btn btn--solid">

@@ -111,7 +111,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: var(--space-16);
-  font-family: var(--font-display);
+  font-family: var(--font-wordmark);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   white-space: nowrap;
@@ -493,8 +493,7 @@ button {
   padding-inline: var(--gutter);
 }
 
-/* The column is as wide as the longer of the lead line and the kicker.
-   The shorter one justifies out to the same edges. */
+/* The headline sets the column. The kicker sits above it as an eyebrow. */
 .hero__headline {
   display: flex;
   flex-direction: column;
@@ -550,22 +549,23 @@ button {
   white-space: pre;
 }
 
-.hero__headline + .hero__kicker {
-  margin-top: calc(var(--space-8) - var(--space-24));
+.hero__kicker {
+  width: 0;
+  min-width: 100%;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+  font-weight: 400;
+  letter-spacing: var(--tracking-eyebrow);
+  line-height: var(--leading-snug);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-ember);
 }
 
-.hero__kicker {
-  font-family: var(--font-display);
-  font-size: var(--text-hero-kicker);
-  font-weight: 400;
-  line-height: var(--leading-snug);
-  color: var(--color-ember);
-  width: max-content;
-  min-width: 100%;
-  max-width: none;
+.hero__kicker-line {
+  display: block;
   white-space: nowrap;
-  text-align: justify;
-  text-align-last: justify;
 }
 
 /* Barra inferior — perfiles a la derecha, alineados con el CTA del contenido. */
@@ -636,7 +636,7 @@ button {
   }
 
   .hero__line {
-    font-size: 1.625rem;
+    font-size: var(--text-hero-line-mobile);
   }
 
   .hero__line--lead {
@@ -706,6 +706,8 @@ button {
   .hero__kicker {
     width: auto;
     min-width: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
     text-align: start;
     text-align-last: auto;
   }

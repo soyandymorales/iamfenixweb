@@ -8,7 +8,7 @@ import Image from "next/image";
  * Los retratos actúan como selector; el resto de la sección
  * permanece como Server Component.
  */
-export default function TestimonialsGallery({ testimonials }) {
+export default function TestimonialsGallery({ testimonials, verifyLabel }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = testimonials[activeIndex];
 
@@ -54,7 +54,7 @@ export default function TestimonialsGallery({ testimonials }) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                verificar ahora
+                {verifyLabel}
               </a>
             </span>
           </figcaption>

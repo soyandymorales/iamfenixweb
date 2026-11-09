@@ -3,10 +3,13 @@ import { localize } from "@/libs/locale";
 const copy = {
   es: {
     headline: [
-      ["Arquitectura", "humana"],
+      ["Arquitectura", "Humana"],
       ["para", "el", "arte", "de", "vivir."],
     ],
-    kicker: "Un cuerpo en forma. Una mente en calma. Una cuenta que te da paz",
+    kicker: [
+      "Un cuerpo vital, una mente en calma,",
+      "un círculo memorable, una cuenta que te dé paz.",
+    ],
     cta: "Diarios del Fénix",
     ctaNote: "Accede gratis a los planos",
     socialLabel: "Perfiles de Andy",
@@ -37,6 +40,7 @@ const copy = {
     testimonials: {
       eyebrow: "Testimonios",
       title: "Voces del camino",
+      verify: "Verificar ahora",
     },
     metricsLabel: "Métricas relevantes",
     proofLabel: "Trayectoria",
@@ -59,7 +63,10 @@ const copy = {
       ["Human", "architecture"],
       ["for", "the", "art", "of", "living."],
     ],
-    kicker: "A fit body. A mind at rest. An account that gives you peace.",
+    kicker: [
+      "A fit body. A mind at rest.",
+      "An account that gives you peace.",
+    ],
     cta: "Fénix Diaries",
     ctaNote: "Free access to the blueprints",
     socialLabel: "Andy’s profiles",
@@ -90,6 +97,7 @@ const copy = {
     testimonials: {
       eyebrow: "Testimonials",
       title: "Voices along the way",
+      verify: "Verify now",
     },
     metricsLabel: "Relevant measures",
     proofLabel: "Trajectory",

@@ -33,7 +33,8 @@
   );
 
   /* Typography — 3.2: display for headlines/editorial; body for copy/UI */
-  --font-display: var(--font-marcellus), "Marcellus", serif;
+  --font-display: var(--font-eb-garamond), "EB Garamond", serif;
+  --font-wordmark: var(--font-marcellus), "Marcellus", serif;
   --font-body: var(--font-jost), "Jost", sans-serif;
 
   /* Radius */

@@ -7,6 +7,7 @@ export default function Testimonials({ locale }) {
   const testimonials = getTestimonials(locale);
   return (
     <section
+      id="testimonials"
       className="section section--parchment section--viewport testimonials"
       aria-labelledby="testimonios-title"
     >
@@ -20,7 +21,10 @@ export default function Testimonials({ locale }) {
           </h2>
         </header>
 
-        <TestimonialsGallery testimonials={testimonials} />
+        <TestimonialsGallery
+          testimonials={testimonials}
+          verifyLabel={chrome.verify}
+        />
       </div>
     </section>
   );

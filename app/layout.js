@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { Marcellus, Jost } from "next/font/google";
+import { EB_Garamond, Jost, Marcellus } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -18,6 +18,12 @@ import {
   LOCALE_HEADER,
   pickLocale,
 } from "@/libs/locale";
+
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  variable: "--font-eb-garamond",
+  display: "swap",
+});
 
 const marcellus = Marcellus({
   weight: "400",
@@ -52,7 +58,7 @@ export default async function RootLayout({ children }) {
   return (
     <html
       lang={htmlLang(locale)}
-      className={`${marcellus.variable} ${jost.variable}`}
+      className={`${ebGaramond.variable} ${marcellus.variable} ${jost.variable}`}
       suppressHydrationWarning
     >
       <head>

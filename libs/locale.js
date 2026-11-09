@@ -47,6 +47,7 @@ export function stripLocalePrefix(pathname) {
 }
 
 const PATH_READINGS = [
+  { es: "/testimonios", en: "/testimonials" },
   { es: "/planosddf", en: "/blueprintsddf" },
   { es: "/planosddf/bienvenido", en: "/blueprintsddf/bienvenido" },
   ...LEGAL_PATH_READINGS,

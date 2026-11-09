@@ -6,6 +6,8 @@ export const HOME_SECTION_IDS = {
   historia: "historia",
   ecosistema: "ecosistema",
   biblioteca: "biblioteca",
+  testimonios: "testimonials",
+  testimonials: "testimonials",
   "empieza-aqui": "empieza-aqui",
 };
 
