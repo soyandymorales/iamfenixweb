@@ -3701,6 +3701,18 @@ button {
 .work-card[data-status="queue"] {
   cursor: default;
   color: var(--color-house-queue-text);
+  background-color: var(--color-warm-parchment);
+}
+
+.work-card__mark {
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  width: min(58%, 220px);
+  height: auto;
+  color: var(--color-ember);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .work-card[data-status="queue"] .work-card__image {
@@ -3711,9 +3723,7 @@ button {
   background: var(--color-house-veil-queue);
 }
 
-.work-card[data-status="queue"] .work-card__type,
-.work-card[data-status="queue"] .work-card__title,
-.work-card[data-status="queue"] .work-card__description {
+.work-card[data-status="queue"] .work-card__type {
   color: var(--color-house-queue-text);
 }
 
@@ -3727,6 +3737,15 @@ button {
   z-index: -1;
   inset: 0;
   background: var(--color-house-veil);
+}
+
+.work-card[data-poster] .work-card__image {
+  filter: none;
+}
+
+.work-card[data-poster] .work-card__veil,
+.work-card[data-poster] .work-card__content {
+  display: none;
 }
 
 .work-card__content {
@@ -3744,14 +3763,6 @@ button {
   justify-content: space-between;
   align-items: center;
   gap: var(--space-16);
-}
-
-.work-card__title-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
-  margin-top: auto;
-  container-type: inline-size;
 }
 
 .work-card__type {
@@ -3774,18 +3785,6 @@ button {
 
 .work-card__tag--queue {
   background-color: var(--color-house-label-queue);
-}
-
-.work-card__title {
-  font-size: min(var(--text-work-card), var(--text-work-card-fit));
-  white-space: nowrap;
-  color: var(--color-chalk-white);
-}
-
-.work-card__description {
-  max-width: var(--reading-card);
-  font-size: var(--text-small);
-  color: var(--color-house-label);
 }
 
 @media (hover: hover) and (pointer: fine) {

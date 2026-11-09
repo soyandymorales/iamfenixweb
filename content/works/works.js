@@ -1,4 +1,19 @@
+import { statSync } from "node:fs";
+import path from "node:path";
+
 import { localize, localizeHref } from "@/libs/locale";
+
+function withImageVersion(src) {
+  if (!src?.startsWith("/")) return src;
+
+  try {
+    const file = path.join(process.cwd(), "public", src);
+    const version = Math.round(statSync(file).mtimeMs);
+    return `${src}?v=${version}`;
+  } catch {
+    return src;
+  }
+}
 
 const intro = {
   es: {
@@ -35,8 +50,9 @@ const worksBase = [
     title: "Racecrew",
     mark: "path",
     status: "live",
+    poster: true,
     image: {
-      src: "/images/Sin título-1.jpg",
+      src: "/images/Racecrew.png",
       position: "center",
     },
     href: "http://racecrew.io/",
@@ -47,8 +63,9 @@ const worksBase = [
     title: "Diarios del Fénix",
     mark: "journal",
     status: "live",
+    poster: true,
     image: {
-      src: "/images/story/7.jpg",
+      src: "/images/DDFposter.png",
       position: "center",
     },
     href: "/diarios",
@@ -89,6 +106,14 @@ const worksBase = [
     },
     href: null,
   },
+  {
+    id: "directorios",
+    number: "06",
+    title: "Directorios",
+    mark: "wing",
+    status: "queue",
+    href: null,
+  },
 ];
 
 const worksCopy = {
@@ -103,7 +128,8 @@ const worksCopy = {
       type: "Web",
       tag: "Live",
       description: "Corre el mundo, colecciona memorias inolvidables con tu crew.",
-      imageAlt: "Andy Morales durante una carrera de fondo.",
+      imageAlt:
+        "Cartel de Racecrew: un triatleta de espaldas frente al mar, con nadadores al fondo.",
     },
     kingdominion: {
       type: "App",
@@ -118,11 +144,18 @@ const worksCopy = {
       description: "El monasterio moderno de productos de bienestar para el arte de vivir.",
       imageAlt: "Una figura recorre en silencio un sendero entre árboles.",
     },
+    directorios: {
+      type: "Software",
+      tag: "Pronto",
+      description: "Publica fichas en directorios web a partir de lo que cargas.",
+      imageAlt: "Isologo de Fénix.",
+    },
     "diarios-del-fenix": {
       type: "Curso digital",
       tag: "Live",
       description: "Eleva la arquitectura de tu cuerpo, paz interior y financiera en 21 días.",
-      imageAlt: "Una mano descansa sobre una Biblia abierta al trabajo interior.",
+      imageAlt:
+        "Cartel de Diarios del Fénix: un hombre camina por un sendero de bosque hacia la luz.",
     },
   },
   en: {
@@ -137,7 +170,8 @@ const worksCopy = {
       type: "Web",
       tag: "Live",
       description: "Run the world and collect unforgettable memories with your crew.",
-      imageAlt: "Andy Morales during a long-distance race.",
+      imageAlt:
+        "Racecrew poster: a triathlete seen from behind, facing the sea with swimmers in the distance.",
     },
     kingdominion: {
       type: "App",
@@ -151,12 +185,19 @@ const worksCopy = {
       description: "The modern monastery of wellness products for the art of living.",
       imageAlt: "A figure walks quietly along a path among trees.",
     },
+    directorios: {
+      type: "Software",
+      tag: "Soon",
+      description: "Publish listings in web directories from what you upload.",
+      imageAlt: "Fénix mark.",
+    },
     "diarios-del-fenix": {
       type: "Digital course",
       tag: "Live",
       description:
         "Elevate the architecture of your body, inner peace, and finances in 21 days.",
-      imageAlt: "A hand rests on a Bible opened for inner work.",
+      imageAlt:
+        "Diarios del Fénix poster: a man walks a forest path toward the light.",
     },
   },
 };
@@ -174,6 +215,9 @@ export function getWorks(locale) {
   return worksBase.map((work) => ({
     ...work,
     ...localized[work.id],
+    image: work.image
+      ? { ...work.image, src: withImageVersion(work.image.src) }
+      : work.image,
     href: work.href ? localizeHref(work.href, locale) : null,
   }));
 }

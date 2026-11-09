@@ -72,8 +72,8 @@ export default function LaCasa({ locale }) {
         <div className="house__main">
           {works.length > 0 ? (
             <div className="works__grid">
-              {works.map((work) => (
-                <WorkCard key={work.id} work={work} />
+              {works.map((work, index) => (
+                <WorkCard key={work.id} work={work} priority={index === 0} />
               ))}
             </div>
           ) : (
