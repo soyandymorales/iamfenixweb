@@ -38,7 +38,7 @@ const records = [
   {
     id: "juri-henley-cohn",
     name: "Juri Henley-Cohn",
-    role: "Harvard Alumni, Actor Netflix & Prime",
+    role: "Harvard Alumni, Actor Netflix & Prime, Co founder savorapp.ai",
     portrait: "/images/juri.jpg",
     country: { flag: "/images/usa.webp" },
     organizations: [{ name: "Harvard", logo: "/images/harvardlogo.webp" }],
