@@ -559,7 +559,7 @@ button {
   letter-spacing: var(--tracking-eyebrow);
   line-height: var(--leading-snug);
   text-transform: uppercase;
-  text-align: center;
+  text-align: start;
   color: var(--color-ember);
 }
 
@@ -703,13 +703,27 @@ button {
     max-width: 100%;
   }
 
+  .hero__kicker,
+  .hero__kicker-line,
+  .hero__line,
+  .hero__line--lead {
+    text-align: center;
+    text-align-last: center;
+  }
+
   .hero__kicker {
     width: auto;
     min-width: 0;
     font-size: 0.75rem;
     letter-spacing: 0.05em;
-    text-align: start;
-    text-align-last: auto;
+  }
+
+  .hero__line--lead {
+    font-size: clamp(2.7rem, 10.8vw, 3.05rem);
+  }
+
+  .hero__line:not(.hero__line--lead) {
+    font-size: clamp(2.25rem, 9.2vw, 2.6rem);
   }
 
   /* Las veladuras giran con la composición: de arriba hacia abajo. */
@@ -741,7 +755,8 @@ button {
 
   .hero__bar-cta {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     gap: var(--space-16);
   }
 }
@@ -2876,7 +2891,7 @@ button {
   font-size: var(--text-body);
 }
 
-.tier-card__investment span {
+.tier-card__investment > span:first-child {
   display: block;
   margin-bottom: var(--space-8);
   font-family: var(--font-body);
@@ -2887,7 +2902,15 @@ button {
   color: var(--color-ash-stone);
 }
 
-.tier-card--private .tier-card__investment span {
+.tier-card__amount {
+  display: block;
+  font-size: clamp(1.75rem, 1.45rem + 0.8vw, 2.25rem);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+}
+
+.tier-card--private .tier-card__investment > span:first-child {
   color: var(--color-limestone);
 }
 

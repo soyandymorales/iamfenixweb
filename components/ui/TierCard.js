@@ -36,7 +36,7 @@ export default function TierCard({ tier, labels }) {
 
       <p className="tier-card__investment">
         <span>{labels.investment}</span>
-        {tier.investment}
+        <span className="tier-card__amount">{tier.investment}</span>
       </p>
 
       <a
