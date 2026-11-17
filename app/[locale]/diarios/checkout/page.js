@@ -1,4 +1,3 @@
-import Footer from "@/components/layout/Footer";
 import LayoutClient from "@/components/layout/LayoutClient";
 import DiariosCart from "@/components/sections/DiariosCart";
 import { getDiariosOffer } from "@/content/diarios/offer";
@@ -38,7 +37,6 @@ export default async function DiariosCheckoutPage({ params }) {
           sandbox={isSandbox()}
         />
       </main>
-      <Footer />
     </LayoutClient>
   );
 }
