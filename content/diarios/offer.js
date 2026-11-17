@@ -11,11 +11,11 @@ export const DIARIOS_VOICE_IDS = [
 const copy = {
   es: {
     eyebrow: "Diarios del Fénix",
-    title: "Renace y eleva tu salud, paz y relación con el dinero en 21 días.",
+    title: "Renace y eleva Tu salud vital, paz interior y relación con el dinero en 21 días",
     titleAccent: "Renace y eleva",
-    titleRest: "tu salud, paz y relación con el dinero en 21 días.",
+    titleRest: "Tu salud vital, paz interior y relación con el dinero en 21 días",
     opening:
-      "Veintiún prácticas. Tres arquitecturas. Un camino guiado por principios bíblicos para reconstruir el cuerpo, la paz interior y la relación con el capital.",
+      "Tres arquitecturas y 21 prácticas guiadas por principios bíblicos para el arte de vivir.",
     heroCta: "Entrar a Diarios del Fénix",
     architecturesLabel: "Tres arquitecturas",
     bodyName: "Body Architecture™",
@@ -147,15 +147,15 @@ const copy = {
     returningError: "El envío se interrumpió. Intenta de nuevo con calma.",
     linkError: "Ese enlace no abrió la sesión. Pide el acceso otra vez.",
     metadataDescription:
-      "Renace y eleva tu salud, paz y relación con el dinero en 21 días. Diarios del Fénix. $37.",
+      "Renace y eleva Tu salud vital, paz interior y relación con el dinero en 21 días. Diarios del Fénix. $37.",
   },
   en: {
     eyebrow: "Diarios del Fénix",
-    title: "Rise and elevate your health, peace, and relationship with money in 21 days.",
+    title: "Rise and elevate Your vital health, inner peace, and relationship with money in 21 days",
     titleAccent: "Rise and elevate",
-    titleRest: "your health, peace, and relationship with money in 21 days.",
+    titleRest: "Your vital health, inner peace, and relationship with money in 21 days",
     opening:
-      "Twenty-one practices. Three architectures. A path guided by biblical principles to rebuild the body, inner peace, and your relationship with capital.",
+      "Three architectures and 21 practices guided by biblical principles for the art of living.",
     heroCta: "Enter Diarios del Fénix",
     architecturesLabel: "Three architectures",
     bodyName: "Body Architecture™",
@@ -286,7 +286,7 @@ const copy = {
     returningError: "The sending was interrupted. Try again, without hurry.",
     linkError: "That link did not open the session. Ask for access again.",
     metadataDescription:
-      "Rise and elevate your health, peace, and relationship with money in 21 days. Diarios del Fénix. $37.",
+      "Rise and elevate Your vital health, inner peace, and relationship with money in 21 days. Diarios del Fénix. $37.",
   },
 };
 
