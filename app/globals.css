@@ -3870,6 +3870,7 @@ button {
 }
 
 .diarios-offer__hero {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -3877,6 +3878,26 @@ button {
   padding-top: var(--header-height);
   padding-bottom: var(--space-80);
   box-sizing: border-box;
+  isolation: isolate;
+}
+
+.diarios-offer__hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("/images/blueprinthero.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 82% auto;
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+}
+
+.diarios-offer__hero > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .diarios-offer__chapter--last {
@@ -3978,15 +3999,11 @@ button {
   white-space: nowrap;
 }
 
-.diarios-offer__headline-accent,
-.diarios-offer__headline-rest {
+.diarios-offer__headline-accent {
   display: block;
   max-width: 100%;
   overflow: hidden;
   white-space: nowrap;
-}
-
-.diarios-offer__headline-accent {
   color: var(--color-ember);
   font-style: normal;
   font-size: clamp(1.55em, 9cqi, 1.95em);
@@ -3994,8 +4011,12 @@ button {
 }
 
 .diarios-offer__headline-rest {
-  font-size: clamp(0.6em, 3.1cqi, 0.72em);
-  line-height: 1.08;
+  display: block;
+  max-width: 100%;
+  font-size: clamp(0.5em, 2.35cqi, 0.56em);
+  line-height: 1.14;
+  text-align: center;
+  text-wrap: balance;
 }
 
 @media (max-width: 768px) {
@@ -4004,7 +4025,7 @@ button {
   }
 
   .diarios-offer__headline-rest {
-    font-size: clamp(0.58em, 4.2cqi, 0.68em);
+    font-size: clamp(0.46em, 3.4cqi, 0.54em);
   }
 }
 
