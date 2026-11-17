@@ -15,7 +15,7 @@ const copy = {
     titleAccent: "Renace y eleva",
     titleRest: "Tu salud vital, paz interior y relación con el dinero en 21 días",
     opening:
-      "Tres arquitecturas y 21 prácticas guiadas por principios bíblicos para el arte de vivir.",
+      "Tres arquitecturas humanas y 21 prácticas guiadas por principios bíblicos para el arte de vivir.",
     heroCta: "Entrar a Diarios del Fénix",
     architecturesLabel: "Tres arquitecturas",
     bodyName: "Body Architecture™",
@@ -155,7 +155,7 @@ const copy = {
     titleAccent: "Rise and elevate",
     titleRest: "Your vital health, inner peace, and relationship with money in 21 days",
     opening:
-      "Three architectures and 21 practices guided by biblical principles for the art of living.",
+      "Three human architectures and 21 practices guided by biblical principles for the art of living.",
     heroCta: "Enter Diarios del Fénix",
     architecturesLabel: "Three architectures",
     bodyName: "Body Architecture™",
