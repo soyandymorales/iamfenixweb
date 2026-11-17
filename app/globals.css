@@ -4032,6 +4032,7 @@ html:has(.diarios-offer) {
   display: block;
   max-width: 100%;
   font-size: clamp(0.5em, 2.35cqi, 0.56em);
+  letter-spacing: 0.02em;
   line-height: 1.14;
   text-align: center;
   text-wrap: balance;
