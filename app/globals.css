@@ -3858,97 +3858,68 @@ button {
    Diarios — oferta y checkout
 --------------------------------------------------------------------------- */
 
-html:has(.diarios-offer),
-body:has(.diarios-offer) {
-  height: var(--height-viewport);
-  overflow: hidden;
+/* Diarios offer — quiet-luxury editorial folio */
+.diarios-offer {
+  background-color: var(--color-warm-parchment);
+  color: var(--color-charcoal);
 }
 
-body:has(.diarios-offer) main {
-  height: 100%;
-  overflow: hidden;
+.diarios-offer__chapter {
+  padding-block: var(--space-80);
+  scroll-margin-top: var(--header-height);
 }
 
-.section.diarios-offer {
-  box-sizing: border-box;
+.diarios-offer__hero {
   display: flex;
   flex-direction: column;
-  height: var(--height-viewport);
-  max-height: var(--height-viewport);
-  min-height: 0;
-  padding: var(--header-height) 0 clamp(12px, 3vh, 48px);
-  overflow: hidden;
-  scroll-margin-top: calc(var(--header-height) * -1);
+  justify-content: center;
+  min-height: var(--height-viewport);
+  padding-top: var(--header-height);
+  padding-bottom: var(--space-80);
+  box-sizing: border-box;
 }
 
-.section.diarios-offer:has(.diarios-offer__access-panel) {
-  overflow-y: auto;
+.diarios-offer__chapter--last {
+  padding-bottom: var(--space-120);
 }
 
 .diarios-offer__sheet {
   display: flex;
-  flex: 1;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: clamp(16px, 3vh, 40px);
-  width: min(100%, var(--reading-body));
-  min-height: 0;
+  align-items: center;
+  gap: var(--space-48);
+  width: min(100%, var(--reading-hero));
   margin-inline: auto;
 }
 
-.diarios-offer__mast {
+.diarios-offer__hero .diarios-offer__sheet,
+.diarios-offer__chapter:has(#diarios-story-title) .diarios-offer__sheet {
+  container-type: inline-size;
+  container-name: diarios-hero;
+}
+
+.diarios-offer__hero .diarios-offer__masthead,
+.diarios-offer__chapter:has(#diarios-story-title) .diarios-offer__masthead {
+  max-width: none;
+  width: 100%;
+}
+
+.diarios-offer__masthead {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(8px, 1.6vh, 24px);
+  align-items: center;
+  gap: var(--space-24);
+  width: 100%;
+  max-width: var(--reading-body);
+  text-align: center;
 }
 
-.diarios-offer__mast h1 {
-  margin: 0;
-  max-width: 14ch;
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 5.2vh, 3rem);
-  font-weight: 400;
-  line-height: var(--leading-snug);
-  text-wrap: balance;
-}
-
-.diarios-offer__mast p,
-.diarios-offer__note {
-  margin: 0;
-  max-width: 36em;
-  font-size: clamp(1rem, 2.2vh, 1.375rem);
-  line-height: 1.45;
-  color: var(--color-ash-stone);
-}
-
-.diarios-offer__contents {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: var(--border-hairline) solid var(--color-hairline);
-}
-
-.diarios-offer__contents li {
-  display: flex;
+.diarios-offer__kicker {
+  display: inline-flex;
   align-items: baseline;
-  justify-content: space-between;
   gap: var(--space-16);
-  padding-block: clamp(2px, 0.7vh, 8px);
-  border-bottom: var(--border-hairline) solid var(--color-hairline);
-}
-
-.diarios-offer__name {
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2.4vh, 1.625rem);
-  line-height: var(--leading-snug);
-}
-
-.diarios-offer__span {
-  flex-shrink: 0;
+  margin: 0;
+  font-family: var(--font-body);
   font-size: var(--text-micro);
   font-weight: 500;
   letter-spacing: var(--tracking-eyebrow);
@@ -3956,89 +3927,545 @@ body:has(.diarios-offer) main {
   color: var(--color-ash-stone);
 }
 
-.diarios-offer__price {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-8);
+.diarios-offer__folio {
+  color: var(--color-ember);
+}
+
+.diarios-offer__headline {
   margin: 0;
-  font-size: var(--text-body);
+  max-width: 18ch;
+  font-family: var(--font-display);
+  font-size: var(--text-display);
   font-weight: 400;
-  line-height: var(--leading-body);
+  letter-spacing: -0.03em;
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+  text-align: center;
   color: var(--color-charcoal);
 }
 
-.diarios-offer__includes {
-  margin: 0 0 clamp(4px, 1vh, 16px);
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 2.6vh, 1.625rem);
-  font-weight: 400;
-  line-height: var(--leading-snug);
-}
-
-.diarios-offer__cta {
-  align-self: flex-start;
-  text-decoration: none;
-}
-
-.diarios-offer__close {
+.diarios-offer__hero .diarios-offer__headline {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(8px, 1.5vh, 24px);
+  align-items: center;
+  gap: 0.08em;
   width: 100%;
+  max-width: none;
+  /* Fits the longer second line in ~2 lines across devices. */
+  font-size: clamp(1.25rem, 0.55rem + 4.1vw, 4.5rem);
+  font-size: clamp(1.25rem, 6cqi, 4.5rem);
+  letter-spacing: -0.045em;
+  line-height: 1.06;
 }
 
-.diarios-offer .btn {
-  padding-block: clamp(10px, 1.6vh, 16px);
+.diarios-offer__headline--duo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.06em;
+  width: 100%;
+  max-width: none;
+  font-size: clamp(1.35rem, 0.7rem + 3.2vw, 3.25rem);
+  font-size: clamp(1.35rem, 5cqi, 3.25rem);
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.diarios-offer__headline--duo > span {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.diarios-offer__headline-accent,
+.diarios-offer__headline-rest {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.diarios-offer__headline-accent {
+  color: var(--color-ember);
+  font-style: normal;
+  font-size: clamp(1.55em, 9cqi, 1.95em);
+  line-height: 1.02;
+}
+
+.diarios-offer__headline-rest {
+  font-size: clamp(0.6em, 3.1cqi, 0.72em);
+  line-height: 1.08;
 }
 
 @media (max-width: 768px) {
-  .section.diarios-offer {
-    padding-bottom: 12px;
+  .diarios-offer__headline-accent {
+    font-size: clamp(1.48em, 11cqi, 1.75em);
   }
 
-  .diarios-offer__sheet {
-    gap: 12px;
+  .diarios-offer__headline-rest {
+    font-size: clamp(0.58em, 4.2cqi, 0.68em);
   }
+}
 
-  .diarios-offer__mast {
-    gap: 8px;
-  }
+.diarios-offer__deck,
+.diarios-offer__note {
+  margin: 0;
+  max-width: var(--reading-body);
+  font-family: var(--font-body);
+  font-size: var(--text-lead);
+  line-height: var(--leading-body);
+  text-align: center;
+  color: var(--color-ash-stone);
+}
 
-  .diarios-offer__mast h1 {
-    font-size: clamp(1.6rem, 4.4vh, 2.25rem);
-  }
+.diarios-offer__prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  width: 100%;
+  max-width: var(--reading-body);
+  text-align: left;
+}
 
-  .diarios-offer__mast p {
-    font-size: 1rem;
-    line-height: 1.4;
-  }
+.diarios-offer__prose p,
+.diarios-offer__index p,
+.diarios-offer__meta,
+.diarios-offer__guarantee p,
+.diarios-offer__note-item p,
+.diarios-offer__colophon li span:last-child {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-ash-stone);
+}
 
-  .diarios-offer__includes,
-  .diarios-offer__name {
-    font-size: 1.15rem;
-  }
+.diarios-offer__colophon li span:last-child {
+  text-align: right;
+}
 
-  .diarios-offer__close {
-    gap: 12px;
-  }
+.diarios-offer__closing {
+  color: var(--color-charcoal);
+}
 
-  .diarios-offer .btn {
-    padding-block: 10px;
-  }
+.diarios-offer__pull {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-16);
+  width: 100%;
+  max-width: var(--reading-body);
+  padding: var(--space-32) 0 var(--space-8);
+  text-align: center;
+}
+
+.diarios-offer__pull-text {
+  margin: 0;
+  max-width: 22em;
+  font-family: var(--font-display);
+  font-size: var(--text-lead);
+  font-style: italic;
+  line-height: var(--leading-snug);
+  color: var(--color-charcoal);
+}
+
+.diarios-offer__index {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--reading-body);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.diarios-offer__index > li {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: var(--space-24);
+  padding-block: var(--space-32);
+  text-align: left;
+}
+
+.diarios-offer__plates {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-16);
+  width: 100%;
+}
+
+.diarios-offer__plates--origin {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-24);
+  width: 100%;
+  max-width: var(--reading-hero);
+}
+
+.diarios-offer__plate {
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-limestone);
+}
+
+.diarios-offer__plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.diarios-offer__index-folio {
+  font-family: var(--font-display);
+  font-size: var(--text-lead);
+  line-height: var(--leading-tight);
+  color: var(--color-ember);
+}
+
+.diarios-offer__index-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  min-width: 0;
+}
+
+.diarios-offer__index-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+
+.diarios-offer__index-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lead);
+  line-height: var(--leading-snug);
+  color: var(--color-charcoal);
+}
+
+.diarios-offer__index-span {
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-ash-stone);
+}
+
+.diarios-offer__colophon {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  width: 100%;
+  max-width: var(--reading-body);
+  padding-top: var(--space-8);
+}
+
+.diarios-offer__colophon ul {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--border-hairline) solid var(--color-line);
+}
+
+.diarios-offer__colophon li {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: var(--space-16);
+  padding-block: var(--space-16);
+  border-bottom: var(--border-hairline) solid var(--color-hairline);
+}
+
+.diarios-offer__colophon li span:first-child {
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  color: var(--color-charcoal);
+}
+
+.diarios-offer__voices {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--reading-body);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 0;
+}
+
+.diarios-offer__voices > li {
+  padding-block: var(--space-32);
+}
+
+.diarios-offer__voice {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-24);
+  padding-left: 0;
+  border-left: 0;
+  text-align: center;
+}
+
+.diarios-offer__voice > p {
+  margin: 0;
+  max-width: 26em;
+  font-family: var(--font-display);
+  font-size: var(--text-lead);
+  line-height: var(--leading-snug);
+  color: var(--color-charcoal);
+  text-wrap: pretty;
+  text-align: center;
+}
+
+.diarios-offer__voice > p::before {
+  content: "“";
+}
+
+.diarios-offer__voice > p::after {
+  content: "”";
+}
+
+.diarios-offer__voice-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+.diarios-offer__voice-avatar {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+  background: var(--color-limestone);
+  color: var(--color-charcoal);
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+}
+
+.diarios-offer__voice-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--image-filter-editorial);
+}
+
+.diarios-offer__voice-identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.diarios-offer__voice-identity cite {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: var(--text-body);
+  font-weight: 500;
+  color: var(--color-charcoal);
+}
+
+.diarios-offer__voice-flag {
+  width: auto;
+  height: 11px;
+  border-radius: var(--radius-sm);
+  opacity: 0.85;
+}
+
+.diarios-offer__voice-role {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  color: var(--color-ash-stone);
+}
+
+.diarios-offer__voice-proof {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-16);
+  margin-top: var(--space-4);
+}
+
+.diarios-offer__voice-org {
+  width: auto;
+  height: 22px;
+  object-fit: contain;
+}
+
+.diarios-offer__voice-org--compact {
+  height: 16px;
+}
+
+.diarios-offer__chapter--entrance {
+  background-color: color-mix(in srgb, var(--color-chalk-white) 55%, var(--color-warm-parchment));
+}
+
+.diarios-offer__subscription {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-32);
+  width: 100%;
+  max-width: var(--reading-body);
+  text-align: center;
+}
+
+.diarios-offer__subscription-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.diarios-offer__amount {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--color-charcoal);
+}
+
+.diarios-offer__guarantee {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  width: 100%;
+  padding-top: var(--space-24);
+}
+
+.diarios-offer__cta {
+  text-decoration: none;
 }
 
 .diarios-offer__pair {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: var(--space-16);
   width: 100%;
 }
 
 .diarios-offer__note:empty {
   display: none;
+}
+
+.diarios-offer__endnotes {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--reading-body);
+  border-top: var(--border-hairline) solid var(--color-line);
+}
+
+.diarios-offer__note-item {
+  padding-block: var(--space-24);
+  border-bottom: var(--border-hairline) solid var(--color-hairline);
+}
+
+.diarios-offer__note-item summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-16);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: var(--text-lead);
+  line-height: var(--leading-snug);
+  color: var(--color-charcoal);
+}
+
+.diarios-offer__note-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.diarios-offer__note-item summary::after {
+  content: "+";
+  flex-shrink: 0;
+  color: var(--color-ember);
+}
+
+.diarios-offer__note-item[open] summary::after {
+  content: "−";
+}
+
+.diarios-offer__note-item p {
+  margin-top: var(--space-16);
+  max-width: 36em;
+}
+
+@media (max-width: 768px) {
+  .diarios-offer__chapter {
+    padding-block: var(--space-64);
+  }
+
+  .diarios-offer__hero {
+    padding-top: calc(var(--header-height) + var(--space-48));
+    padding-bottom: var(--space-64);
+  }
+
+  .diarios-offer__chapter--last {
+    padding-bottom: var(--space-80);
+  }
+
+  .diarios-offer__sheet {
+    gap: var(--space-32);
+  }
+
+  .diarios-offer__headline {
+    max-width: 12ch;
+  }
+
+  .diarios-offer__hero .diarios-offer__headline {
+    max-width: none;
+    font-size: clamp(1.15rem, 5.8cqi, 2.5rem);
+  }
+
+  .diarios-offer__headline--duo {
+    max-width: none;
+    font-size: clamp(1.2rem, 5.2cqi, 2.15rem);
+  }
+
+  .diarios-offer__index > li {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: var(--space-16);
+    padding-block: var(--space-24);
+  }
+
+  .diarios-offer__index-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+  }
+
+  .diarios-offer__plates--origin {
+    grid-template-columns: 1fr;
+    gap: var(--space-16);
+  }
+
+  .diarios-offer__colophon li {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
 }
 
 body:has(.diarios-cart) {
