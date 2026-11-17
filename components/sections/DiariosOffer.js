@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import BrandWordmark from "@/components/ui/BrandWordmark";
 import ScriptureCitation from "@/components/ui/ScriptureCitation";
 import { DIARIOS_VOICE_IDS, getDiariosOffer } from "@/content/diarios/offer";
 import { getTestimonials } from "@/content/testimonials/testimonials";
@@ -56,6 +57,7 @@ export default function DiariosOffer({ locale, linkError = false }) {
         <div className="container">
           <div className="diarios-offer__sheet">
             <header className="diarios-offer__masthead">
+              <BrandWordmark className="wordmark site-header__wordmark diarios-offer__mark" priority />
               <ChapterKicker label={copy.eyebrow} />
               <h1 id="diarios-offer-title" className="diarios-offer__headline">
                 <span className="diarios-offer__headline-accent">{copy.titleAccent}</span>

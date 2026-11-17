@@ -1,5 +1,5 @@
 import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
+import LanguageToggle from "@/components/layout/LanguageToggle";
 import LayoutClient from "@/components/layout/LayoutClient";
 import DiariosOffer from "@/components/sections/DiariosOffer";
 import { getDiariosOffer } from "@/content/diarios/offer";
@@ -42,11 +42,13 @@ export default async function DiariosPage({ params, searchParams }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <Header />
+      <div className="diarios-offer__locale">
+        <LanguageToggle />
+      </div>
       <main>
         <DiariosOffer locale={locale} linkError={query?.acceso === "enlace"} />
       </main>
-      <Footer />
+      <Footer legalOnly />
     </LayoutClient>
   );
 }

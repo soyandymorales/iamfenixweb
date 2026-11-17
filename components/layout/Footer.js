@@ -15,7 +15,7 @@ const socialLinks = [
   { label: "Strava", href: siteMetadata.social.strava },
 ];
 
-export default function Footer() {
+export default function Footer({ legalOnly = false }) {
   const locale = useLocale();
   const footerNavigation = getFooterNavigation(locale);
   const legalNavigation = getLegalNavigation(locale);
@@ -23,6 +23,37 @@ export default function Footer() {
   const chrome = getNavigationChrome(locale);
   const copy = getSiteCopy(locale);
   const homeHref = localizeHref("/home", locale);
+  const legal = (
+    <nav className="footer__legal" aria-label={legalChrome.navLabel}>
+      <ul>
+        {legalNavigation.map((item) => (
+          <li key={item.id}>
+            <a href={item.href} className="footer__link">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+  const colophon = (
+    <div className="footer__colophon">
+      <p>© {new Date().getFullYear()} Fénix</p>
+      <p>{copy.colophon}</p>
+      <LanguageToggle />
+    </div>
+  );
+
+  if (legalOnly) {
+    return (
+      <footer className="footer footer--legal">
+        <div className="container footer__inner">
+          {legal}
+          {colophon}
+        </div>
+      </footer>
+    );
+  }
 
   return (
     <footer className="footer">
@@ -65,23 +96,8 @@ export default function Footer() {
           </nav>
         </div>
 
-        <nav className="footer__legal" aria-label={legalChrome.navLabel}>
-          <ul>
-            {legalNavigation.map((item) => (
-              <li key={item.id}>
-                <a href={item.href} className="footer__link">
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="footer__colophon">
-          <p>© {new Date().getFullYear()} Fénix</p>
-          <p>{copy.colophon}</p>
-          <LanguageToggle />
-        </div>
+        {legal}
+        {colophon}
       </div>
     </footer>
   );
