@@ -31,6 +31,7 @@ const copy = {
     moneyLine:
       "Aprender a canalizar, administrar y multiplicar tu relación con el dinero",
     includesTitle: "Qué incluye",
+    supportLabel: "Soporte",
     storyEyebrow: "El origen",
     storyTitle: "No nació de una teoría. Nació de la reconstrucción.",
     storyTitleLine1: "No nació de una teoría.",
@@ -171,6 +172,7 @@ const copy = {
     moneyLine:
       "Learn to channel, manage, and multiply your relationship with money",
     includesTitle: "What it includes",
+    supportLabel: "Support",
     storyEyebrow: "Origin",
     storyTitle: "It was not born from theory. It was born from reconstruction.",
     storyTitleLine1: "It was not born from theory.",

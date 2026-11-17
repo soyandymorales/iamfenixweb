@@ -52,6 +52,14 @@ export default function DiariosCart({
               ))}
             </ul>
           </article>
+          <a
+            className="btn btn--solid diarios-cart__support"
+            href="https://wa.link/ncbpt6"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {copy.supportLabel}
+          </a>
         </div>
         <div className="diarios-cart__panel">
           {checkoutReady ? (

@@ -4622,6 +4622,17 @@ body:has(.diarios-cart) {
   font-size: var(--text-small);
 }
 
+.diarios-cart__support {
+  position: sticky;
+  bottom: var(--space-16);
+  z-index: 2;
+  align-self: stretch;
+  width: 100%;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-soft);
+  text-decoration: none;
+}
+
 .diarios-cart__panel {
   padding: var(--space-24);
 }
